@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 const TOKEN_KEY = 'auth-token';
 const USER_KEY = 'auth-user';
@@ -28,11 +29,14 @@ export class TokenStorageService {
   }
 
   public getUser(): any {
-    const user = window.sessionStorage.getItem(USER_KEY);
+    let token = window.sessionStorage.getItem(USER_KEY);
+    const helper = new JwtHelperService();
+    const user = helper.decodeToken(token!);
+    user.email = user.username;
     if (user) {
-      return JSON.parse(user);
+        return user;
     }
-
     return {};
   }
+
 }
