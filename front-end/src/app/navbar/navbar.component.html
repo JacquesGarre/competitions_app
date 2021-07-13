@@ -1,0 +1,71 @@
+
+<!-- Topbar -->
+<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+    <!-- Sidebar Toggle (Topbar) -->
+    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+        <fa-icon [icon]="faBars"></fa-icon>
+    </button>
+
+    <!-- Topbar Navbar -->
+    <ul class="navbar-nav ml-auto">
+
+        <div class="topbar-divider d-none d-sm-block"></div>
+
+        <!-- Nav Item - User Information -->
+        <li class="nav-item dropdown no-arrow" ngbDropdown>
+            <a class="nav-link dropdown-toggle" id="userDropdown" role="button" ngbDropdownToggle>
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{username}}</span>
+                <img class="img-profile rounded-circle" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png">
+            </a>
+            <!-- Dropdown - User Information -->
+            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown" ngbDropdownMenu>
+
+
+                <!-- ADMIN -->
+                <a class="dropdown-item" href="/admin/profile" routerLink="/admin/profile" *ngIf="showAdminBoard">
+                    <fa-icon [icon]="faUser" class="mr-2 text-gray-400"></fa-icon>
+                    Profile
+                </a>
+                <a class="dropdown-item" href="/admin" routerLink="/admin" *ngIf="showAdminBoard">
+                    <fa-icon [icon]="faCog" class="mr-2 text-gray-400"></fa-icon>
+                    Administration
+                </a>
+
+                <!-- MODERATOR -->
+                <a class="dropdown-item" href="/mod/profile" routerLink="/mod/profile" *ngIf="showModeratorBoard">
+                    <fa-icon [icon]="faUser" class="mr-2 text-gray-400"></fa-icon>
+                    Profile
+                </a>
+                <a class="dropdown-item" href="/mod" routerLink="/mod" *ngIf="showModeratorBoard">
+                    <fa-icon [icon]="faCog" class="mr-2 text-gray-400"></fa-icon>
+                    Administration
+                </a>
+
+                <!-- USER -->
+                <a class="dropdown-item" href="/user/profile" routerLink="/user/profile" *ngIf="showUserBoard">
+                    <fa-icon [icon]="faUser" class="mr-2 text-gray-400"></fa-icon>
+                    Profile
+                </a>
+                <a class="dropdown-item" href="/user" routerLink="/user" *ngIf="showUserBoard">
+                    <fa-icon [icon]="faCog" class="mr-2 text-gray-400"></fa-icon>
+                    My Account
+                </a>
+
+
+                <a class="dropdown-item" href="/" routerLink="/" >
+                    <fa-icon [icon]="faHome" class="mr-2 text-gray-400"></fa-icon>
+                    Home
+                </a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href (click)="logout()">
+                    <fa-icon [icon]="faSignOutAlt" class="mr-2 text-gray-400"></fa-icon>
+                    Logout
+                </a>
+            </div>
+        </li>
+
+    </ul>
+
+</nav>
+<!-- End of Topbar -->
