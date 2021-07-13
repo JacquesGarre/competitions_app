@@ -28,6 +28,12 @@ export class LoginComponent implements OnInit {
             if(this.roles.includes('ROLE_ADMIN')){
                 this.router.navigate(['/admin'])
             }
+            if(this.roles.includes('ROLE_MODERATOR')){
+                this.router.navigate(['/mod'])
+            }
+            if(this.roles.includes('ROLE_USER') && !this.roles.includes('ROLE_ADMIN') && !this.roles.includes('ROLE_MODERATOR')){
+                this.router.navigate(['/user'])
+            }
         }
     }
 
@@ -44,7 +50,12 @@ export class LoginComponent implements OnInit {
                 if(this.roles.includes('ROLE_ADMIN')){
                     this.router.navigate(['/admin'])
                 }
-                this.reloadPage();
+                if(this.roles.includes('ROLE_MODERATOR')){
+                    this.router.navigate(['/mod'])
+                }
+                if(this.roles.includes('ROLE_USER') && !this.roles.includes('ROLE_ADMIN') && !this.roles.includes('ROLE_MODERATOR')){
+                    this.router.navigate(['/user'])
+                }
             },
             err => {
                 this.errorMessage = err.error.message;
