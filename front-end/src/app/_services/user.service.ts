@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-
-const API_URL = 'http://localhost:8000/api/';
+import { Env } from '../_globals/env';
 
 @Injectable({
   providedIn: 'root'
@@ -10,19 +9,15 @@ const API_URL = 'http://localhost:8000/api/';
 export class UserService {
   constructor(private http: HttpClient) { }
 
-  getPublicContent(): Observable<any> {
-    return this.http.get(API_URL + 'organizations');
-  }
-
   getUserBoard(): Observable<any> {
-    return this.http.get(API_URL + 'user', { responseType: 'text' });
+    return this.http.get(Env.API_URL + 'user', { responseType: 'text' });
   }
 
   getModeratorBoard(): Observable<any> {
-    return this.http.get(API_URL + 'mod', { responseType: 'text' });
+    return this.http.get(Env.API_URL + 'mod', { responseType: 'text' });
   }
 
   getAdminBoard(): Observable<any> {
-    return this.http.get(API_URL + 'admin', { responseType: 'text' });
+    return this.http.get(Env.API_URL + 'admin', { responseType: 'text' });
   }
 }

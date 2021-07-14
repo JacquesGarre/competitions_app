@@ -4,7 +4,7 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" routerLink="/" routerLinkActive="active" >
         <div class="sidebar-brand-icon rotate-n-15">
-            <fa-icon [icon]="faLaughWink" class="mr-2"></fa-icon>
+            <fa-icon [icon]="faTrophy" class="mr-2"></fa-icon>
         </div>
         <div class="sidebar-brand-text mx-3">App</div>
     </a>
@@ -25,9 +25,18 @@
     <hr class="sidebar-divider">
 
     <!-- Heading -->
-    <div class="sidebar-heading">
+    <div class="sidebar-heading" *ngIf="showAdminBoard || showModeratorBoard">
         Administration
     </div>
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item" *ngIf="showAdminBoard">
+        <a class="nav-link" routerLink="/admin/organizations" routerLinkActive="active">
+            <fa-icon [icon]="faUsers" class="mr-2"></fa-icon>
+            <span>Organizations</span>
+            <fa-icon [icon]="faChevronRight" class="float-right mt-1 arrowRight"></fa-icon>
+        </a>
+    </li>
 
     <!-- Divider -->
     <hr class="sidebar-divider mt-2">

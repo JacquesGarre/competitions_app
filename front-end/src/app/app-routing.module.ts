@@ -8,6 +8,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { BoardUserComponent } from './board-user/board-user.component';
 import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
 import { BoardAdminComponent } from './board-admin/board-admin.component';
+import { ModuleOrganizationsComponent } from './module-organizations/module-organizations.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -23,6 +24,10 @@ const routes: Routes = [
             {
                 path: 'profile',
                 component: ProfileComponent
+            },
+            {
+                path: 'organizations',
+                component: ModuleOrganizationsComponent
             }
         ]
 

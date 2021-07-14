@@ -1,16 +1,23 @@
-<h1>Home page</h1>
+<!-- Navbar -->
+<app-navbar></app-navbar>
+<!-- End of Navbar -->
+<div class="container-fluid">
 
-<a href="/register" class="nav-link" routerLink="/register" *ngIf="!isLoggedIn">Sign Up</a>
-<a href="/login" class="nav-link" routerLink="/login" *ngIf="!isLoggedIn">Login</a>
-     
-<a class="nav-link"href (click)="logout()" *ngIf="isLoggedIn">Logout</a>
+    <h1>Home page</h1>
 
-<a class="nav-link" href="/admin" routerLink="/admin" *ngIf="showAdminBoard">
-    Administration
-</a>
-<a class="nav-link" href="/mod" routerLink="/mod" *ngIf="showModeratorBoard">
-    Administration
-</a>
-<a class="nav-link" href="/user" routerLink="/user" *ngIf="showUserBoard">
-    My Account
-</a>
+    <a href="/register" class="nav-link" routerLink="/register" *ngIf="!isLoggedIn">Sign Up</a>
+    <a href="/login" class="nav-link" routerLink="/login" *ngIf="!isLoggedIn">Login</a>
+        
+    <a class="nav-link"href (click)="logout()" *ngIf="isLoggedIn">Logout</a>
+
+    <a class="nav-link" href="/admin" routerLink="/admin" *ngIf="showAdminBoard">
+        Administration
+    </a>
+    <a class="nav-link" href="/mod" routerLink="/mod" *ngIf="showModeratorBoard">
+        Administration
+    </a>
+    <a class="nav-link" href="/user" routerLink="/user" *ngIf="showUserBoard">
+        My Account
+    </a>
+    
+</div>

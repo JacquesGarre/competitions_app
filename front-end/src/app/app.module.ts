@@ -20,6 +20,7 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ModuleOrganizationsComponent } from './module-organizations/module-organizations.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     BoardModeratorComponent,
     BoardUserComponent,
     NavbarComponent,
-    SidebarComponent
+    SidebarComponent,
+    ModuleOrganizationsComponent
   ],
   imports: [
     BrowserModule,

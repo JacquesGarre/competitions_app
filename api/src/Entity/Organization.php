@@ -37,7 +37,7 @@ class Organization
     private $updatedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="organization")
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="organizations")
      */
     private $users;
 
@@ -100,7 +100,7 @@ class Organization
     {
         if (!$this->users->contains($user)) {
             $this->users[] = $user;
-            $user->setOrganization($this);
+            $user->addOrganization($this);
         }
 
         return $this;
@@ -109,13 +109,11 @@ class Organization
     public function removeUser(User $user): self
     {
         if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getOrganization() === $this) {
-                $user->setOrganization(null);
-            }
+            $user->removeOrganization($this);
         }
 
         return $this;
     }
+
 
 }
