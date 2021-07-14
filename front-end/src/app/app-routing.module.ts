@@ -15,8 +15,26 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'profile', component: ProfileComponent },
-    { path: 'user', component: BoardUserComponent },
-    { path: 'mod', component: BoardModeratorComponent },
+    { 
+        path: 'user', 
+        component: BoardUserComponent,
+        children: [
+            {
+                path: 'profile',
+                component: ProfileComponent
+            }
+        ]
+    },
+    { 
+        path: 'mod', 
+        component: BoardModeratorComponent,
+        children: [
+            {
+                path: 'profile',
+                component: ProfileComponent
+            }
+        ] 
+    },
     {
         path: 'admin',
         component: BoardAdminComponent, 

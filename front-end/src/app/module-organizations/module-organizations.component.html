@@ -1,48 +1,25 @@
 
 <form>
-    <h3><fa-icon [icon]="faUsers" class="mr-2"></fa-icon>Organizations
-        <div class="form-group form-inline float-right">
-            <span class="ml-3" *ngIf="service.loading$ | async"><h6>Loading...</h6></span>
-            <input class="form-control ml-2" type="text" name="searchTerm" placeholder="Search..."
-                [(ngModel)]="service.searchTerm" />
-        </div>
+    <h3>
+        <fa-icon [icon]="faUsers" class="mr-2"></fa-icon>
+        Organizations
     </h3>
     <table class="table table-striped">
         <thead>
             <tr>
                 <th scope="col">ID</th>
-                <th scope="col" sortable="name" (sort)="onSort($event)">Name</th>
-                <th scope="col" sortable="createdAt" (sort)="onSort($event)">Created at</th>
-                <th scope="col" sortable="updatedAt" (sort)="onSort($event)">Updated at</th>
+                <th scope="col">Name</th>
+                <th scope="col">Created at</th>
+                <th scope="col">Updated at</th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let organization of organizations$ | async">
+            <tr *ngFor="let organization of organizations">
                 <th scope="row">{{ organization.id }}</th>
-                <td>
-                    <ngb-highlight [result]="organization.name" [term]="service.searchTerm"></ngb-highlight>
-                </td>
-                <td>
-                    <ngb-highlight [result]="organization.createdAt.toString()" [term]="service.searchTerm">
-                    </ngb-highlight>
-                </td>
-                <td>
-                    <ngb-highlight [result]="organization.updatedAt.toString()" [term]="service.searchTerm">
-                    </ngb-highlight>
-                </td>
+                <td>{{ organization.name }}</td>
+                <td>{{ organization.createdAt }}</td>
+                <td>{{ organization.updatedAt }}</td>
             </tr>
         </tbody>
     </table>
-
-    <div class="d-flex justify-content-between p-2">
-        <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="service.page" [pageSize]="service.pageSize">
-        </ngb-pagination>
-
-        <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
-            <option [ngValue]="10">10 items per page</option>
-            <option [ngValue]="20">20 items per page</option>
-            <option [ngValue]="50">50 items per page</option>
-        </select>
-    </div>
-
 </form>
