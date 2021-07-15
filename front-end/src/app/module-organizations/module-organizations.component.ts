@@ -3,7 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { Organization } from './organization';
 import { OrganizationService } from '../_services/organization.service';
 
-import { faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+
+import { NgbModal, ModalDismissReasons, NgbModalOptions } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
     selector: 'app-module-organizations',
@@ -13,6 +16,9 @@ import { faUsers } from '@fortawesome/free-solid-svg-icons';
 export class ModuleOrganizationsComponent implements OnInit {
 
     faUsers = faUsers;
+    faTrashAlt = faTrashAlt;
+    faPencilAlt = faPencilAlt;
+    faPlus = faPlus;
     organizations: any = [];
 
     constructor(public service: OrganizationService) { }
@@ -28,16 +34,23 @@ export class ModuleOrganizationsComponent implements OnInit {
         })
     }
 
-    /*
-        // Delete employee
-        deleteEmployee(id) {
-            if (window.confirm('Are you sure, you want to delete?')){
-            this.restApi.deleteEmployee(id).subscribe(data => {
-                this.loadEmployees()
+    // Delete Organization
+    deleteOrganization(id: any) {
+
+        /*
+        if (window.confirm('Are you sure, you want to delete?')){
+            this.service.deleteOrganization(id).subscribe(data => {
+                this.loadOrganizations()
             })
-            }
-        }  
-    */
+        }
+        */
+    }  
+
+    // Create organization
+    createOrganization(){
+        // let content = "Formulaire de creation";
+        // this.modal.open(content)
+    }
 
 
 }

@@ -21,35 +21,39 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModuleOrganizationsComponent } from './module-organizations/module-organizations.component';
+import { ModalComponent } from './modal/modal.component';
+import { ModalDeleteConfirmComponent } from './modal/modal-delete-confirm/modal-delete-confirm.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    HomeComponent,
-    ProfileComponent,
-    BoardAdminComponent,
-    BoardModeratorComponent,
-    BoardUserComponent,
-    NavbarComponent,
-    SidebarComponent,
-    ModuleOrganizationsComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    RouterModule,
-    FormsModule,
-    HttpClientModule,
-    FontAwesomeModule,
-    NgbModule
-  ],
-  providers: [authInterceptorProviders],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        LoginComponent,
+        RegisterComponent,
+        HomeComponent,
+        ProfileComponent,
+        BoardAdminComponent,
+        BoardModeratorComponent,
+        BoardUserComponent,
+        NavbarComponent,
+        SidebarComponent,
+        ModuleOrganizationsComponent,
+        ModalComponent,
+        ModalDeleteConfirmComponent
+    ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        RouterModule,
+        FormsModule,
+        HttpClientModule,
+        FontAwesomeModule,
+        NgbModule
+    ],
+    providers: [authInterceptorProviders],
+    bootstrap: [AppComponent]
 })
-export class AppModule { 
-    constructor(library: FaIconLibrary){
+export class AppModule {
+    constructor(library: FaIconLibrary) {
         library.addIconPacks(fas);
     }
 }

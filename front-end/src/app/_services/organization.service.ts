@@ -6,8 +6,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Organization } from '../module-organizations/organization';
 import { Env } from '../_globals/env';
 
-
-
 @Injectable({ providedIn: 'root' })
 export class OrganizationService {
 
@@ -16,17 +14,19 @@ export class OrganizationService {
             'Accept': 'application/json'
         })
     }
-    organizations: Organization[] = [];
 
     constructor(private http: HttpClient) { }
 
-    // HttpClient API get() method => Fetch employees list
+    // GET ALL
     getOrganizations(): Observable<Organization> {
         return this.http.get<Organization>(Env.API_URL + 'organizations')
-        .pipe(
-            retry(1),
-            catchError(this.handleError)
-        )
+        .pipe(retry(1), catchError(this.handleError))
+    }
+
+    // DELETE BY ID
+    deleteOrganization(id: any){
+        return this.http.delete<Organization>(Env.API_URL + 'organizations/' + id)
+        .pipe(retry(1), catchError(this.handleError))
     }
 
     /*
@@ -57,14 +57,7 @@ export class OrganizationService {
             )
         }
 
-        // HttpClient API delete() method => Delete employee
-        deleteEmployee(id){
-            return this.http.delete<Employee>(this.apiURL + '/employees/' + id, this.httpOptions)
-            .pipe(
-            retry(1),
-            catchError(this.handleError)
-            )
-        }
+
     */
 
     // Error handling 

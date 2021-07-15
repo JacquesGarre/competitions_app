@@ -33,6 +33,7 @@ import {
     faTrophy
 } from '@fortawesome/free-solid-svg-icons';
 import { TokenStorageService } from '../_services/token-storage.service';
+import { Env } from '../_globals/env';
 
 @Component({
   selector: 'app-sidebar',
@@ -79,6 +80,8 @@ export class SidebarComponent implements OnInit {
     showModeratorBoard = false;
     showUserBoard = false;
     username?: string;
+
+    appName: string = Env.APP_NAME;
   
     constructor(private tokenStorageService: TokenStorageService) { }
   

@@ -1,25 +1,39 @@
-
+<!-- Table -->
 <form>
     <h3>
         <fa-icon [icon]="faUsers" class="mr-2"></fa-icon>
         Organizations
+        <a [routerLink]="" class="p-0 text-secondary float-right" (click)=createOrganization()>
+            <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
+        </a>
     </h3>
     <table class="table table-striped">
         <thead>
             <tr>
+                <th scope="col"></th>
                 <th scope="col">ID</th>
                 <th scope="col">Name</th>
                 <th scope="col">Created at</th>
                 <th scope="col">Updated at</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let organization of organizations">
-                <th scope="row">{{ organization.id }}</th>
+                <td>
+                    <a [routerLink]="" class="p-0 text-secondary"><fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon></a>
+                </td>
+                <td scope="row">{{ organization.id }}</td>
                 <td>{{ organization.name }}</td>
                 <td>{{ organization.createdAt }}</td>
                 <td>{{ organization.updatedAt }}</td>
+                <td>
+                    <a [routerLink]="" class="p-0 text-secondary" (click)=deleteOrganization(organization.id)><fa-icon [icon]="faTrashAlt" class="mr-2"></fa-icon></a>
+                </td>
             </tr>
         </tbody>
     </table>
 </form>
+<!-- // Table -->
+
+<app-modal></app-modal>
