@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
 import { fas } from '@fortawesome/free-solid-svg-icons';
@@ -21,8 +21,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModuleOrganizationsComponent } from './module-organizations/module-organizations.component';
-import { ModalComponent } from './modal/modal.component';
-import { ModalDeleteConfirmComponent } from './modal/modal-delete-confirm/modal-delete-confirm.component';
+import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
+import { ModalFormComponent } from './modal-form/modal-form.component';
+
+
 
 @NgModule({
     declarations: [
@@ -37,9 +39,9 @@ import { ModalDeleteConfirmComponent } from './modal/modal-delete-confirm/modal-
         NavbarComponent,
         SidebarComponent,
         ModuleOrganizationsComponent,
-        ModalComponent,
-        ModalDeleteConfirmComponent
-    ],
+        ModalConfirmComponent,
+        ModalFormComponent,
+    ],  
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -47,9 +49,12 @@ import { ModalDeleteConfirmComponent } from './modal/modal-delete-confirm/modal-
         FormsModule,
         HttpClientModule,
         FontAwesomeModule,
-        NgbModule
+        NgbModule,
+        ReactiveFormsModule,
     ],
-    providers: [authInterceptorProviders],
+    providers: [
+        authInterceptorProviders
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {
