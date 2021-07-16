@@ -7,7 +7,7 @@ import { faUsers, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-soli
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
-import { ModalFormComponent } from '../modal-form/modal-form.component';
+import { AddModalFormComponent } from './add-modal-form/add-modal-form.component';
 
 
 @Component({
@@ -57,13 +57,16 @@ export class ModuleOrganizationsComponent implements OnInit {
 
     // Create organization
     createOrganization() {
-
-        // Creer un AddModalFormComponent plus que mettre le ModalForm dedans
-        const modalRef = this.modalService.open(ModalFormComponent, { centered: true } );
-        modalRef.componentInstance.title = 'New organization';
+        const modalRef = this.modalService.open(AddModalFormComponent, { centered: true } );
         modalRef.result.then((result) => {
-            if(result == 'confirm'){
-
+            if(result == 'save'){
+                let values = modalRef.componentInstance.addForm.value;
+                let organization: any = {
+                    name: values.name
+                }
+                this.service.createOrganization(organization).subscribe(data => {
+                    this.loadOrganizations()
+                })
             }
         });
     }

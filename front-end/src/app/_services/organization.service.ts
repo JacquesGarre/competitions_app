@@ -11,6 +11,7 @@ export class OrganizationService {
 
     httpOptions = {
         headers: new HttpHeaders({
+            'Content-Type': 'application/json',
             'Accept': 'application/json'
         })
     }
@@ -29,6 +30,12 @@ export class OrganizationService {
         .pipe(retry(1), catchError(this.handleError))
     }
 
+    // CREATE
+    createOrganization(organization: any): Observable<Organization> {
+        return this.http.post<Organization>(Env.API_URL + 'organizations', JSON.stringify(organization), this.httpOptions)
+        .pipe(retry(1), catchError(this.handleError))
+    }  
+
     /*
         // HttpClient API get() method => Fetch employee
         getEmployee(id): Observable<Employee> {
@@ -39,14 +46,7 @@ export class OrganizationService {
             )
         }  
 
-        // HttpClient API post() method => Create employee
-        createEmployee(employee): Observable<Employee> {
-            return this.http.post<Employee>(this.apiURL + '/employees', JSON.stringify(employee), this.httpOptions)
-            .pipe(
-            retry(1),
-            catchError(this.handleError)
-            )
-        }  
+
 
         // HttpClient API put() method => Update employee
         updateEmployee(id, employee): Observable<Employee> {

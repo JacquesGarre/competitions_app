@@ -22,7 +22,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModuleOrganizationsComponent } from './module-organizations/module-organizations.component';
 import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
-import { ModalFormComponent } from './modal-form/modal-form.component';
+import { AddModalFormComponent } from './module-organizations/add-modal-form/add-modal-form.component';
 
 
 
@@ -40,7 +40,7 @@ import { ModalFormComponent } from './modal-form/modal-form.component';
         SidebarComponent,
         ModuleOrganizationsComponent,
         ModalConfirmComponent,
-        ModalFormComponent,
+        AddModalFormComponent,
     ],  
     imports: [
         BrowserModule,

@@ -1,11 +1,11 @@
 <div class="modal-header">
-    <h5 class="modal-title" [innerHTML]="title"></h5>
+    <h5 class="modal-title"><fa-icon [icon]="faUsers" class="mr-2"></fa-icon>New organization</h5>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
 <div class="modal-body">
-    <form [formGroup]="myForm" (ngSubmit)="submitForm()">
+    <form [formGroup]="addForm" (ngSubmit)="submitForm()">
         <div class="modal-boy">
             <div class="container">
                 <label for="name">Name</label>
@@ -13,18 +13,18 @@
                     <input 
                         type="text"
                         [className]="
-                            (myForm.invalid && (myForm.get('name')?.dirty || myForm.get('name')?.touched) && myForm.get('name')?.errors) ? 
-                            'form-control is-invalid' : (myForm.invalid && (myForm.get('name')?.dirty || myForm.get('name')?.touched)) ? 'form-control is-valid' : 'form-control'" 
+                            (addForm.invalid && (addForm.get('name')?.dirty || addForm.get('name')?.touched) && addForm.get('name')?.errors) ? 
+                            'form-control is-invalid' : (addForm.invalid && (addForm.get('name')?.dirty || addForm.get('name')?.touched)) ? 'form-control is-valid' : 'form-control'" 
                         id="name" 
                         name="name"
                         formControlName="name"
                         autocomplete="off" 
                     >
-                    <div *ngIf="myForm.invalid && (myForm.dirty || myForm.touched)" class="invalid-feedback">
-                        <div *ngIf="myForm.get('name')?.errors?.required">
+                    <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
+                        <div *ngIf="addForm.get('name')?.errors?.required">
                             Name is required.
                         </div>
-                        <div *ngIf="myForm.get('name')?.errors?.minlength">
+                        <div *ngIf="addForm.get('name')?.errors?.minlength">
                             Name must be at least 4 characters long.
                         </div>
                     </div>
@@ -32,10 +32,7 @@
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-outline-success"
-                [disabled]="!myForm.valid">
-                Save
-            </button>
+            <button class="btn btn-outline-success" [disabled]="!addForm.valid" (click)="activeModal.close('save')">Save</button>
             <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss()">Cancel</button>
         </div>
     </form>
