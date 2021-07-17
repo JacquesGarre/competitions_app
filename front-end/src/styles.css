@@ -11277,3 +11277,16 @@
     width: 100%;
   }
   
+  .ng2-smart-action-multiple-select input[type="checkbox"]{
+    width: 14px;
+  }
+
+  ng2-smart-table-pager {
+    margin-top: 15px;
+  }
+
+  .page-link-next, .page-link-prev {
+    height: 100%;
+    padding-top: 11px;
+  }    
+  

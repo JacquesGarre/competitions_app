@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { LocalDataSource } from 'ng2-smart-table';
 
 import { Organization } from './organization';
 import { OrganizationService } from '../_services/organization.service';
@@ -23,53 +24,120 @@ export class ModuleOrganizationsComponent implements OnInit {
     faPlus = faPlus;
     organizations: any = [];
 
+    source: LocalDataSource;
+    settings = {
+        mode: 'inline',
+        selectMode: 'multi',
+        attr: {
+            class: "table-hover"
+        },
+        actions: {
+            columnTitle: "Actions",
+            add: false,
+            custom: [
+                {
+                    name: 'view',
+                    title: '<i class="fa fa-eye mr-1" aria-hidden="true"></i>',
+                }
+            ],
+        },
+        columns: {
+            id: {
+                title: 'ID',
+                editable: false,
+                addable: false,
+            },
+            name: {
+                title: 'Name',
+                required: true
+            },
+            createdAt: {
+                title: 'Created At',
+                editable: false,
+                addable: false
+            },
+            updatedAt: {
+                title: 'Updated At',
+                editable: false,
+                addable: false
+            },
+        },
+        edit: {
+            editButtonContent: '<i class="fa fa-pencil mr-2 ml-2" aria-hidden="true"></i>',
+            saveButtonContent: '<i class="fa fa-check mr-2" aria-hidden="true"></i>',
+            cancelButtonContent: '<i class="fa fa-times mr-2" aria-hidden="true"></i>',
+            confirmSave: true
+        },
+        delete: {
+            deleteButtonContent: '<i class="fa fa-trash mr-2" aria-hidden="true"></i>',
+            confirmDelete: true
+        },
+        pager: {
+            perPage: 50
+        }
+    };
+
     constructor(
         public service: OrganizationService,
         private modalService: NgbModal,
-    ) { }
-
-
-    ngOnInit(): void {
-        this.loadOrganizations()
-    }
-
-    // Get Organizations list
-    loadOrganizations() {
-        return this.service.getOrganizations().subscribe((data: {}) => {
-            this.organizations = data;
+    ) {
+        this.source = new LocalDataSource();
+        this.service.getOrganizations().subscribe((data: any) => {
+            this.source.load(data);
         })
     }
 
-    // Delete Organization
-    deleteOrganization(id: any, name: any) {
-        const modalRef = this.modalService.open(ModalConfirmComponent, { centered: true } );
-        modalRef.componentInstance.title = 'Deleting an organization';
-        modalRef.componentInstance.content = 'Are you sure you want to delete <i>' + name + '</i> ?';
-        modalRef.componentInstance.confirmBtn = 'Confirm';
-        modalRef.result.then((result) => {
-            if(result == 'confirm'){
-                this.service.deleteOrganization(id).subscribe(data => {
-                    this.loadOrganizations()
-                })
-            }
-        });
+
+    ngOnInit(): void {
     }
 
     // Create organization
     createOrganization() {
-        const modalRef = this.modalService.open(AddModalFormComponent, { centered: true } );
+        const modalRef = this.modalService.open(AddModalFormComponent, { centered: true });
         modalRef.result.then((result) => {
-            if(result == 'save'){
+            if (result == 'save') {
                 let values = modalRef.componentInstance.addForm.value;
                 let organization: any = {
                     name: values.name
                 }
                 this.service.createOrganization(organization).subscribe(data => {
-                    this.loadOrganizations()
+                    this.service.getOrganizations().subscribe((data: any) => {
+                        this.source.load(data);
+                    })
                 })
             }
         });
     }
+
+    onEditConfirm(event: any) {
+        event.confirm.resolve();
+        let newData = {
+            name: event.newData.name
+        }
+        this.service.updateOrganization(event.data.id, newData).subscribe(data => {
+            this.service.getOrganizations().subscribe((data: any) => {
+                this.source.load(data);
+            })
+        })
+    }
+
+    onDeleteConfirm(event: any) {
+        const modalRef = this.modalService.open(ModalConfirmComponent, { centered: true });
+        modalRef.componentInstance.title = 'Deleting an organization';
+        modalRef.componentInstance.content = 'Are you sure you want to delete <i>' + event.data.name + '</i> ?';
+        modalRef.componentInstance.confirmBtn = 'Confirm';
+        modalRef.result.then((result) => {
+            if (result == 'confirm') {
+                event.confirm.resolve();
+                this.service.deleteOrganization(event.data.id).subscribe(data => {
+                    this.service.getOrganizations().subscribe((data: any) => {
+                        this.source.load(data);
+                    })
+                })
+            }
+        });
+    }
+
 
 
 }

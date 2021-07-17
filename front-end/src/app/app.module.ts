@@ -23,6 +23,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ModuleOrganizationsComponent } from './module-organizations/module-organizations.component';
 import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
 import { AddModalFormComponent } from './module-organizations/add-modal-form/add-modal-form.component';
+import { Ng2SmartTableModule } from 'ng2-smart-table'
 
 
 
@@ -40,7 +41,7 @@ import { AddModalFormComponent } from './module-organizations/add-modal-form/add
         SidebarComponent,
         ModuleOrganizationsComponent,
         ModalConfirmComponent,
-        AddModalFormComponent,
+        AddModalFormComponent
     ],  
     imports: [
         BrowserModule,
@@ -51,6 +52,7 @@ import { AddModalFormComponent } from './module-organizations/add-modal-form/add
         FontAwesomeModule,
         NgbModule,
         ReactiveFormsModule,
+        Ng2SmartTableModule,
     ],
     providers: [
         authInterceptorProviders
