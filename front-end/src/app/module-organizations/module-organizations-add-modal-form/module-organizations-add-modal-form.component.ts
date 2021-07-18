@@ -4,11 +4,11 @@ import { FormControl, FormGroup, Validators, FormBuilder, ValidatorFn, AbstractC
 import { faUsers, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-    selector: 'app-add-modal-form',
-    templateUrl: './add-modal-form.component.html',
-    styleUrls: ['./add-modal-form.component.css']
+    selector: 'app-module-organizations-add-modal-form',
+    templateUrl: './module-organizations-add-modal-form.component.html',
+    styleUrls: ['./module-organizations-add-modal-form.component.css']
 })
-export class AddModalFormComponent {
+export class ModuleOrganizationsAddModalFormComponent {
 
     faUsers = faUsers;
 

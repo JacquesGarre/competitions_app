@@ -20,10 +20,14 @@ import { authInterceptorProviders } from './_helpers/auth.interceptor';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ModuleOrganizationsComponent } from './module-organizations/module-organizations.component';
+
 import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
-import { AddModalFormComponent } from './module-organizations/add-modal-form/add-modal-form.component';
-import { Ng2SmartTableModule } from 'ng2-smart-table'
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+
+
+import { ModuleOrganizationsComponent } from './module-organizations/module-organizations.component';
+import { ModuleOrganizationsAddModalFormComponent } from './module-organizations/module-organizations-add-modal-form/module-organizations-add-modal-form.component';
+import { ModuleOrganizationsViewComponent } from './module-organizations/module-organizations-view/module-organizations-view.component';
 
 
 
@@ -41,7 +45,8 @@ import { Ng2SmartTableModule } from 'ng2-smart-table'
         SidebarComponent,
         ModuleOrganizationsComponent,
         ModalConfirmComponent,
-        AddModalFormComponent
+        ModuleOrganizationsAddModalFormComponent,
+        ModuleOrganizationsViewComponent,
     ],  
     imports: [
         BrowserModule,

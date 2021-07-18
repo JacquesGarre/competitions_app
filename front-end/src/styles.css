@@ -11290,3 +11290,17 @@
     padding-top: 11px;
   }    
   
+  .form-control:disabled, .form-control[readonly] {
+    background-color: transparent;
+    border: none;
+    padding-left: 0px !important;
+    opacity: 1;
+}
+
+.form-control:disabled, .form-control[readonly]:focus {
+    color: #6e707e;
+    background-color: #fff;
+    border-color: transparent;
+    outline: 0;
+    box-shadow: none;
+}

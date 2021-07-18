@@ -9,6 +9,7 @@ import { BoardUserComponent } from './board-user/board-user.component';
 import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
 import { BoardAdminComponent } from './board-admin/board-admin.component';
 import { ModuleOrganizationsComponent } from './module-organizations/module-organizations.component';
+import { ModuleOrganizationsViewComponent } from './module-organizations/module-organizations-view/module-organizations-view.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -45,12 +46,15 @@ const routes: Routes = [
             },
             {
                 path: 'organizations',
-                component: ModuleOrganizationsComponent
+                component: ModuleOrganizationsComponent,
+            },
+            {
+                path: 'organizations/:id',
+                component: ModuleOrganizationsViewComponent,
             }
         ]
 
-    },
-    //{ path: '', redirectTo: 'home', pathMatch: 'full' }
+    }
 ];
 
 @NgModule({

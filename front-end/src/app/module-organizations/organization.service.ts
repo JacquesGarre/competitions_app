@@ -3,7 +3,7 @@ import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Organization } from '../module-organizations/organization';
+import { Organization } from './organization';
 import { Env } from '../_globals/env';
 
 @Injectable({ providedIn: 'root' })
@@ -29,6 +29,12 @@ export class OrganizationService {
         return this.http.get<Organization>(Env.API_URL + 'organizations')
         .pipe(retry(1), catchError(this.handleError))
     }
+
+    // Read by id
+    getOrganization(id: any): Observable<Organization> {
+        return this.http.get<Organization>(Env.API_URL + 'organizations/' + id)
+        .pipe(retry(1), catchError(this.handleError))
+    }  
 
     // Update
     updateOrganization(id: any, organization: any): Observable<Organization> {

@@ -1,0 +1,54 @@
+<h4 class="mb-4">
+    <fa-icon [icon]="faUsers" class="mr-2"></fa-icon>
+    <a routerLink="/admin/organizations">Organizations</a> / {{organization.name}}
+</h4>
+
+<div class="col-md-12">
+    <div class="card card-container shadow">
+        <div class="card-header">
+           Details
+           <a class="btn btn-primary btn-sm float-right" (click)=toggleForm() *ngIf=isReadonly><fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Edit</a>
+        </div>
+        <div class="card-body">
+            <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="id" class="mb-1">ID</label>
+                            <input type="id" class="form-control" name="id" [(ngModel)]="form.id" required readonly
+                                #id="ngModel" />
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="mb-1">Name</label>
+                            <input type="text" class="form-control" name="name" [(ngModel)]="form.name" required
+                                #name="ngModel" [readonly]="isReadonly"/>
+                            <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
+                                Name is required!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="createdAt" class="mb-1">Created at</label>
+                            <input type="createdAt" class="form-control" name="createdAt" [(ngModel)]="form.createdAt" required
+                                #createdAt="ngModel" readonly/>
+                        </div>
+                        <div class="form-group">
+                            <label for="updatedAt" class="mb-1">Updated at</label>
+                            <input type="updatedAt" class="form-control" name="updatedAt" [(ngModel)]="form.updatedAt" required
+                                #updatedAt="ngModel" readonly/>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2" *ngIf=!isReadonly>
+                    <div class="col-md-12">
+                        <button class="btn btn-success mr-2" *ngIf=!isReadonly (click)=onSubmit()>
+                            Save
+                        </button>
+                        <a class="btn btn-danger" *ngIf=!isReadonly (click)=toggleForm()>Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -2,13 +2,14 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 
 import { Organization } from './organization';
-import { OrganizationService } from '../_services/organization.service';
+import { OrganizationService } from './organization.service';
+import { Router } from '@angular/router';
 
 import { faUsers, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
-import { AddModalFormComponent } from './add-modal-form/add-modal-form.component';
+import { ModuleOrganizationsAddModalFormComponent } from './module-organizations-add-modal-form/module-organizations-add-modal-form.component';
 
 
 @Component({
@@ -36,7 +37,7 @@ export class ModuleOrganizationsComponent implements OnInit {
             add: false,
             custom: [
                 {
-                    name: 'view',
+                    name: 'show',
                     title: '<i class="fa fa-eye mr-1" aria-hidden="true"></i>',
                 }
             ],
@@ -80,6 +81,7 @@ export class ModuleOrganizationsComponent implements OnInit {
     constructor(
         public service: OrganizationService,
         private modalService: NgbModal,
+        private router: Router
     ) {
         this.source = new LocalDataSource();
         this.service.getOrganizations().subscribe((data: any) => {
@@ -93,7 +95,7 @@ export class ModuleOrganizationsComponent implements OnInit {
 
     // Create organization
     createOrganization() {
-        const modalRef = this.modalService.open(AddModalFormComponent, { centered: true });
+        const modalRef = this.modalService.open(ModuleOrganizationsAddModalFormComponent, { centered: true });
         modalRef.result.then((result) => {
             if (result == 'save') {
                 let values = modalRef.componentInstance.addForm.value;
@@ -136,6 +138,17 @@ export class ModuleOrganizationsComponent implements OnInit {
                 })
             }
         });
+    }
+
+    onCustomAction(event: any) {
+
+        console.log(event)
+
+        switch (event.action) {
+          case 'show':
+            this.router.navigate(['/admin/organizations/' + event.data.id])
+            break;
+        }
     }
 
 
