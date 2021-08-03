@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
+import { DatePipe } from '@angular/common';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 import { Organization } from './organization';
 import { OrganizationService } from './organization.service';
@@ -15,7 +17,8 @@ import { ModuleOrganizationsAddModalFormComponent } from './module-organizations
 @Component({
     selector: 'app-module-organizations',
     templateUrl: './module-organizations.component.html',
-    styleUrls: ['./module-organizations.component.css']
+    styleUrls: ['./module-organizations.component.css'],
+    providers: [DatePipe]
 })
 export class ModuleOrganizationsComponent implements OnInit {
 
@@ -55,12 +58,26 @@ export class ModuleOrganizationsComponent implements OnInit {
             createdAt: {
                 title: 'Created At',
                 editable: false,
-                addable: false
+                addable: false,
+                valuePrepareFunction: (createdAt: any) => {
+                    if(createdAt.length){
+                        return this.datePipe.transform(new Date(createdAt),'dd/MM/yyyy HH:mm');
+                    } else {
+                        return '';
+                    }
+                },
             },
             updatedAt: {
                 title: 'Updated At',
                 editable: false,
-                addable: false
+                addable: false,
+                valuePrepareFunction: (updatedAt: any) => {
+                    if(updatedAt.length){
+                        return this.datePipe.transform(new Date(updatedAt),'dd/MM/yyyy HH:mm');
+                    } else {
+                        return '';
+                    }
+                },
             },
         },
         edit: {
@@ -81,11 +98,15 @@ export class ModuleOrganizationsComponent implements OnInit {
     constructor(
         public service: OrganizationService,
         private modalService: NgbModal,
-        private router: Router
+        private router: Router,
+        private datePipe: DatePipe,
+        private ngxLoader: NgxUiLoaderService
     ) {
+        this.ngxLoader.startLoader('page-loader');
         this.source = new LocalDataSource();
         this.service.getOrganizations().subscribe((data: any) => {
             this.source.load(data);
+            this.ngxLoader.stopLoader('page-loader');
         })
     }
 
@@ -141,9 +162,6 @@ export class ModuleOrganizationsComponent implements OnInit {
     }
 
     onCustomAction(event: any) {
-
-        console.log(event)
-
         switch (event.action) {
           case 'show':
             this.router.navigate(['/admin/organizations/' + event.data.id])

@@ -3,6 +3,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Organization } from '../organization';
 import { OrganizationService } from '../organization.service';
 import { faUsers, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { DatePipe } from '@angular/common';
+import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 @Component({
     selector: 'app-module-organizations-view',
@@ -28,8 +30,9 @@ export class ModuleOrganizationsViewComponent implements OnInit {
     constructor(
         public service: OrganizationService,
         private route: ActivatedRoute,
-        private router: Router
-    ) { }
+        private router: Router,
+        private ngxLoader: NgxUiLoaderService
+    ){}
 
     ngOnInit(): void {
         const id = this.route.snapshot.paramMap.get('id');

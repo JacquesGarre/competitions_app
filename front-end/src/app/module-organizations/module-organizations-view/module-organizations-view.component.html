@@ -1,3 +1,7 @@
+<!-- Loader -->
+<ngx-ui-loader [loaderId]="'organization-view-loader'"></ngx-ui-loader>
+<!-- End of Loader -->
+
 <h4 class="mb-4">
     <fa-icon [icon]="faUsers" class="mr-2"></fa-icon>
     <a routerLink="/admin/organizations">Organizations</a> / {{organization.name}}
@@ -30,13 +34,13 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="createdAt" class="mb-1">Created at</label>
-                            <input type="createdAt" class="form-control" name="createdAt" [(ngModel)]="form.createdAt" required
-                                #createdAt="ngModel" readonly/>
+                            <input type="createdAt" class="form-control" name="createdAt" [value]="form.createdAt | date:'dd/MM/yyyy HH:mm'" required
+                                readonly/>
                         </div>
                         <div class="form-group">
                             <label for="updatedAt" class="mb-1">Updated at</label>
-                            <input type="updatedAt" class="form-control" name="updatedAt" [(ngModel)]="form.updatedAt" required
-                                #updatedAt="ngModel" readonly/>
+                            <input type="updatedAt" class="form-control" name="updatedAt" [value]="form.updatedAt | date:'dd/MM/yyyy HH:mm'" required
+                                readonly/>
                         </div>
                     </div>
                 </div>
