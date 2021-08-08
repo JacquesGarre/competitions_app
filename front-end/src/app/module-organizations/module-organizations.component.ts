@@ -120,6 +120,7 @@ export class ModuleOrganizationsComponent implements OnInit {
         const modalRef = this.modalService.open(ModuleOrganizationsAddModalFormComponent, { centered: true });
         modalRef.result.then((result) => {
             if (result == 'save') {
+                this.ngxLoader.startLoader('page-loader');
                 let values = modalRef.componentInstance.addForm.value;
                 let organization: any = {
                     name: values.name
@@ -127,6 +128,7 @@ export class ModuleOrganizationsComponent implements OnInit {
                 this.service.createOrganization(organization).subscribe(data => {
                     this.service.getOrganizations().subscribe((data: any) => {
                         this.source.load(data);
+                        this.ngxLoader.stopLoader('page-loader');
                     })
                 })
             }

@@ -60,7 +60,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     "pbDirection": "ltr",
     "pbThickness": 3,
     "hasProgressBar": true,
-    "text": "Preparing the magic...",
+    "text": "Loading",
     "textColor": "rgba(0, 57, 171, 0.8)",
     "textPosition": "center-center",
 }
