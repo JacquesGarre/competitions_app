@@ -1,5 +1,6 @@
+
 <!-- Loader -->
-<ngx-ui-loader [loaderId]="'organization-view-loader'"></ngx-ui-loader>
+<ngx-ui-loader [loaderId]="'page-loader'"></ngx-ui-loader>
 <!-- End of Loader -->
 
 <h4 class="mb-4">
@@ -49,7 +50,7 @@
                         <button class="btn btn-success mr-2" *ngIf=!isReadonly (click)=onSubmit()>
                             Save
                         </button>
-                        <a class="btn btn-danger" *ngIf=!isReadonly (click)=toggleForm()>Cancel</a>
+                        <a class="btn btn-danger" *ngIf=!isReadonly (click)="toggleForm(); resetForm()">Cancel</a>
                     </div>
                 </div>
             </form>

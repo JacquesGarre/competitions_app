@@ -16,7 +16,12 @@ export class ModuleOrganizationsViewComponent implements OnInit {
     faUsers = faUsers;
     faPencilAlt = faPencilAlt;
 
-    organization: any;
+    organization: any = {
+        id: '',
+        name: '',
+        createdAt: '',
+        updatedAt: '',
+    };
     untouchedOrganization: any;
     public isReadonly: boolean = true;
 
@@ -30,20 +35,34 @@ export class ModuleOrganizationsViewComponent implements OnInit {
     constructor(
         public service: OrganizationService,
         private route: ActivatedRoute,
-        private router: Router,
         private ngxLoader: NgxUiLoaderService
-    ){}
-
-    ngOnInit(): void {
+    ){
+        this.ngxLoader.startLoader('page-loader');
         const id = this.route.snapshot.paramMap.get('id');
         this.service.getOrganization(id).subscribe((data: any) => {
             this.organization = data;
+            this.untouchedOrganization = data;
             this.form = this.organization;
+            this.ngxLoader.stopLoader('page-loader');
         })
+    }
+
+    ngOnInit(): void {
     }
 
     toggleForm(){
         this.isReadonly = !this.isReadonly
+    }
+
+    resetForm(){
+        this.ngxLoader.startLoader('page-loader');
+        const id = this.route.snapshot.paramMap.get('id');
+        this.service.getOrganization(id).subscribe((data: any) => {
+            this.organization = data;
+            this.untouchedOrganization = data;
+            this.form = this.organization;
+            this.ngxLoader.stopLoader('page-loader');
+        })
     }
 
     onSubmit() {

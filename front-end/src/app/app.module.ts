@@ -8,6 +8,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { NgxUiLoaderModule,
     NgxUiLoaderConfig,
     NgxUiLoaderHttpModule,
+    NgxUiLoaderRouterModule, 
     SPINNER,
     POSITION,
     PB_DIRECTION } from "ngx-ui-loader";
@@ -92,7 +93,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         ReactiveFormsModule,
         Ng2SmartTableModule,
         NgxUiLoaderModule.forRoot(ngxUiLoaderConfig), 
-        NgxUiLoaderHttpModule.forRoot({ showForeground: false })
+        NgxUiLoaderHttpModule, 
+        NgxUiLoaderRouterModule
     ],
     providers: [
         authInterceptorProviders

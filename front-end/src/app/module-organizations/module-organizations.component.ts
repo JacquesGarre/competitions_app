@@ -102,16 +102,17 @@ export class ModuleOrganizationsComponent implements OnInit {
         private datePipe: DatePipe,
         private ngxLoader: NgxUiLoaderService
     ) {
-        this.ngxLoader.startLoader('page-loader');
         this.source = new LocalDataSource();
-        this.service.getOrganizations().subscribe((data: any) => {
-            this.source.load(data);
-            this.ngxLoader.stopLoader('page-loader');
-        })
     }
 
-
     ngOnInit(): void {
+        this.ngxLoader.startLoader('page-loader');
+        this.service.getOrganizations().subscribe((data: any) => {
+            if(data.length){
+                this.source.load(data);
+            }
+            this.ngxLoader.stopLoader('page-loader');
+        })
     }
 
     // Create organization
@@ -162,9 +163,13 @@ export class ModuleOrganizationsComponent implements OnInit {
     }
 
     onCustomAction(event: any) {
+        this.detailsView(event);
+    }
+
+    detailsView(event: any){
         switch (event.action) {
-          case 'show':
-            this.router.navigate(['/admin/organizations/' + event.data.id])
+            case 'show':
+                this.router.navigate(['/admin/organizations/' + event.data.id])
             break;
         }
     }
