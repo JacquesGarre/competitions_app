@@ -1,4 +1,3 @@
-
 <!-- Loader -->
 <ngx-ui-loader [loaderId]="'page-loader'"></ngx-ui-loader>
 <!-- End of Loader -->
@@ -10,12 +9,44 @@
         <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
     </a>
 </h4>
-<ng2-smart-table 
-    [settings]="settings" 
-    [source]="source" 
-    (deleteConfirm)="onDeleteConfirm($event)"
-    (editConfirm)="onEditConfirm($event)"
-    (custom)="onCustomAction($event)"
-></ng2-smart-table>
 
 
+<!--This is your master form-->
+<form [formGroup]="organizationForm">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Actions</th>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Updated At</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container formArrayName="organizationDetails" *ngFor="let organization of organizations; let $index=index">
+                <tr [formGroupName]="$index">
+                    <td>
+                        <a class="btn btn-sm" (click)=showOrganization(organization)>See</a>
+                        <a class="btn btn-sm">(Edit btn wip)</a>
+                        <a class="btn btn-sm" (click)=deleteOrganization(organization)>Delete</a>
+                    </td>
+                    <td>
+                        <input class="form-control"  placeholder="ID" type="text" formControlName="id" readonly/>
+                    </td>
+                    <td>
+                        <input class="form-control"  placeholder="Name" type="text" formControlName="name" [readonly]="organization.isReadonly"/>
+                    </td>
+                    <td>
+                        <input class="form-control"   placeholder="Created At" type="text" [value]="organization.createdAt | date:'dd/MM/yyyy HH:mm'" readonly/>
+                    </td>
+                    <td>
+                        <input class="form-control"  placeholder="Updated At" type="text" [value]="organization.updatedAt | date:'dd/MM/yyyy HH:mm'" readonly/>
+                    </td>
+                </tr>  
+            </ng-container>
+        </tbody>
+    </table>
+
+</form>

@@ -29,8 +29,8 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
-import { Ng2SmartTableModule } from 'ng2-smart-table';
 
+import { DataTablesModule } from 'angular-datatables';
 
 import { ModuleOrganizationsComponent } from './module-organizations/module-organizations.component';
 import { ModuleOrganizationsAddModalFormComponent } from './module-organizations/module-organizations-add-modal-form/module-organizations-add-modal-form.component';
@@ -91,7 +91,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         FontAwesomeModule,
         NgbModule,
         ReactiveFormsModule,
-        Ng2SmartTableModule,
+        DataTablesModule,
         NgxUiLoaderModule.forRoot(ngxUiLoaderConfig), 
         NgxUiLoaderHttpModule, 
         NgxUiLoaderRouterModule
