@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { User } from '../user';
 import { UserService } from '../user.service';
 import { OrganizationService } from '../../module-organizations/organization.service';
-import { faUsers, faTrashAlt, faPencilAlt, faPlus, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faTrashAlt, faPencilAlt, faPlus, faChevronRight, faSitemap, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Organization } from 'src/app/module-organizations/organization';
@@ -18,6 +18,8 @@ export class ModuleUsersViewComponent implements OnInit {
     faUsers = faUsers;
     faPencilAlt = faPencilAlt;
     faChevronRight = faChevronRight;
+    faSitemap = faSitemap;
+    faInfoCircle = faInfoCircle;
 
     organizations: Organization[];
     user: any = {

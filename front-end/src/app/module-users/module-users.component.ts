@@ -8,7 +8,7 @@ import { Organization } from '../module-organizations/organization';
 import { OrganizationService } from '../module-organizations/organization.service';
 import { Router } from '@angular/router';
 
-import { faUsers, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faSitemap } from '@fortawesome/free-solid-svg-icons';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
@@ -33,6 +33,7 @@ export class ModuleUsersComponent implements OnInit {
     faPen = faPen;
     faEye = faEye;
     faPlus = faPlus;
+    faSitemap = faSitemap;
     users: any = [];
     userForm: any;
     allUserDetails: any;
