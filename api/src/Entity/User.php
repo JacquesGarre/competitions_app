@@ -66,10 +66,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $organizations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Tournament::class, mappedBy="createdBy")
+     */
+    private $tournaments;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Tournament::class, mappedBy="creator")
+     */
+    private $tournamentsCreated;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->organizations = new ArrayCollection();
+        $this->tournaments = new ArrayCollection();
+        $this->tournamentsCreated = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -229,6 +241,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeOrganization(Organization $organization): self
     {
         $this->organizations->removeElement($organization);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tournament[]
+     */
+    public function getTournaments(): Collection
+    {
+        return $this->tournaments;
+    }
+
+    public function addTournament(Tournament $tournament): self
+    {
+        if (!$this->tournaments->contains($tournament)) {
+            $this->tournaments[] = $tournament;
+            $tournament->setCreatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTournament(Tournament $tournament): self
+    {
+        if ($this->tournaments->removeElement($tournament)) {
+            // set the owning side to null (unless already changed)
+            if ($tournament->getCreatedBy() === $this) {
+                $tournament->setCreatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tournament[]
+     */
+    public function getTournamentsCreated(): Collection
+    {
+        return $this->tournamentsCreated;
+    }
+
+    public function addTournamentsCreated(Tournament $tournamentsCreated): self
+    {
+        if (!$this->tournamentsCreated->contains($tournamentsCreated)) {
+            $this->tournamentsCreated[] = $tournamentsCreated;
+            $tournamentsCreated->setCreator($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTournamentsCreated(Tournament $tournamentsCreated): self
+    {
+        if ($this->tournamentsCreated->removeElement($tournamentsCreated)) {
+            // set the owning side to null (unless already changed)
+            if ($tournamentsCreated->getCreator() === $this) {
+                $tournamentsCreated->setCreator(null);
+            }
+        }
 
         return $this;
     }

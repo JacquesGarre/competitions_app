@@ -46,10 +46,16 @@ class Organization
      */
     private $users;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Tournament::class, mappedBy="organization", orphanRemoval=true)
+     */
+    private $tournaments;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->users = new ArrayCollection();
+        $this->tournaments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -127,6 +133,36 @@ class Organization
     {
         if ($this->users->removeElement($user)) {
             $user->removeOrganization($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Tournament[]
+     */
+    public function getTournaments(): Collection
+    {
+        return $this->tournaments;
+    }
+
+    public function addTournament(Tournament $tournament): self
+    {
+        if (!$this->tournaments->contains($tournament)) {
+            $this->tournaments[] = $tournament;
+            $tournament->setOrganization($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTournament(Tournament $tournament): self
+    {
+        if ($this->tournaments->removeElement($tournament)) {
+            // set the owning side to null (unless already changed)
+            if ($tournament->getOrganization() === $this) {
+                $tournament->setOrganization(null);
+            }
         }
 
         return $this;
