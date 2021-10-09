@@ -1,10 +1,10 @@
 <div class="modal-header">
-    <h5 class="modal-title" [innerHTML]="title"></h5>
+    <h5 class="modal-title text-dark-gray" [innerHTML]="title"></h5>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<div class="modal-body" [innerHTML]="content"></div>
+<div class="modal-body text-dark-gray" [innerHTML]="content"></div>
 <div class="modal-footer">
     <button type="button" class="btn btn-outline-success" (click)="activeModal.close('confirm')"><fa-icon [icon]="faCheck"></fa-icon></button>
     <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss()"><fa-icon [icon]="faTimes"></fa-icon></button>

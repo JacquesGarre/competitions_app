@@ -1,0 +1,91 @@
+
+<!-- Loader -->
+<ngx-ui-loader [loaderId]="'page-loader'"></ngx-ui-loader>
+<!-- End of Loader -->
+
+<h4 class="mb-4 pr-4 pl-4 text-center">
+    <fa-icon [icon]="faUsers" class="mr-2"></fa-icon>
+    <a routerLink="/admin/users" class="text-light">Users</a> <fa-icon [icon]="faChevronRight" class="ml-2" style="font-size: 16px;"></fa-icon> {{user.firstName}} {{user.lastName}}
+</h4>
+
+<div class="col-md-12 text-gray">
+    <div class="card card-container shadow rounded-0 bg-dark-gray border-0">
+        <div class="card-header bg-dark text-light border-gray border-top-0 border-left-0 border-right-0 rounded-0 ">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-11">
+                    <h6 class="mb-0">Details</h6>
+                </div>
+                <div class="col-md-1">
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=toggleForm() *ngIf=isReadonly><fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Edit</a>
+                </div>
+            </div>
+        </div> 
+        <div class="card-body text-light">
+            <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="firstName" class="col-sm-3 col-form-label">First name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="firstName" [(ngModel)]="form.firstName" required
+                                #firstName="ngModel" [readonly]="isReadonly"/>
+                            </div>
+                            <div class="alert alert-danger" role="alert" *ngIf="firstName.errors && f.submitted">
+                                First name is required!
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="lastName" class="col-sm-3 col-form-label">Last name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="lastName" [(ngModel)]="form.lastName" required
+                                #lastName="ngModel" [readonly]="isReadonly"/>
+                            </div>
+                            <div class="alert alert-danger" role="alert" *ngIf="lastName.errors && f.submitted">
+                                Last name is required!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="email" class="col-sm-3 col-form-label">Email</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="email" [(ngModel)]="form.email" required
+                                #email="ngModel" [readonly]="isReadonly"/>
+                            </div>
+                            <div class="alert alert-danger" role="alert" *ngIf="email.errors && f.submitted">
+                                Email is required!
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="password" class="col-sm-3 col-form-label">Password</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="password" [(ngModel)]="form.password" required
+                                #password="ngModel" [readonly]="isReadonly"/>
+                            </div>
+                            <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
+                                Password is required!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="organizations" class="col-sm-3 col-form-label">Organizations</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="organizations" [(ngModel)]="form.organizations"
+                                #organizations="ngModel" [readonly]="isReadonly"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2" *ngIf=!isReadonly>
+                    <div class="col-md-12">
+                        <button class="btn btn-success mr-2" *ngIf=!isReadonly (click)=onSubmit()>
+                            Save
+                        </button>
+                        <a class="btn btn-danger" *ngIf=!isReadonly (click)="toggleForm(); resetForm()">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

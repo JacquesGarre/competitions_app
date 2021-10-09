@@ -37,6 +37,11 @@ class Organization
     private $updatedAt;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $subdomain;
+
+    /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="organizations")
      */
     private $users;
@@ -60,6 +65,18 @@ class Organization
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getSubdomain(): ?string
+    {
+        return $this->subdomain;
+    }
+
+    public function setSubdomain(?string $subdomain): self
+    {
+        $this->subdomain = $subdomain;
 
         return $this;
     }
@@ -114,6 +131,7 @@ class Organization
 
         return $this;
     }
+
 
 
 }

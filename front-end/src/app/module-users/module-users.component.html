@@ -4,38 +4,42 @@
 
 <h4 class="mb-4 pr-4 pl-4 text-center">
     <fa-icon [icon]="faUsers" class="mr-2"></fa-icon>
-    Organizations
-    <a [routerLink]="" class="p-0 text-secondary float-right" (click)=createOrganization()>
+    Users
+    <a [routerLink]="" class="p-0 text-secondary float-right" (click)=createUser()>
         <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
     </a>
 </h4>
 
 
 <!--This is your master form-->
-<form [formGroup]="organizationForm">
+<form [formGroup]="userForm">
 
     <table class="table table-hover shadow">
         <thead class="bg-dark text-light border-top-0 border-right-0 border-left-0">
             <tr>
                 <th scope="col" class="text-center border-gray">Actions</th>
                 <th scope="col" class="border-gray">ID</th>
-                <th scope="col" class="border-gray">Name</th>
-                <th scope="col" class="border-gray">Subdomain</th>
+                <th scope="col" class="border-gray">Email</th>
+                <th scope="col" class="border-gray">First Name</th>
+                <th scope="col" class="border-gray">Last Name</th>
+                <th scope="col" class="border-gray">Organizations</th>
+                <!-- <th scope="col" class="border-gray">Roles</th>
+                <th scope="col" class="border-gray">Organization</th> -->
                 <th scope="col" class="border-gray">Created At</th>
                 <th scope="col" class="border-gray">Updated At</th>
             </tr>
         </thead>
         <tbody>
-            <ng-container formArrayName="organizationDetails" *ngFor="let organization of organizations; let $index=index">
+            <ng-container formArrayName="userDetails" *ngFor="let user of users; let $index=index">
                 <tr [formGroupName]="$index"  class="bg-dark-gray">
                     <td class="text-center">
-                        <a class="btn text-light text-hover-orange" (click)=showOrganization(organization)>
+                        <a class="btn text-light text-hover-orange" (click)=showUser(user)>
                             <fa-icon [icon]="faEye" class="mr-2"></fa-icon>
                         </a>
                         <!-- <a class="btn text-light text-hover-orange">
                             <fa-icon [icon]="faPen" class="mr-2"></fa-icon>
                         </a> -->
-                        <a class="btn text-light text-hover-orange" (click)=deleteOrganization(organization)>
+                        <a class="btn text-light text-hover-orange" (click)=deleteUser(user)>
                             <fa-icon [icon]="faTrash" class="mr-2"></fa-icon>
                         </a>
                     </td>
@@ -43,16 +47,22 @@
                         <input class="form-control pl-0" type="text" formControlName="id" readonly/>
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" formControlName="name" readonly/>
+                        <input class="form-control pl-0" type="text" formControlName="email" readonly/>
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" formControlName="subdomain" readonly/>
+                        <input class="form-control pl-0" type="text" formControlName="firstName" readonly/>
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="organization.createdAt | date:'dd/MM/yyyy HH:mm'" readonly/>
+                        <input class="form-control pl-0" type="text" formControlName="lastName" readonly/>
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="(organization.updatedAt !== null) ? (organization.updatedAt | date: 'dd/MM/yyyy HH:mm') : ''" readonly/>
+                        <input class="form-control pl-0" type="text" formControlName="organizations" readonly/>
+                    </td>
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" [value]="user.createdAt | date:'dd/MM/yyyy HH:mm'" readonly/>
+                    </td>
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" [value]="(user.updatedAt !== null) ? (user.updatedAt | date: 'dd/MM/yyyy HH:mm') : ''" readonly/>
                     </td>
                 </tr>
             </ng-container>

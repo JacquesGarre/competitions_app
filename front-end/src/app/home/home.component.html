@@ -3,7 +3,7 @@
 <!-- End of Navbar -->
 <div class="container-fluid">
 
-    <h1>Home page</h1>
+    <h1 class="text-dark-gray">Home page</h1>
 
     <a href="/register" class="nav-link" routerLink="/register" *ngIf="!isLoggedIn">Sign Up</a>
     <a href="/login" class="nav-link" routerLink="/login" *ngIf="!isLoggedIn">Login</a>
@@ -13,7 +13,7 @@
     <a class="nav-link" href="/admin" routerLink="/admin" *ngIf="showAdminBoard">
         Administration
     </a>
-    <a class="nav-link" href="/mod" routerLink="/mod" *ngIf="showModeratorBoard">
+    <a class="nav-link" href="/admin" routerLink="/admin" *ngIf="showModeratorBoard">
         Administration
     </a>
     <a class="nav-link" href="/user" routerLink="/user" *ngIf="showUserBoard">

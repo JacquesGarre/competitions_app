@@ -3,11 +3,11 @@ import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Organization } from './organization';
+import { User } from './user';
 import { Env } from '../_globals/env';
 
 @Injectable({ providedIn: 'root' })
-export class OrganizationService {
+export class UserService {
 
     httpOptions = {
         headers: new HttpHeaders({
@@ -19,39 +19,33 @@ export class OrganizationService {
     constructor(private http: HttpClient) { }
 
     // Create
-    createOrganization(organization: any): Observable<Organization> {
-        return this.http.post<Organization>(Env.API_URL + 'organizations', JSON.stringify(organization), this.httpOptions)
+    createUser(organization: any): Observable<User> {
+        console.log(organization)
+        return this.http.post<User>(Env.API_URL + 'users', JSON.stringify(organization), this.httpOptions)
         .pipe(retry(1), catchError(this.handleError))
     }  
 
     // Read
-    getOrganizations(): Observable<Organization> {
-        return this.http.get<Organization>(Env.API_URL + 'organizations')
-        .pipe(retry(1), catchError(this.handleError))
+    getUsers(): Observable<User> {
+        return this.http.get<User>(Env.API_URL + 'users')
+        .pipe(retry(1), catchError(this.handleError),)
     }
 
     // Read by id
-    getOrganization(id: any): Observable<Organization> {
-        return this.http.get<Organization>(Env.API_URL + 'organizations/' + id)
-        .pipe(retry(1), catchError(this.handleError))
-    }  
-
-    // Read by url
-    getOrganizationByURL(url: any): Observable<Organization> {
-        const apiURL = Env.API_URL + url.replace('/api/', '');
-        return this.http.get<Organization>(apiURL)
+    getUser(id: any): Observable<User> {
+        return this.http.get<User>(Env.API_URL + 'users/' + id)
         .pipe(retry(1), catchError(this.handleError))
     }  
 
     // Update
-    updateOrganization(id: any, organization: any): Observable<Organization> {
-        return this.http.put<Organization>(Env.API_URL + 'organizations/' + id, JSON.stringify(organization), this.httpOptions)
+    updateUser(id: any, organization: any): Observable<User> {
+        return this.http.put<User>(Env.API_URL + 'users/' + id, JSON.stringify(organization), this.httpOptions)
         .pipe(retry(1), catchError(this.handleError))
     }
 
     // Delete
-    deleteOrganization(id: any){
-        return this.http.delete<Organization>(Env.API_URL + 'organizations/' + id)
+    deleteUser(id: any){
+        return this.http.delete<User>(Env.API_URL + 'users/' + id)
         .pipe(retry(1), catchError(this.handleError))
     }
 

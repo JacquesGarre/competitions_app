@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Organization } from '../organization';
 import { OrganizationService } from '../organization.service';
-import { faUsers, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faTrashAlt, faPencilAlt, faPlus, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 
@@ -15,6 +15,7 @@ export class ModuleOrganizationsViewComponent implements OnInit {
 
     faUsers = faUsers;
     faPencilAlt = faPencilAlt;
+    faChevronRight = faChevronRight;
 
     organization: any = {
         id: '',

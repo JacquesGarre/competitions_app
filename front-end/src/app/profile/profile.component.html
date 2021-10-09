@@ -1,14 +1,13 @@
 
-<div class="container" *ngIf="currentUser; else loggedOut">
+<div class="container-fluid" *ngIf="currentUser; else loggedOut">
     <h1>Profile</h1>
-    <header class="jumbotron">
-        <h3>
-            {{ currentUser.username }}
-        </h3>
-    </header>
     <p>
         <strong>Email:</strong>
         {{ currentUser.email }}
+    </p>
+    <p>
+        <strong>Identity:</strong>
+        {{ currentUser.firstName }} {{ currentUser.lastName }}
     </p>
     <strong>Roles:</strong>
     <ul>

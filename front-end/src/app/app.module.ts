@@ -20,7 +20,6 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BoardAdminComponent } from './board-admin/board-admin.component';
-import { BoardModeratorComponent } from './board-moderator/board-moderator.component';
 import { BoardUserComponent } from './board-user/board-user.component';
 
 import { authInterceptorProviders } from './_helpers/auth.interceptor';
@@ -36,6 +35,12 @@ import { ModuleOrganizationsComponent } from './module-organizations/module-orga
 import { ModuleOrganizationsAddModalFormComponent } from './module-organizations/module-organizations-add-modal-form/module-organizations-add-modal-form.component';
 import { ModuleOrganizationsViewComponent } from './module-organizations/module-organizations-view/module-organizations-view.component';
 
+
+import { ModuleUsersComponent } from './module-users/module-users.component';
+import { ModuleUsersAddModalFormComponent } from './module-users/module-users-add-modal-form/module-users-add-modal-form.component';
+import { ModuleUsersViewComponent } from './module-users/module-users-view/module-users-view.component';
+
+
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     "bgsColor": "red",
     "bgsOpacity": 0.1,
@@ -45,23 +50,23 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     "blur": 10,
     "delay": 0,
     "fastFadeOut": true,
-    "fgsColor": "rgba(0, 57, 171, 0.8)",
+    "fgsColor": "#ff7518",
     "fgsPosition": "center-center",
     "fgsSize": 70,
-    "fgsType": "cube-grid",
+    "fgsType": "rectangle-bounce-pulse-out",
     "gap": 24,
     "logoPosition": "center-center",
     "logoSize": 120,
     "logoUrl": "",
     "masterLoaderId": "master",
     "overlayBorderRadius": "0",
-    "overlayColor": "rgba(255,255,255)",
-    "pbColor": "#4e73df",
+    "overlayColor": "#1b1b1b",
+    "pbColor": "#ff7518",
     "pbDirection": "ltr",
     "pbThickness": 3,
     "hasProgressBar": true,
-    "text": "Loading",
-    "textColor": "rgba(0, 57, 171, 0.8)",
+    "text": "",
+    "textColor": "#f8f9fc",
     "textPosition": "center-center",
 }
 
@@ -73,14 +78,16 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         HomeComponent,
         ProfileComponent,
         BoardAdminComponent,
-        BoardModeratorComponent,
         BoardUserComponent,
         NavbarComponent,
         SidebarComponent,
-        ModuleOrganizationsComponent,
         ModalConfirmComponent,
+        ModuleOrganizationsComponent,
         ModuleOrganizationsAddModalFormComponent,
         ModuleOrganizationsViewComponent,
+        ModuleUsersComponent,
+        ModuleUsersAddModalFormComponent,
+        ModuleUsersViewComponent,
     ],  
     imports: [
         BrowserModule,

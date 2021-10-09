@@ -1,8 +1,8 @@
 <!-- Sidebar -->
-<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+<ul class="navbar-nav bg-dark sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" routerLink="/" routerLinkActive="active" >
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" routerLink="/" routerLinkActive="active">
         <div class="sidebar-brand-icon rotate-n-15">
             <fa-icon [icon]="faTrophy" class="mr-2"></fa-icon>
         </div>
@@ -10,11 +10,11 @@
     </a>
 
     <!-- Divider -->
-    <hr class="sidebar-divider my-0">
+    <hr class="sidebar-divider my-0" *ngIf="showAdminBoard">
 
     <!-- Nav Item - Dashboard -->
-    <li class="nav-item">
-        <a class="nav-link" routerLink="/" routerLinkActive="active">
+    <li class="nav-item" *ngIf="showAdminBoard">
+        <a class="nav-link text-hover-orange" routerLink="/">
             <fa-icon [icon]="faTachometerAlt" class="mr-2"></fa-icon>
             <span>Dashboard</span>
             <fa-icon [icon]="faChevronRight" class="float-right mt-1 arrowRight"></fa-icon>
@@ -31,20 +31,29 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item" *ngIf="showAdminBoard">
-        <a class="nav-link" routerLink="/admin/organizations" routerLinkActive="active">
+        <a class="nav-link text-hover-orange" routerLink="/admin/organizations" routerLinkActive="active">
             <fa-icon [icon]="faUsers" class="mr-2"></fa-icon>
             <span>Organizations</span>
             <fa-icon [icon]="faChevronRight" class="float-right mt-1 arrowRight"></fa-icon>
         </a>
     </li>
 
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item" *ngIf="showAdminBoard">
+        <a class="nav-link text-hover-orange" routerLink="/admin/users" routerLinkActive="active">
+            <fa-icon [icon]="faUsers" class="mr-2"></fa-icon>
+            <span>Users</span>
+            <fa-icon [icon]="faChevronRight" class="float-right mt-1 arrowRight"></fa-icon>
+        </a>
+    </li>
+
     <!-- Divider -->
-    <hr class="sidebar-divider mt-2">
+    <!-- <hr class="sidebar-divider mt-2"> -->
 
     <!-- Heading -->
-    <div class="sidebar-heading">
+    <!-- <div class="sidebar-heading">
         Heading
-    </div>
+    </div> -->
 
 </ul>
 <!-- End of Sidebar -->

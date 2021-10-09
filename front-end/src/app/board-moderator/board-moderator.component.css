@@ -1,8 +1,0 @@
-.container-fluid {
-    right: 0;
-    width: calc(100% - 14rem) !important;
-    float: right;
-    position: relative;
-    padding-top: 5.875rem;
-    min-height: 100vh;
-}

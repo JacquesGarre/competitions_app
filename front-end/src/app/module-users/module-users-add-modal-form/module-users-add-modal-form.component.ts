@@ -4,16 +4,18 @@ import { FormControl, FormGroup, Validators, FormBuilder, ValidatorFn, AbstractC
 import { faUsers, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-    selector: 'app-module-organizations-add-modal-form',
-    templateUrl: './module-organizations-add-modal-form.component.html',
-    styleUrls: ['./module-organizations-add-modal-form.component.css']
+    selector: 'app-module-users-add-modal-form',
+    templateUrl: './module-users-add-modal-form.component.html',
+    styleUrls: ['./module-users-add-modal-form.component.css']
 })
-export class ModuleOrganizationsAddModalFormComponent {
+export class ModuleUsersAddModalFormComponent {
 
     faUsers = faUsers;
 
-    name: string = '';
-    subdomain: string = '';
+    email: string = '';
+    firstName: string = '';
+    lastName: string = '';
+    password: string = '';
     addForm = new FormGroup({});
 
     constructor(
@@ -21,15 +23,29 @@ export class ModuleOrganizationsAddModalFormComponent {
         private formBuilder: FormBuilder
     ) { 
         this.addForm = new FormGroup({
-            name: new FormControl(
-                this.name, 
+            email: new FormControl(
+                this.email, 
                 [
                     Validators.required,
                     Validators.minLength(4)
                 ]
             ),
-            subdomain: new FormControl(
-                this.subdomain, 
+            firstName: new FormControl(
+                this.firstName, 
+                [
+                    Validators.required,
+                    Validators.minLength(4)
+                ]
+            ),
+            lastName: new FormControl(
+                this.lastName, 
+                [
+                    Validators.required,
+                    Validators.minLength(4)
+                ]
+            ),
+            password: new FormControl(
+                this.password, 
                 [
                     Validators.required,
                     Validators.minLength(4)
@@ -40,8 +56,10 @@ export class ModuleOrganizationsAddModalFormComponent {
 
     private createForm() {
         this.addForm = this.formBuilder.group({
-            name: '',
-            subdomain: ''
+            email: '',
+            firstName: '',
+            lastName: '',
+            password: ''
         });
     }
 

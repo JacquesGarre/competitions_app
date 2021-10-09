@@ -6,7 +6,7 @@ import { Organization } from './organization';
 import { OrganizationService } from './organization.service';
 import { Router } from '@angular/router';
 
-import { faUsers, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen } from '@fortawesome/free-solid-svg-icons';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
@@ -27,6 +27,9 @@ export class ModuleOrganizationsComponent implements OnInit {
     faUsers = faUsers;
     faTrashAlt = faTrashAlt;
     faPencilAlt = faPencilAlt;
+    faTrash = faTrash;
+    faPen = faPen;
+    faEye = faEye;
     faPlus = faPlus;
     organizations: any = [];
     organizationForm: any;
@@ -61,6 +64,7 @@ export class ModuleOrganizationsComponent implements OnInit {
                             this.formBuilder.group({
                                 id: [x.id, [Validators.required, Validators.minLength(2)]],
                                 name: [x.name, [Validators.required, Validators.minLength(2)]],
+                                subdomain: [x.subdomain, [Validators.required, Validators.minLength(2)]],
                                 createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
                                 updatedAt: x.updatedAt, 
                                 isReadonly: true
@@ -81,7 +85,8 @@ export class ModuleOrganizationsComponent implements OnInit {
                 this.ngxLoader.startLoader('page-loader');
                 let values = modalRef.componentInstance.addForm.value;
                 let organization: any = {
-                    name: values.name
+                    name: values.name,
+                    subdomain: values.subdomain
                 }
                 this.service.createOrganization(organization).subscribe(data => {
                     this.initOrganizations();

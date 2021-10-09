@@ -1,31 +1,39 @@
 <div class="modal-header">
-    <h5 class="modal-title"><fa-icon [icon]="faUsers" class="mr-2"></fa-icon>New organization</h5>
+    <h5 class="modal-title text-dark-gray">
+        <fa-icon [icon]="faUsers" class="mr-2"></fa-icon>New organization</h5>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-<div class="modal-body">
+<div class="modal-body text-dark-gray">
     <form [formGroup]="addForm" (ngSubmit)="submitForm()">
         <div class="modal-boy">
             <div class="container">
                 <label for="name">Name</label>
                 <div class="input-group mb-4">
-                    <input 
-                        type="text"
-                        [className]="
+                    <input type="text" [className]="
                             (addForm.invalid && (addForm.get('name')?.dirty || addForm.get('name')?.touched) && addForm.get('name')?.errors) ? 
-                            'form-control is-invalid' : (addForm.invalid && (addForm.get('name')?.dirty || addForm.get('name')?.touched)) ? 'form-control is-valid' : 'form-control'" 
-                        id="name" 
-                        name="name"
-                        formControlName="name"
-                        autocomplete="off" 
-                    >
+                            'form-control is-invalid' : (addForm.invalid && (addForm.get('name')?.dirty || addForm.get('name')?.touched)) ? 'form-control is-valid' : 'form-control'" id="name" name="name" formControlName="name" autocomplete="off">
                     <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
                         <div *ngIf="addForm.get('name')?.errors?.required">
                             Name is required.
                         </div>
                         <div *ngIf="addForm.get('name')?.errors?.minlength">
                             Name must be at least 4 characters long.
+                        </div>
+                    </div>
+                </div>
+                <label for="subdomain">Subdomain</label>
+                <div class="input-group mb-4">
+                    <input type="text" [className]="
+                            (addForm.invalid && (addForm.get('subdomain')?.dirty || addForm.get('subdomain')?.touched) && addForm.get('subdomain')?.errors) ? 
+                            'form-control is-invalid' : (addForm.invalid && (addForm.get('subdomain')?.dirty || addForm.get('subdomain')?.touched)) ? 'form-control is-valid' : 'form-control'" id="subdomain" name="subdomain" formControlName="subdomain" autocomplete="off">
+                    <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
+                        <div *ngIf="addForm.get('subdomain')?.errors?.required">
+                            Subdomain is required.
+                        </div>
+                        <div *ngIf="addForm.get('subdomain')?.errors?.minlength">
+                            Subdomain must be at least 4 characters long.
                         </div>
                     </div>
                 </div>
