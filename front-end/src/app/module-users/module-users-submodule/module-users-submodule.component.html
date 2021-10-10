@@ -23,7 +23,6 @@
                     <thead class="text-light border-top-0 border-right-0 border-left-0">
                         <tr>
                             <th scope="col" class="text-center border-gray">Actions</th>
-                            <th scope="col" class="border-gray">ID</th>
                             <th scope="col" class="border-gray">Email</th>
                             <th scope="col" class="border-gray">First Name</th>
                             <th scope="col" class="border-gray">Last Name</th>
@@ -47,9 +46,6 @@
                                     <a class="btn text-light text-hover-orange" (click)=removeUser(user) title="Remove user">
                                         <fa-icon [icon]="faTimes" class="mr-2"></fa-icon>
                                     </a>
-                                </td>
-                                <td class="text-light">
-                                    <input class="form-control pl-0" type="text" formControlName="id" readonly />
                                 </td>
                                 <td class="text-light">
                                     <input class="form-control pl-0" type="text" formControlName="email" readonly />

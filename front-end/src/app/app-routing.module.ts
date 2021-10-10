@@ -7,10 +7,15 @@ import { HomeComponent } from './home/home.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BoardUserComponent } from './board-user/board-user.component';
 import { BoardAdminComponent } from './board-admin/board-admin.component';
+
 import { ModuleOrganizationsComponent } from './module-organizations/module-organizations.component';
 import { ModuleOrganizationsViewComponent } from './module-organizations/module-organizations-view/module-organizations-view.component';
+
 import { ModuleUsersComponent } from './module-users/module-users.component';
 import { ModuleUsersViewComponent } from './module-users/module-users-view/module-users-view.component';
+
+import { ModuleTournamentsComponent } from './module-tournaments/module-tournaments.component';
+import { ModuleTournamentsViewComponent } from './module-tournaments/module-tournaments-view/module-tournaments-view.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -50,6 +55,14 @@ const routes: Routes = [
             {
                 path: 'users/:id',
                 component: ModuleUsersViewComponent,
+            },
+            {
+                path: 'tournaments',
+                component: ModuleTournamentsComponent,
+            },
+            {
+                path: 'tournaments/:id',
+                component: ModuleTournamentsViewComponent,
             }
         ]
 

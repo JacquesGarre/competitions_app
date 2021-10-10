@@ -42,6 +42,13 @@ import { ModuleUsersAddModalFormComponent } from './module-users/module-users-ad
 import { ModuleUsersLinkModalFormComponent } from './module-users/module-users-link-modal-form/module-users-link-modal-form.component';
 import { ModuleUsersViewComponent } from './module-users/module-users-view/module-users-view.component';
 
+import { ModuleTournamentsComponent } from './module-tournaments/module-tournaments.component';
+import { ModuleTournamentsSubmoduleComponent } from './module-tournaments/module-tournaments-submodule/module-tournaments-submodule.component';
+import { ModuleTournamentsAddModalFormComponent } from './module-tournaments/module-tournaments-add-modal-form/module-tournaments-add-modal-form.component';
+import { ModuleTournamentsLinkModalFormComponent } from './module-tournaments/module-tournaments-link-modal-form/module-tournaments-link-modal-form.component';
+import { ModuleTournamentsViewComponent } from './module-tournaments/module-tournaments-view/module-tournaments-view.component';
+
+
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     "bgsColor": "red",
@@ -96,6 +103,12 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         ModuleUsersAddModalFormComponent,
         ModuleUsersLinkModalFormComponent,
         ModuleUsersViewComponent,
+
+        ModuleTournamentsComponent,
+        ModuleTournamentsSubmoduleComponent,
+        ModuleTournamentsAddModalFormComponent,
+        ModuleTournamentsLinkModalFormComponent,
+        ModuleTournamentsViewComponent,
     ],  
     imports: [
         BrowserModule,

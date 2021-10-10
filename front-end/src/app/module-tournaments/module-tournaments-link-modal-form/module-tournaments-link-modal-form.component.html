@@ -1,0 +1,26 @@
+<div class="modal-header bg-dark rounded-0">
+    <h5 class="modal-title text-light">
+        <fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>Add tournament</h5>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body text-light  bg-dark-gray rounded-0">
+    <form [formGroup]="addForm" (ngSubmit)="submitForm()">
+        <div class="modal-boy">
+            <label for="tournamentId">Tournament</label>
+            <div class="input-group mb-4">
+                <select class="browser-default custom-select" name="tournamentId"  id="tournamentId" formControlName="tournamentId">
+                    <option *ngFor="let tournament of tournaments" [value]="tournament.id">{{tournament.name}}</option>
+                  </select>
+                <div *ngIf="addForm.get('tournamentId')?.errors?.required">
+                    Tournament is required.
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline-success" [disabled]="!addForm.valid" (click)="activeModal.close('save')">Add</button>
+            <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss()">Cancel</button>
+        </div>
+    </form>
+</div>

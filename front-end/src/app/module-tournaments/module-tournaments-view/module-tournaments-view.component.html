@@ -1,0 +1,80 @@
+
+<!-- Loader -->
+<ngx-ui-loader [loaderId]="'page-loader'"></ngx-ui-loader>
+<!-- End of Loader -->
+
+<h4 class="mb-4 pr-4 pl-4 text-center">
+    <fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>
+    <a routerLink="/admin/tournaments" class="text-light">Tournaments</a> <fa-icon [icon]="faChevronRight" class="ml-2" style="font-size: 16px;"></fa-icon> {{tournament.name}}
+</h4>
+
+<div class="col-md-12 text-gray">
+    <div class="card card-container shadow rounded-0 bg-dark-gray border-0">
+        <div class="card-header bg-dark text-light border-gray border-top-0 border-left-0 border-right-0 rounded-0 ">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-11">
+                    <h6 class="mb-0"><fa-icon [icon]="faInfoCircle" class="mr-2"></fa-icon>Details</h6>
+                </div>
+                <div class="col-md-1">
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=toggleForm() *ngIf=isReadonly><fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Edit</a>
+                </div>
+            </div>
+        </div> 
+        <div class="card-body text-light">
+            <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="name" class="col-sm-3 col-form-label">Name</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="name" [(ngModel)]="form.name" required
+                                #name="ngModel" [readonly]="isReadonly"/>
+                            </div>
+                            <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
+                                Name is required!
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="subdomain" class="col-sm-3 col-form-label">Subdomain</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="subdomain" [(ngModel)]="form.subdomain" required
+                                #subdomain="ngModel" [readonly]="isReadonly"/>
+                            </div>
+                            <div class="alert alert-danger" role="alert" *ngIf="subdomain.errors && f.submitted">
+                                Name is required!
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="createdAt" class="col-sm-3 col-form-label">Created at</label>
+                            <div class="col-sm-9">
+                                <input type="createdAt" class="form-control bg-gray pl-2" name="createdAt" [value]="form.createdAt | date:'dd/MM/yyyy HH:mm'" required
+                                readonly/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="updatedAt" class="col-sm-3 col-form-label">Updated at</label>
+                            <div class="col-sm-9">
+                                <input type="updatedAt" class="form-control bg-gray pl-2" name="updatedAt" [value]="form.updatedAt | date:'dd/MM/yyyy HH:mm'" required
+                                readonly/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2" *ngIf=!isReadonly>
+                    <div class="col-md-12">
+                        <button class="btn btn-success mr-2" *ngIf=!isReadonly (click)=onSubmit()>
+                            Save
+                        </button>
+                        <a class="btn btn-danger" *ngIf=!isReadonly (click)="toggleForm(); resetForm()">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Sous module users -->
+<app-module-users-submodule [parentModule]="'tournaments'" [parent]="tournament"></app-module-users-submodule>
+<!-- End::Sous module users -->

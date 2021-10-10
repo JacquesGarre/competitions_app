@@ -1,0 +1,70 @@
+<!-- Loader -->
+<ngx-ui-loader [loaderId]="'page-loader'"></ngx-ui-loader>
+<!-- End of Loader -->
+
+<h4 class="mb-4 pr-4 pl-4 text-center">
+    <fa-icon [icon]="faGem" class="mr-2"></fa-icon>
+    Tournaments
+    <a [routerLink]="" class="p-0 text-secondary float-right" (click)=createTournament()>
+        <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
+    </a>
+</h4>
+
+<!--This is your master form-->
+<form [formGroup]="tournamentForm">
+
+    <table class="table table-hover shadow">
+        <thead class="bg-dark text-light border-top-0 border-right-0 border-left-0">
+            <tr>
+                <th scope="col" class="text-center border-gray">Actions</th>
+                <th scope="col" class="border-gray">Name</th>
+                <th scope="col" class="border-gray">Organization</th>
+                <th scope="col" class="border-gray">Start Date</th>
+                <th scope="col" class="border-gray">End Date</th>
+                <th scope="col" class="border-gray">Registration Form</th>
+                <th scope="col" class="border-gray">Created at</th>
+                <th scope="col" class="border-gray">Updated at</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container formArrayName="tournamentDetails" *ngFor="let tournament of tournaments; let $index=index">
+                <tr [formGroupName]="$index"  class="bg-dark-gray">
+                    <td class="text-center">
+                        <a class="btn text-light text-hover-orange" (click)=showTournament(tournament)>
+                            <fa-icon [icon]="faEye" class="mr-2"></fa-icon>
+                        </a>
+                        <!-- <a class="btn text-light text-hover-orange">
+                            <fa-icon [icon]="faPen" class="mr-2"></fa-icon>
+                        </a> -->
+                        <a class="btn text-light text-hover-orange" (click)=deleteTournament(tournament)>
+                            <fa-icon [icon]="faTrash" class="mr-2"></fa-icon>
+                        </a>
+                    </td>
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" formControlName="name" readonly/>
+                    </td>
+
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" formControlName="organization" readonly/>
+                    </td>
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" [value]="tournament.startDate | date:'dd/MM/yyyy HH:mm'" readonly/>
+                    </td>
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" [value]="tournament.endDate | date:'dd/MM/yyyy HH:mm'" readonly/>
+                    </td>
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" [value]="tournament.registrationFormOpen == 1 ? 'Open' : 'Closed'"  readonly/>
+                    </td>
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" [value]="tournament.createdAt | date:'dd/MM/yyyy HH:mm'" readonly/>
+                    </td>
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" [value]="(tournament.updatedAt !== null) ? (tournament.updatedAt | date: 'dd/MM/yyyy HH:mm') : ''" readonly/>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+
+</form>

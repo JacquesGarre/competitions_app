@@ -31,7 +31,8 @@ import {
     faUsers,
     IconName,
     faTrophy,
-    faSitemap
+    faSitemap,
+    faGem
 } from '@fortawesome/free-solid-svg-icons';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { Env } from '../_globals/env';
@@ -43,6 +44,7 @@ import { Env } from '../_globals/env';
 })
 export class SidebarComponent implements OnInit {
 
+    faGem = faGem;
     faSitemap = faSitemap;
     faTachometerAlt = faTachometerAlt;
     faLaughWink = faLaughWink;

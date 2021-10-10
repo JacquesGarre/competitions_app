@@ -3,11 +3,11 @@ import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { User } from './user';
+import { Tournament } from './tournament';
 import { Env } from '../_globals/env';
 
 @Injectable({ providedIn: 'root' })
-export class UserService {
+export class TournamentService {
 
     httpOptions = {
         headers: new HttpHeaders({
@@ -19,43 +19,38 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     // Create
-    createUser(user: any): Observable<User> {
-        return this.http.post<User>(Env.API_URL + 'users', JSON.stringify(user), this.httpOptions)
+    createTournament(tournament: any): Observable<Tournament> {
+        return this.http.post<Tournament>(Env.API_URL + 'tournaments', JSON.stringify(tournament), this.httpOptions)
         .pipe(retry(1), catchError(this.handleError))
     }  
 
     // Read
-    getUsers(): Observable<User> {
-        return this.http.get<User>(Env.API_URL + 'users.json')
-        .pipe(retry(1), catchError(this.handleError),)
-    }
-
-    // Read
-    getUsersByOrganization(id: any): Observable<User> {
-        return this.http.get<User>(Env.API_URL + 'organizations/'+ id +'/users.json')
-        .pipe(retry(1), catchError(this.handleError),)
+    getTournaments(): Observable<Tournament> {
+        return this.http.get<Tournament>(Env.API_URL + 'tournaments.json')
+        .pipe(retry(1), catchError(this.handleError))
     }
 
     // Read by id
-    getUser(id: any): Observable<User> {
-        return this.http.get<User>(Env.API_URL + 'users/' + id + '.json')
+    getTournament(id: any): Observable<Tournament> {
+        return this.http.get<Tournament>(Env.API_URL + 'tournaments/' + id + '.json')
         .pipe(retry(1), catchError(this.handleError))
     }  
 
-    getUserByEmail(email: any): Observable<User> {
-        return this.http.get<User>(Env.API_URL + 'users.json?email='+email)
+    // Read by id
+    getTournamentsByUser(id: any): Observable<Tournament> {
+        return this.http.get<Tournament>(Env.API_URL + 'users/' + id + '/tournaments.json')
         .pipe(retry(1), catchError(this.handleError))
     }  
 
     // Update
-    updateUser(id: any, organization: any): Observable<User> {
-        return this.http.put<User>(Env.API_URL + 'users/' + id + '.json', JSON.stringify(organization), this.httpOptions)
+    updateTournament(id: any, tournament: any): Observable<Tournament> {
+        return this.http.put<Tournament>(Env.API_URL + 'tournaments/' + id + '.json', JSON.stringify(tournament), this.httpOptions)
         .pipe(retry(1), catchError(this.handleError))
     }
 
     // Delete
-    deleteUser(id: any){
-        return this.http.delete<User>(Env.API_URL + 'users/' + id)
+    deleteTournament(id: any){
+        return this.http.delete<Tournament>(Env.API_URL + 'tournaments/' + id)
         .pipe(retry(1), catchError(this.handleError))
     }
 
