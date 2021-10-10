@@ -1,28 +1,28 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnChanges, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 
-import { Organization } from './organization';
-import { OrganizationService } from './organization.service';
+import { Organization } from '../organization';
+import { OrganizationService } from '../organization.service';
 import { Router } from '@angular/router';
 
-import { faUsers, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faSitemap } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faSitemap, } from '@fortawesome/free-solid-svg-icons';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
-import { ModuleOrganizationsAddModalFormComponent } from './module-organizations-add-modal-form/module-organizations-add-modal-form.component';
+import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
+import { ModuleOrganizationsAddModalFormComponent } from '../module-organizations-add-modal-form/module-organizations-add-modal-form.component';
 
 import { Subject } from 'rxjs';
 import { FormBuilder, Validators } from '@angular/forms';
 
 
 @Component({
-    selector: 'app-module-organizations',
-    templateUrl: './module-organizations.component.html',
-    styleUrls: ['./module-organizations.component.css'],
+    selector: 'app-module-organizations-submodule',
+    templateUrl: './module-organizations-submodule.component.html',
+    styleUrls: ['./module-organizations-submodule.component.css'],
     providers: [DatePipe]
 })
-export class ModuleOrganizationsComponent implements OnInit {
+export class ModuleOrganizationsSubmoduleComponent implements OnChanges {
 
     faSitemap = faSitemap;
     faUsers = faUsers;
@@ -37,6 +37,8 @@ export class ModuleOrganizationsComponent implements OnInit {
     allOrganizationDetails: any;
     forms: any = [];
 
+    @Input() user: any;
+
     constructor(
         public service: OrganizationService,
         private modalService: NgbModal,
@@ -50,32 +52,34 @@ export class ModuleOrganizationsComponent implements OnInit {
         });
     }
 
-    ngOnInit(): void {
-        this.ngxLoader.startLoader('page-loader');
+    ngOnChanges(): void {
         this.initOrganizations();
     }
 
     initOrganizations() {
-        this.service.getOrganizations().subscribe((data: any) => {
-            if (data.length) {
-                this.organizations = data;
-                this.organizationForm = this.formBuilder.group({
-                    organizationDetails: this.formBuilder.array(
-                        this.organizations.map((x: any) => 
-                            this.formBuilder.group({
-                                id: [x.id, [Validators.required, Validators.minLength(2)]],
-                                name: [x.name, [Validators.required, Validators.minLength(2)]],
-                                subdomain: [x.subdomain, [Validators.required, Validators.minLength(2)]],
-                                createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
-                                updatedAt: x.updatedAt, 
-                                isReadonly: true
-                            })
+        
+        if(this.user){
+            this.service.getOrganizationsByUser(this.user).subscribe((data: any) => {
+                if (data.length) {
+                    this.organizations = data;
+                    this.organizationForm = this.formBuilder.group({
+                        organizationDetails: this.formBuilder.array(
+                            this.organizations.map((x: any) => 
+                                this.formBuilder.group({
+                                    id: [x.id, [Validators.required, Validators.minLength(2)]],
+                                    name: [x.name, [Validators.required, Validators.minLength(2)]],
+                                    subdomain: [x.subdomain, [Validators.required, Validators.minLength(2)]],
+                                    createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
+                                    updatedAt: x.updatedAt, 
+                                    isReadonly: true
+                                })
+                            )
                         )
-                    )
-                })
-            }
-            this.ngxLoader.stopLoader('page-loader');
-        })
+                    })
+                }
+                console.log(this.organizations)
+            })
+        }
     }
 
     // Create organization

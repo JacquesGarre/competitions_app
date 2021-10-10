@@ -36,10 +36,9 @@ export class OrganizationService {
         .pipe(retry(1), catchError(this.handleError))
     }  
 
-    // Read by url
-    getOrganizationByURL(url: any): Observable<Organization> {
-        const apiURL = Env.API_URL + url.replace('/api/', '');
-        return this.http.get<Organization>(apiURL)
+    // Read by id
+    getOrganizationsByUser(id: any): Observable<Organization> {
+        return this.http.get<Organization>(Env.API_URL + 'users/' + id + '/organizations.json')
         .pipe(retry(1), catchError(this.handleError))
     }  
 

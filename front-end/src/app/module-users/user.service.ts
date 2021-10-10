@@ -33,7 +33,7 @@ export class UserService {
 
     // Read
     getUsersByOrganization(id: any): Observable<User> {
-        return this.http.get<User>(Env.API_URL + 'users')
+        return this.http.get<User>(Env.API_URL + 'organizations/'+ id +'/users.json')
         .pipe(retry(1), catchError(this.handleError),)
     }
 

@@ -22,7 +22,6 @@
                 <th scope="col" class="border-gray">Email</th>
                 <th scope="col" class="border-gray">First Name</th>
                 <th scope="col" class="border-gray">Last Name</th>
-                <th scope="col" class="border-gray">Organizations</th>
                 <!-- <th scope="col" class="border-gray">Roles</th>
                 <th scope="col" class="border-gray">Organization</th> -->
                 <th scope="col" class="border-gray">Created At</th>
@@ -54,9 +53,6 @@
                     </td>
                     <td class="text-light">
                         <input class="form-control pl-0" type="text" formControlName="lastName" readonly/>
-                    </td>
-                    <td class="text-light">
-                        <input class="form-control pl-0" type="text" formControlName="organizations" readonly/>
                     </td>
                     <td class="text-light">
                         <input class="form-control pl-0" type="text" [value]="user.createdAt | date:'dd/MM/yyyy HH:mm'" readonly/>

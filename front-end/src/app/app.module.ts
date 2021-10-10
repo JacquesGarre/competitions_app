@@ -28,15 +28,15 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { ModalConfirmComponent } from './modal-confirm/modal-confirm.component';
-
 import { DataTablesModule } from 'angular-datatables';
 
 import { ModuleOrganizationsComponent } from './module-organizations/module-organizations.component';
+import { ModuleOrganizationsSubmoduleComponent } from './module-organizations/module-organizations-submodule/module-organizations-submodule.component';
 import { ModuleOrganizationsAddModalFormComponent } from './module-organizations/module-organizations-add-modal-form/module-organizations-add-modal-form.component';
 import { ModuleOrganizationsViewComponent } from './module-organizations/module-organizations-view/module-organizations-view.component';
 
-
 import { ModuleUsersComponent } from './module-users/module-users.component';
+import { ModuleUsersSubmoduleComponent } from './module-users/module-users-submodule/module-users-submodule.component';
 import { ModuleUsersAddModalFormComponent } from './module-users/module-users-add-modal-form/module-users-add-modal-form.component';
 import { ModuleUsersViewComponent } from './module-users/module-users-view/module-users-view.component';
 
@@ -82,10 +82,14 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         NavbarComponent,
         SidebarComponent,
         ModalConfirmComponent,
+
         ModuleOrganizationsComponent,
+        ModuleOrganizationsSubmoduleComponent,
         ModuleOrganizationsAddModalFormComponent,
         ModuleOrganizationsViewComponent,
+
         ModuleUsersComponent,
+        ModuleUsersSubmoduleComponent,
         ModuleUsersAddModalFormComponent,
         ModuleUsersViewComponent,
     ],  
