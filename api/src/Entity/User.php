@@ -231,14 +231,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         if (!$this->organizations->contains($organization)) {
             $this->organizations[] = $organization;
         }
-
+        $roles = $this->getRoles();
+        if(!in_array('ROLE_MODERATOR', $roles)){
+            $roles[] = 'ROLE_MODERATOR';
+        }
+        $this->setRoles($roles);
         return $this;
     }
 
     public function removeOrganization(Organization $organization): self
     {
         $this->organizations->removeElement($organization);
-
+        $roles = $this->getRoles();
+        $organizations = $this->getOrganizations();
+        if(count($organizations) < 1 && in_array("ROLE_MODERATOR", $roles)){
+            unset($roles[array_search("ROLE_MODERATOR", $roles)]);
+        }        
+        $this->setRoles($roles);
         return $this;
     }
 

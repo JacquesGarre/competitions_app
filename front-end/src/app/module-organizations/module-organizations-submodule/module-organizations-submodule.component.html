@@ -2,17 +2,20 @@
     <div class="card card-container shadow rounded-0 bg-dark-gray border-0">
         <div class="card-header bg-dark text-light border-gray border-0 rounded-0 ">
             <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-md-12">
-                    <h6 class="mb-0">
-                        <fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>Organizations
-                    </h6>
+                <div class="col-md-10">
+                    <h6 class="mb-0"><fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>Organizations</h6>
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=linkOrganization()><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add organization</a>
                 </div>
             </div>
         </div>
         <div class="card-body text-light p-0">
 
+            <p class="w-100 text-center pt-3" *ngIf="!organizations.length"><i>No organizations found.</i></p>
+
             <!--This is your master form-->
-            <form [formGroup]="organizationForm">
+            <form [formGroup]="organizationForm" *ngIf="organizations.length">
 
                 <table class="table table-hover m-0">
                     <thead class="text-light border-0">
@@ -40,6 +43,9 @@
                                         (click)=deleteOrganization(organization)>
                                         <fa-icon [icon]="faTrash" class="mr-2"></fa-icon>
                                     </a>
+                                    <a class="btn text-light text-hover-orange" (click)=removeOrganization(organization) title="Remove from organization">
+                                        <fa-icon [icon]="faTimes" class="mr-2"></fa-icon>
+                                    </a>
                                 </td>
                                 <td class="text-light">
                                     <input class="form-control pl-0" type="text" formControlName="id" readonly />
@@ -65,9 +71,6 @@
                 </table>
 
             </form>
-
-
-
 
         </div>
     </div>

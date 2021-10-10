@@ -91,8 +91,7 @@ export class ModuleUsersViewComponent implements OnInit {
             email: this.form.email,
             firstName: this.form.firstName,
             lastName: this.form.lastName,
-            password: this.form.password,
-            organizations: this.form.organizations,
+            password: this.form.password
         }).subscribe((data: any) => {
             this.user = data;
             this.form = data;

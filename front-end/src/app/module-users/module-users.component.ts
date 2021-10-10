@@ -70,10 +70,8 @@ export class ModuleUsersComponent implements OnInit {
                                 email: [x.email, [Validators.required, Validators.minLength(2)]],
                                 firstName: [x.firstName, [Validators.required, Validators.minLength(2)]],
                                 lastName: [x.lastName, [Validators.required, Validators.minLength(2)]],
-                                organizations: [x.organizations.map((organization: string)=>{
-                                    const id = organization.replace('/api/organizations/','');
-                                    return id;
-                                }), [Validators.required, Validators.minLength(2)]],
+                                roles: [x.roles],
+                                organizations: [x.organizations, [Validators.required, Validators.minLength(2)]],
                                 createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
                                 updatedAt: x.updatedAt, 
                                 isReadonly: true

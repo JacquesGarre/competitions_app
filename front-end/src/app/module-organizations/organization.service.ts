@@ -32,7 +32,7 @@ export class OrganizationService {
 
     // Read by id
     getOrganization(id: any): Observable<Organization> {
-        return this.http.get<Organization>(Env.API_URL + 'organizations/' + id)
+        return this.http.get<Organization>(Env.API_URL + 'organizations/' + id + '.json')
         .pipe(retry(1), catchError(this.handleError))
     }  
 
@@ -44,7 +44,7 @@ export class OrganizationService {
 
     // Update
     updateOrganization(id: any, organization: any): Observable<Organization> {
-        return this.http.put<Organization>(Env.API_URL + 'organizations/' + id, JSON.stringify(organization), this.httpOptions)
+        return this.http.put<Organization>(Env.API_URL + 'organizations/' + id + '.json', JSON.stringify(organization), this.httpOptions)
         .pipe(retry(1), catchError(this.handleError))
     }
 

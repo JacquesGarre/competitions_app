@@ -19,9 +19,8 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     // Create
-    createUser(organization: any): Observable<User> {
-        console.log(organization)
-        return this.http.post<User>(Env.API_URL + 'users', JSON.stringify(organization), this.httpOptions)
+    createUser(user: any): Observable<User> {
+        return this.http.post<User>(Env.API_URL + 'users', JSON.stringify(user), this.httpOptions)
         .pipe(retry(1), catchError(this.handleError))
     }  
 
@@ -39,13 +38,13 @@ export class UserService {
 
     // Read by id
     getUser(id: any): Observable<User> {
-        return this.http.get<User>(Env.API_URL + 'users/' + id)
+        return this.http.get<User>(Env.API_URL + 'users/' + id + '.json')
         .pipe(retry(1), catchError(this.handleError))
     }  
 
     // Update
     updateUser(id: any, organization: any): Observable<User> {
-        return this.http.put<User>(Env.API_URL + 'users/' + id, JSON.stringify(organization), this.httpOptions)
+        return this.http.put<User>(Env.API_URL + 'users/' + id + '.json', JSON.stringify(organization), this.httpOptions)
         .pipe(retry(1), catchError(this.handleError))
     }
 

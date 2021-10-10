@@ -2,10 +2,11 @@
     <div class="card card-container shadow rounded-0 bg-dark-gray border-0">
         <div class="card-header bg-dark text-light border-gray border-0 rounded-0 ">
             <div class="row d-flex justify-content-center align-items-center h-100">
-                <div class="col-md-12">
-                    <h6 class="mb-0">
-                        <fa-icon [icon]="faUsers" class="mr-2"></fa-icon>Users
-                    </h6>
+                <div class="col-md-11">
+                    <h6 class="mb-0"><fa-icon [icon]="faUsers" class="mr-2"></fa-icon>Users</h6>
+                </div>
+                <div class="col-md-1">
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=linkUser()><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add user</a>
                 </div>
             </div>
         </div>
@@ -14,9 +15,9 @@
             <!-- Loader -->
             <!-- <ngx-ui-loader [loaderId]="'users-submodule-loader'" [hasProgressBar]="false"></ngx-ui-loader> -->
             <!-- End of Loader -->
-
+            <p class="w-100 text-center pt-3" *ngIf="!users.length"><i>No users found.</i></p>
             <!--This is your master form-->
-            <form [formGroup]="userForm">
+            <form [formGroup]="userForm" *ngIf="users.length">
 
                 <table class="table table-hover m-0">
                     <thead class="text-light border-top-0 border-right-0 border-left-0">
@@ -34,14 +35,17 @@
                         <ng-container formArrayName="userDetails" *ngFor="let user of users; let $index=index">
                             <tr [formGroupName]="$index" class="bg-dark-gray">
                                 <td class="text-center">
-                                    <a class="btn text-light text-hover-orange" (click)=showUser(user)>
+                                    <a class="btn text-light text-hover-orange" (click)=showUser(user) title="Show details">
                                         <fa-icon [icon]="faEye" class="mr-2"></fa-icon>
                                     </a>
                                     <!-- <a class="btn text-light text-hover-orange">
                             <fa-icon [icon]="faPen" class="mr-2"></fa-icon>
                         </a> -->
-                                    <a class="btn text-light text-hover-orange" (click)=deleteUser(user)>
+                                    <a class="btn text-light text-hover-orange" (click)=deleteUser(user) title="Delete user">
                                         <fa-icon [icon]="faTrash" class="mr-2"></fa-icon>
+                                    </a>
+                                    <a class="btn text-light text-hover-orange" (click)=removeUser(user) title="Remove user">
+                                        <fa-icon [icon]="faTimes" class="mr-2"></fa-icon>
                                     </a>
                                 </td>
                                 <td class="text-light">

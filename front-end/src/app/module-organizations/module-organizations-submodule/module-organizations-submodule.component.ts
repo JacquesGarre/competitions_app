@@ -4,13 +4,15 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 import { Organization } from '../organization';
 import { OrganizationService } from '../organization.service';
+import { UserService } from '../../module-users/user.service';
 import { Router } from '@angular/router';
 
-import { faUsers, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faSitemap, } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faSitemap, faTimes} from '@fortawesome/free-solid-svg-icons';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
 import { ModuleOrganizationsAddModalFormComponent } from '../module-organizations-add-modal-form/module-organizations-add-modal-form.component';
+import { ModuleOrganizationsLinkModalFormComponent } from '../module-organizations-link-modal-form/module-organizations-link-modal-form.component';
 
 import { Subject } from 'rxjs';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -24,6 +26,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class ModuleOrganizationsSubmoduleComponent implements OnChanges {
 
+    faTimes = faTimes;
     faSitemap = faSitemap;
     faUsers = faUsers;
     faTrashAlt = faTrashAlt;
@@ -37,10 +40,12 @@ export class ModuleOrganizationsSubmoduleComponent implements OnChanges {
     allOrganizationDetails: any;
     forms: any = [];
 
-    @Input() user: any;
+    @Input() parent: any;
+    @Input() parentModule: any;
 
     constructor(
         public service: OrganizationService,
+        public userService: UserService,
         private modalService: NgbModal,
         private router: Router,
         private datePipe: DatePipe,
@@ -57,9 +62,9 @@ export class ModuleOrganizationsSubmoduleComponent implements OnChanges {
     }
 
     initOrganizations() {
-        
-        if(this.user){
-            this.service.getOrganizationsByUser(this.user).subscribe((data: any) => {
+        // Organizations as submodule in user
+        if(this.parent.id && this.parentModule == 'users'){
+            this.service.getOrganizationsByUser(this.parent.id).subscribe((data: any) => {
                 if (data.length) {
                     this.organizations = data;
                     this.organizationForm = this.formBuilder.group({
@@ -76,29 +81,59 @@ export class ModuleOrganizationsSubmoduleComponent implements OnChanges {
                             )
                         )
                     })
+                } else {
+                    this.organizations = [];
                 }
-                console.log(this.organizations)
             })
         }
     }
 
-    // Create organization
-    createOrganization() {
-        const modalRef = this.modalService.open(ModuleOrganizationsAddModalFormComponent, { centered: true });
+    // Add orga to parent module
+    linkOrganization() {
+        const modalRef = this.modalService.open(ModuleOrganizationsLinkModalFormComponent, { centered: true });
         modalRef.result.then((result) => {
             if (result == 'save') {
-                this.ngxLoader.startLoader('page-loader');
                 let values = modalRef.componentInstance.addForm.value;
-                let organization: any = {
-                    name: values.name,
-                    subdomain: values.subdomain
+                switch(this.parentModule){
+                    case 'users':
+                        this.service.getOrganization(values.organizationId).subscribe((organization: any) => {
+                            console.log(this.parent.organizations);
+                            if (!organization.users.includes(this.parent.id)) {
+                                organization.users.push('/api/users/'+this.parent.id);
+                                this.service.updateOrganization(organization.id, organization).subscribe((data: any) => {
+                                    this.initOrganizations();
+                                })
+                            }
+                        })
+                    break;
                 }
-                this.service.createOrganization(organization).subscribe(data => {
-                    this.initOrganizations();
-                })
             }
         });
     }
+
+    // Remove organization from parent module
+    removeOrganization(organization: any) {
+        switch(this.parentModule){
+            case 'users':
+                const modalRef = this.modalService.open(ModalConfirmComponent, { centered: true });
+                modalRef.componentInstance.title = 'Removing user from organization';
+                modalRef.componentInstance.content = 'Are you sure you want to remove <i>' + this.parent.firstName + ' ' + this.parent.lastName + '</i> from <i>' + organization.name + '</i>?';
+                modalRef.componentInstance.confirmBtn = 'Confirm';
+                modalRef.result.then((result) => {
+                    if (result == 'confirm') {
+                        const index: number = organization.users.indexOf('/api/users/'+this.parent.id);
+                        if (index !== -1) {
+                            organization.users.splice(index, 1);
+                            this.service.updateOrganization(organization.id, organization).subscribe((data: any) => {
+                                this.initOrganizations();
+                            })
+                        }                
+                    }
+                });
+            break;
+        }
+    }
+
 
     // Delete organization
     deleteOrganization(organization: any) {

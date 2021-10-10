@@ -33,11 +33,13 @@ import { DataTablesModule } from 'angular-datatables';
 import { ModuleOrganizationsComponent } from './module-organizations/module-organizations.component';
 import { ModuleOrganizationsSubmoduleComponent } from './module-organizations/module-organizations-submodule/module-organizations-submodule.component';
 import { ModuleOrganizationsAddModalFormComponent } from './module-organizations/module-organizations-add-modal-form/module-organizations-add-modal-form.component';
+import { ModuleOrganizationsLinkModalFormComponent } from './module-organizations/module-organizations-link-modal-form/module-organizations-link-modal-form.component';
 import { ModuleOrganizationsViewComponent } from './module-organizations/module-organizations-view/module-organizations-view.component';
 
 import { ModuleUsersComponent } from './module-users/module-users.component';
 import { ModuleUsersSubmoduleComponent } from './module-users/module-users-submodule/module-users-submodule.component';
 import { ModuleUsersAddModalFormComponent } from './module-users/module-users-add-modal-form/module-users-add-modal-form.component';
+import { ModuleUsersLinkModalFormComponent } from './module-users/module-users-link-modal-form/module-users-link-modal-form.component';
 import { ModuleUsersViewComponent } from './module-users/module-users-view/module-users-view.component';
 
 
@@ -86,11 +88,13 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         ModuleOrganizationsComponent,
         ModuleOrganizationsSubmoduleComponent,
         ModuleOrganizationsAddModalFormComponent,
+        ModuleOrganizationsLinkModalFormComponent,
         ModuleOrganizationsViewComponent,
 
         ModuleUsersComponent,
         ModuleUsersSubmoduleComponent,
         ModuleUsersAddModalFormComponent,
+        ModuleUsersLinkModalFormComponent,
         ModuleUsersViewComponent,
     ],  
     imports: [
