@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators, FormBuilder, ValidatorFn, AbstractControl, FormsModule } from '@angular/forms';
 import { faSitemap, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
-
+import { OrganizationService } from '../organization.service';
 @Component({
     selector: 'app-module-organizations-link-modal-form',
     templateUrl: './module-organizations-link-modal-form.component.html',
@@ -11,12 +11,16 @@ import { faSitemap, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-so
 export class ModuleOrganizationsLinkModalFormComponent {
 
     faSitemap = faSitemap;
-    organizationId: number = 0;
+    organizationId: any = 0;
     addForm = new FormGroup({});
+    organizations: any = [];
+
+    @Input() parentOrganizationIDS: any;
 
     constructor(
         public activeModal: NgbActiveModal,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        public service: OrganizationService
     ) { 
         this.addForm = new FormGroup({
             organizationId: new FormControl(
@@ -26,6 +30,13 @@ export class ModuleOrganizationsLinkModalFormComponent {
                 ]
             )
         });
+
+        this.service.getOrganizations().subscribe((data: any) => {
+            if (data.length) {
+                this.organizations = data.filter((organization: any) => !this.parentOrganizationIDS.includes(organization.id.toString()));
+            }
+        })
+
     }
 
     private createForm() {

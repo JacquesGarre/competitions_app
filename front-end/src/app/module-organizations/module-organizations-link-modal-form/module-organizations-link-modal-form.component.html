@@ -8,18 +8,13 @@
 <div class="modal-body text-light  bg-dark-gray rounded-0">
     <form [formGroup]="addForm" (ngSubmit)="submitForm()">
         <div class="modal-boy">
-            <label for="organizationId">Organization ID</label>
+            <label for="organizationId">Organization</label>
             <div class="input-group mb-4">
-                <input type="text" [className]="
-                        (addForm.invalid && (addForm.get('organizationId')?.dirty || addForm.get('organizationId')?.touched) && addForm.get('organizationId')?.errors) ? 
-                        'form-control is-invalid' : (addForm.invalid && (addForm.get('organizationId')?.dirty || addForm.get('organizationId')?.touched)) ? 'form-control is-valid' : 'form-control'" id="organizationId" name="organizationId" formControlName="organizationId" autocomplete="off">
-                <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
-                    <div *ngIf="addForm.get('organizationId')?.errors?.required">
-                        Organization ID is required.
-                    </div>
-                    <div *ngIf="addForm.get('organizationId')?.errors?.minlength">
-                        Organization ID must be at least 1 characters long.
-                    </div>
+                <select class="browser-default custom-select" name="organizationId"  id="organizationId" formControlName="organizationId">
+                    <option *ngFor="let organization of organizations" [value]="organization.id">{{organization.name}}</option>
+                  </select>
+                <div *ngIf="addForm.get('organizationId')?.errors?.required">
+                    Organization is required.
                 </div>
             </div>
         </div>

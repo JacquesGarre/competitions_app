@@ -91,6 +91,7 @@ export class ModuleOrganizationsSubmoduleComponent implements OnChanges {
     // Add orga to parent module
     linkOrganization() {
         const modalRef = this.modalService.open(ModuleOrganizationsLinkModalFormComponent, { centered: true });
+        modalRef.componentInstance.parentOrganizationIDS = this.parent.organizations.map((url: any) => {return url.replace('/api/organizations/', '')})
         modalRef.result.then((result) => {
             if (result == 'save') {
                 let values = modalRef.componentInstance.addForm.value;

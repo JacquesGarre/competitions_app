@@ -96,6 +96,7 @@ export class ModuleUsersSubmoduleComponent implements OnChanges {
     // Add user to parent module
     linkUser() {
         const modalRef = this.modalService.open(ModuleUsersLinkModalFormComponent, { centered: true });
+        modalRef.componentInstance.parentUserIDS = this.parent.users.map((url: any) => {return url.replace('/api/users/', '')})
         modalRef.result.then((result) => {
             if (result == 'save') {
                 let values = modalRef.componentInstance.addForm.value;

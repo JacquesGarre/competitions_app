@@ -10,15 +10,12 @@
         <div class="modal-boy">
             <label for="userId">User ID</label>
             <div class="input-group mb-4">
-                <input type="text" [className]="
-                        (addForm.invalid && (addForm.get('userId')?.dirty || addForm.get('userId')?.touched) && addForm.get('userId')?.errors) ? 
-                        'form-control is-invalid' : (addForm.invalid && (addForm.get('userId')?.dirty || addForm.get('userId')?.touched)) ? 'form-control is-valid' : 'form-control'" id="userId" name="userId" formControlName="userId" autocomplete="off">
+                <select class="browser-default custom-select" name="userId"  id="userId" formControlName="userId">
+                    <option *ngFor="let user of users" [value]="user.id">{{user.firstName}} {{user.lastName}}</option>
+                </select>
                 <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
                     <div *ngIf="addForm.get('userId')?.errors?.required">
                         User ID is required.
-                    </div>
-                    <div *ngIf="addForm.get('userId')?.errors?.minlength">
-                        User ID must be at least 1 characters long.
                     </div>
                 </div>
             </div>
