@@ -26,7 +26,7 @@ export class OrganizationService {
 
     // Read
     getOrganizations(): Observable<Organization> {
-        return this.http.get<Organization>(Env.API_URL + 'organizations')
+        return this.http.get<Organization>(Env.API_URL + 'organizations.json')
         .pipe(retry(1), catchError(this.handleError))
     }
 

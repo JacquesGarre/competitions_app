@@ -69,11 +69,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $organizations;
 
     /**
-     * @ORM\OneToMany(targetEntity=Tournament::class, mappedBy="createdBy")
-     */
-    private $tournaments;
-
-    /**
      * @ORM\OneToMany(targetEntity=Tournament::class, mappedBy="creator")
      */
     private $tournamentsCreated;
@@ -243,36 +238,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeOrganization(Organization $organization): self
     {
         $this->organizations->removeElement($organization);
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Tournament[]
-     */
-    public function getTournaments(): Collection
-    {
-        return $this->tournaments;
-    }
-
-    public function addTournament(Tournament $tournament): self
-    {
-        if (!$this->tournaments->contains($tournament)) {
-            $this->tournaments[] = $tournament;
-            $tournament->setCreatedBy($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTournament(Tournament $tournament): self
-    {
-        if ($this->tournaments->removeElement($tournament)) {
-            // set the owning side to null (unless already changed)
-            if ($tournament->getCreatedBy() === $this) {
-                $tournament->setCreatedBy(null);
-            }
-        }
 
         return $this;
     }

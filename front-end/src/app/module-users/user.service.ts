@@ -27,7 +27,7 @@ export class UserService {
 
     // Read
     getUsers(): Observable<User> {
-        return this.http.get<User>(Env.API_URL + 'users')
+        return this.http.get<User>(Env.API_URL + 'users.json')
         .pipe(retry(1), catchError(this.handleError),)
     }
 
