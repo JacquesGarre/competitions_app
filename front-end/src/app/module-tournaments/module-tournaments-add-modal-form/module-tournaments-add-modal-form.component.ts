@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators, FormBuilder, ValidatorFn, AbstractControl, FormsModule } from '@angular/forms';
-import { faUsers, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faGem, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-module-tournaments-add-modal-form',
@@ -10,7 +10,7 @@ import { faUsers, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-soli
 })
 export class ModuleTournamentsAddModalFormComponent {
 
-    faUsers = faUsers;
+    faGem = faGem;
 
     name: string = '';
     organization: string = '';

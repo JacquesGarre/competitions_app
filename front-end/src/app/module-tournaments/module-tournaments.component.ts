@@ -106,18 +106,17 @@ export class ModuleTournamentsComponent implements OnInit {
             if (result == 'save') {
                 this.ngxLoader.startLoader('page-loader');
                 let values = modalRef.componentInstance.addForm.value;
-                this.organizationService.getOrganization(values.organization).subscribe((data: any) => {
-                    let tournament: any = {
-                        name: values.name,
-                        organization: data,
-                        startDate: values.startDate,
-                        endDate: values.endDate,
-                        creator: this.currentUser
-                    }
-                    this.service.createTournament(tournament).subscribe(data => {
-                        this.initTournaments();
-                        this.ngxLoader.stopLoader('page-loader');
-                    })
+                let tournament: any = {
+                    name: values.name,
+                    organization: 'api/organizations/' + values.organization,
+                    startDate: values.startDate,
+                    endDate: values.endDate,
+                    creator: 'api/users/' + this.currentUser.id,
+                    registrationFormOpen: false
+                }
+                this.service.createTournament(tournament).subscribe(data => {
+                    this.initTournaments();
+                    this.ngxLoader.stopLoader('page-loader');
                 })
             }
         });
