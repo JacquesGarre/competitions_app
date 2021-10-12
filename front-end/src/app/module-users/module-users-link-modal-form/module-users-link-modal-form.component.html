@@ -8,14 +8,14 @@
 <div class="modal-body text-light bg-dark-gray rounded-0">
     <form [formGroup]="addForm" (ngSubmit)="submitForm()">
         <div class="modal-boy">
-            <label for="userId">User ID</label>
+            <label for="userId">User</label>
             <div class="input-group mb-4">
                 <select class="browser-default custom-select" name="userId"  id="userId" formControlName="userId">
                     <option *ngFor="let user of users" [value]="user.id">{{user.firstName}} {{user.lastName}}</option>
                 </select>
                 <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
                     <div *ngIf="addForm.get('userId')?.errors?.required">
-                        User ID is required.
+                        User is required.
                     </div>
                 </div>
             </div>

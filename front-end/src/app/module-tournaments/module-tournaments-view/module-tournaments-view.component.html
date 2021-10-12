@@ -4,7 +4,7 @@
 <!-- End of Loader -->
 
 <h4 class="mb-4 pr-4 pl-4 text-center">
-    <fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>
+    <fa-icon [icon]="faGem" class="mr-2"></fa-icon>
     <a routerLink="/admin/tournaments" class="text-light">Tournaments</a> <fa-icon [icon]="faChevronRight" class="ml-2" style="font-size: 16px;"></fa-icon> {{tournament.name}}
 </h4>
 
@@ -35,13 +35,53 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="subdomain" class="col-sm-3 col-form-label">Subdomain</label>
+                            <label for="organization" class="col-sm-3 col-form-label">Organization</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-gray pl-2" name="subdomain" [(ngModel)]="form.subdomain" required
-                                #subdomain="ngModel" [readonly]="isReadonly"/>
+                                <input type="text" class="form-control bg-gray pl-2" name="organization" [(ngModel)]="form.organization" required
+                                #organization="ngModel" [readonly]="isReadonly"/>
                             </div>
-                            <div class="alert alert-danger" role="alert" *ngIf="subdomain.errors && f.submitted">
-                                Name is required!
+                            <div class="alert alert-danger" role="alert" *ngIf="organization.errors && f.submitted">
+                                Organization is required!
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="address" class="col-sm-3 col-form-label">Address</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="address" [(ngModel)]="form.address" required
+                                #address="ngModel" [readonly]="isReadonly"/>
+                            </div>
+                            <div class="alert alert-danger" role="alert" *ngIf="address.errors && f.submitted">
+                                Address is required!
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="city" class="col-sm-3 col-form-label">City</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="city" [(ngModel)]="form.city" required
+                                #city="ngModel" [readonly]="isReadonly"/>
+                            </div>
+                            <div class="alert alert-danger" role="alert" *ngIf="city.errors && f.submitted">
+                                City is required!
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="postalCode" class="col-sm-3 col-form-label">Postal code</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="postalCode" [(ngModel)]="form.postalCode" required
+                                #postalCode="ngModel" [readonly]="isReadonly"/>
+                            </div>
+                            <div class="alert alert-danger" role="alert" *ngIf="postalCode.errors && f.submitted">
+                                Postal code is required!
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="country" class="col-sm-3 col-form-label">Country</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="country" [(ngModel)]="form.country" required
+                                #country="ngModel" [readonly]="isReadonly"/>
+                            </div>
+                            <div class="alert alert-danger" role="alert" *ngIf="country.errors && f.submitted">
+                                Country is required!
                             </div>
                         </div>
                     </div>
@@ -58,6 +98,37 @@
                             <div class="col-sm-9">
                                 <input type="updatedAt" class="form-control bg-gray pl-2" name="updatedAt" [value]="form.updatedAt | date:'dd/MM/yyyy HH:mm'" required
                                 readonly/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="creator" class="col-sm-3 col-form-label">Created By</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="creator" [(ngModel)]="form.creator" required
+                                #creator="ngModel" [readonly]="isReadonly"/>
+                            </div>
+                            <div class="alert alert-danger" role="alert" *ngIf="creator.errors && f.submitted">
+                                Created By is required!
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="startDate" class="col-sm-3 col-form-label">Start date</label>
+                            <div class="col-sm-9">
+                                <input type="startDate" class="form-control bg-gray pl-2" name="startDate" [value]="form.startDate | date:'dd/MM/yyyy HH:mm'" required
+                                readonly/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="endDate" class="col-sm-3 col-form-label">End date</label>
+                            <div class="col-sm-9">
+                                <input type="endDate" class="form-control bg-gray pl-2" name="endDate" [value]="form.endDate | date:'dd/MM/yyyy HH:mm'" required
+                                readonly/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="registrationFormOpen" class="col-sm-3 col-form-label">Registration Form</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="registrationFormOpen" [value]="form.registrationFormOpen == false ? 'Closed' : 'Open'" required
+                                [readonly]="isReadonly"/>
                             </div>
                         </div>
                     </div>

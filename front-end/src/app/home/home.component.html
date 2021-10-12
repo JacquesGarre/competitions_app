@@ -7,13 +7,9 @@
 
     <a href="/register" class="nav-link" routerLink="/register" *ngIf="!isLoggedIn">Sign Up</a>
     <a href="/login" class="nav-link" routerLink="/login" *ngIf="!isLoggedIn">Login</a>
-        
     <a class="nav-link"href (click)="logout()" *ngIf="isLoggedIn">Logout</a>
 
-    <a class="nav-link" href="/admin" routerLink="/admin" *ngIf="showAdminBoard">
-        Administration
-    </a>
-    <a class="nav-link" href="/admin" routerLink="/admin" *ngIf="showModeratorBoard">
+    <a class="nav-link" href="/admin" routerLink="/admin" *ngIf="showAdminBoard || showModeratorBoard">
         Administration
     </a>
     <a class="nav-link" href="/user" routerLink="/user" *ngIf="showUserBoard">

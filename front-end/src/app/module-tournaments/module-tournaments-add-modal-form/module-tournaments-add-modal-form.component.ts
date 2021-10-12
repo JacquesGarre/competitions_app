@@ -2,6 +2,9 @@ import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators, FormBuilder, ValidatorFn, AbstractControl, FormsModule } from '@angular/forms';
 import { faGem, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { OrganizationService } from 'src/app/module-organizations/organization.service';
+import { TokenStorageService } from 'src/app/_services/token-storage.service';
+import { UserService } from 'src/app/module-users/user.service';
 
 @Component({
     selector: 'app-module-tournaments-add-modal-form',
@@ -17,10 +20,15 @@ export class ModuleTournamentsAddModalFormComponent {
     startDate: Date = new Date();
     endDate: Date = new Date();
     addForm = new FormGroup({});
+    currentUser: any;
+    organizations: any;
 
     constructor(
         public activeModal: NgbActiveModal,
-        private formBuilder: FormBuilder
+        private formBuilder: FormBuilder,
+        public organizationService: OrganizationService,
+        public token: TokenStorageService,
+        public userService: UserService
     ) { 
         this.addForm = new FormGroup({
             name: new FormControl(
@@ -45,6 +53,18 @@ export class ModuleTournamentsAddModalFormComponent {
                 []
             )
         });
+        this.userService.getCurrentUser().subscribe((data: any) => {
+            this.currentUser = data[0];
+            if(this.currentUser.roles.includes('ROLE_ADMIN')){
+                this.organizationService.getOrganizations().subscribe((data: any) => {
+                    this.organizations = data;
+                })
+            } else {
+                this.organizationService.getOrganizationsByUser(this.currentUser.id).subscribe((data: any) => {
+                    this.organizations = data;
+                })
+            }
+        })
     }
 
     private createForm() {

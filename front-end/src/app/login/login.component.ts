@@ -25,13 +25,9 @@ export class LoginComponent implements OnInit {
         if (this.tokenStorage.getToken()) {
             this.isLoggedIn = true;
             this.roles = this.tokenStorage.getUser().roles;
-            if(this.roles.includes('ROLE_ADMIN')){
+            if(this.roles.includes('ROLE_ADMIN') || this.roles.includes('ROLE_MODERATOR')){
                 this.router.navigate(['/admin'])
-            }
-            if(this.roles.includes('ROLE_MODERATOR')){
-                this.router.navigate(['/mod'])
-            }
-            if(this.roles.includes('ROLE_USER') && !this.roles.includes('ROLE_ADMIN') && !this.roles.includes('ROLE_MODERATOR')){
+            } else {
                 this.router.navigate(['/user'])
             }
         }
@@ -47,13 +43,9 @@ export class LoginComponent implements OnInit {
                 this.isLoginFailed = false;
                 this.isLoggedIn = true;
                 this.roles = this.tokenStorage.getUser().roles;
-                if(this.roles.includes('ROLE_ADMIN')){
+                if(this.roles.includes('ROLE_ADMIN') || this.roles.includes('ROLE_MODERATOR')){
                     this.router.navigate(['/admin'])
-                }
-                if(this.roles.includes('ROLE_MODERATOR')){
-                    this.router.navigate(['/mod'])
-                }
-                if(this.roles.includes('ROLE_USER') && !this.roles.includes('ROLE_ADMIN') && !this.roles.includes('ROLE_MODERATOR')){
+                } else {
                     this.router.navigate(['/user'])
                 }
             },

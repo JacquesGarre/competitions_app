@@ -26,7 +26,8 @@ export class ModuleUsersLinkModalFormComponent {
             userId: new FormControl(
                 this.userId, 
                 [
-                    Validators.required
+                    Validators.required,
+                    Validators.minLength(1)
                 ]
             )
         });

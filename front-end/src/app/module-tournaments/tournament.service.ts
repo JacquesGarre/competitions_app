@@ -20,6 +20,8 @@ export class TournamentService {
 
     // Create
     createTournament(tournament: any): Observable<Tournament> {
+        console.log('tournament:');
+        console.log(tournament);
         return this.http.post<Tournament>(Env.API_URL + 'tournaments', JSON.stringify(tournament), this.httpOptions)
         .pipe(retry(1), catchError(this.handleError))
     }  

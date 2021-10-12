@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -48,7 +49,7 @@ import { ModuleTournamentsAddModalFormComponent } from './module-tournaments/mod
 import { ModuleTournamentsLinkModalFormComponent } from './module-tournaments/module-tournaments-link-modal-form/module-tournaments-link-modal-form.component';
 import { ModuleTournamentsViewComponent } from './module-tournaments/module-tournaments-view/module-tournaments-view.component';
 
-
+import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     "bgsColor": "red",
@@ -112,6 +113,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     ],  
     imports: [
         BrowserModule,
+        BrowserAnimationsModule,
         AppRoutingModule,
         RouterModule,
         FormsModule,
@@ -122,10 +124,13 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         DataTablesModule,
         NgxUiLoaderModule.forRoot(ngxUiLoaderConfig), 
         NgxUiLoaderHttpModule, 
-        NgxUiLoaderRouterModule
+        NgxUiLoaderRouterModule,
+        OwlDateTimeModule, 
+        OwlNativeDateTimeModule
     ],
     providers: [
-        authInterceptorProviders
+        authInterceptorProviders,
+        { provide: OWL_DATE_TIME_LOCALE, useValue: { useUtc: true } },
     ],
     bootstrap: [AppComponent]
 })

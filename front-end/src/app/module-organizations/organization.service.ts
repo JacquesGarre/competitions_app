@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Organization } from './organization';
 import { Env } from '../_globals/env';
+import { TokenStorageService } from '../_services/token-storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class OrganizationService {
@@ -16,7 +17,10 @@ export class OrganizationService {
         })
     }
 
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+        public token: TokenStorageService
+    ) { }
 
     // Create
     createOrganization(organization: any): Observable<Organization> {

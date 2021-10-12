@@ -12,6 +12,7 @@
 * Copyright 2011-2020 Twitter, Inc.
 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
 */
+@import "~ng-pick-datetime/assets/style/picker.min.css";
 
 :root {
     --blue: #4e73df;
@@ -1908,6 +1909,10 @@ textarea.form-control {
     flex-wrap: wrap;
     margin-right: -5px;
     margin-left: -5px;
+}
+
+.modal-content input {
+    color:var(--dark-gray);
 }
 
 .form-row>.col, .form-row>[class*="col-"] {
@@ -10701,4 +10706,26 @@ ng2-smart-table-pager {
 
 .modal-content {
     border-radius: 0;
+}
+
+.cdk-overlay-container {
+    position: fixed;
+    z-index: 10001;
+}
+
+.owl-dt-control-arrow-button svg {
+    fill: black;
+}
+
+.owl-dt-calendar-table .owl-dt-calendar-cell-selected {
+    color: rgba(255,255,255,.85);
+    background-color: var(--orange);
+}
+
+.owl-dt-container-control-button {
+    color: var(--orange);
+}
+
+.form-control, .custom-select {
+    border-radius: 0.35rem !important;
 }

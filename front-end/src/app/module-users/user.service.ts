@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { User } from './user';
 import { Env } from '../_globals/env';
+import { TokenStorageService } from '../_services/token-storage.service';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -16,7 +17,10 @@ export class UserService {
         })
     }
 
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+        public token: TokenStorageService,
+    ) { }
 
     // Create
     createUser(user: any): Observable<User> {
@@ -39,6 +43,13 @@ export class UserService {
     // Read by id
     getUser(id: any): Observable<User> {
         return this.http.get<User>(Env.API_URL + 'users/' + id + '.json')
+        .pipe(retry(1), catchError(this.handleError))
+    }  
+
+    // Gets current user
+    getCurrentUser(): Observable<User> {
+        let user = this.token.getUser();
+        return this.http.get<User>(Env.API_URL + 'users.json?email='+user.email)
         .pipe(retry(1), catchError(this.handleError))
     }  
 

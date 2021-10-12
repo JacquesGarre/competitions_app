@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { DateTimeAdapter } from 'ng-pick-datetime';
 import { TokenStorageService } from './_services/token-storage.service';
 import { UserService } from './module-users/user.service';
 
@@ -16,9 +17,10 @@ export class AppComponent {
     user: any;
 
     constructor(
+        dateTimeAdapter: DateTimeAdapter<any>,
         private tokenStorageService: TokenStorageService, 
         public userService: UserService
-    ) { }
+    ) {}
 
     ngOnInit(): void {
         this.isLoggedIn = !!this.tokenStorageService.getToken();

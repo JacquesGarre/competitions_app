@@ -22,31 +22,21 @@
 
 
                 <!-- ADMIN -->
-                <a class="dropdown-item" href="/admin/profile" routerLink="/admin/profile" *ngIf="showAdminBoard">
+                <a class="dropdown-item" href="/admin/profile" routerLink="/admin/profile" *ngIf="showAdminBoard || showModeratorBoard">
                     <fa-icon [icon]="faUser" class="mr-2 text-gray-400"></fa-icon>
                     Profile
                 </a>
-                <a class="dropdown-item" href="/admin" routerLink="/admin" *ngIf="showAdminBoard">
-                    <fa-icon [icon]="faCog" class="mr-2 text-gray-400"></fa-icon>
-                    Administration
-                </a>
-
-                <!-- MODERATOR -->
-                <a class="dropdown-item" href="/admin/profile" routerLink="/admin/profile" *ngIf="showModeratorBoard">
-                    <fa-icon [icon]="faUser" class="mr-2 text-gray-400"></fa-icon>
-                    Profile
-                </a>
-                <a class="dropdown-item" href="/admin" routerLink="/admin" *ngIf="showModeratorBoard">
+                <a class="dropdown-item" href="/admin" routerLink="/admin" *ngIf="showAdminBoard || showModeratorBoard">
                     <fa-icon [icon]="faCog" class="mr-2 text-gray-400"></fa-icon>
                     Administration
                 </a>
 
                 <!-- USER -->
-                <a class="dropdown-item" href="/user/profile" routerLink="/user/profile" *ngIf="showUserBoard && !showModeratorBoard">
+                <a class="dropdown-item" href="/user/profile" routerLink="/user/profile" *ngIf="showUserBoard && !showModeratorBoard && !showAdminBoard">
                     <fa-icon [icon]="faUser" class="mr-2 text-gray-400"></fa-icon>
                     Profile
                 </a>
-                <a class="dropdown-item" href="/user" routerLink="/user"  *ngIf="showUserBoard && !showModeratorBoard">
+                <a class="dropdown-item" href="/user" routerLink="/user"  *ngIf="(showUserBoard || showModeratorBoard) && !showAdminBoard">
                     <fa-icon [icon]="faCog" class="mr-2 text-gray-400"></fa-icon>
                     My Account
                 </a>

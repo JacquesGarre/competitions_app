@@ -109,8 +109,8 @@ export class ModuleTournamentsComponent implements OnInit {
                 let tournament: any = {
                     name: values.name,
                     organization: 'api/organizations/' + values.organization,
-                    startDate: values.startDate,
-                    endDate: values.endDate,
+                    startDate: values.startDate.toLocaleString('fr-FR'),
+                    endDate: values.endDate.toLocaleString('fr-FR'),
                     creator: 'api/users/' + this.currentUser.id,
                     registrationFormOpen: false
                 }
