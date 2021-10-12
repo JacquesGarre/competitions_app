@@ -10729,3 +10729,10 @@ ng2-smart-table-pager {
 .form-control, .custom-select {
     border-radius: 0.35rem !important;
 }
+
+.custom-select:disabled {
+    border: 0;
+    opacity: 1;
+    background: none;
+    padding-left: 0.5rem !important;
+}

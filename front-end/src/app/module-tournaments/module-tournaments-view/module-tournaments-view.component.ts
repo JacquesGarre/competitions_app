@@ -27,13 +27,16 @@ export class ModuleTournamentsViewComponent implements OnInit {
         organization: '',
         registrationFormOpen: '',
         creator: '',
+        startDate: '',
+        endDate: '',
         createdAt: '',
         updatedAt: '',
     };
     untouchedTournament: any;
     public isReadonly: boolean = true;
-    users: any = [];
+    users: any;
     currentUser: any;
+    organizations: any;
 
     form: any = {
         id: null,
@@ -41,6 +44,8 @@ export class ModuleTournamentsViewComponent implements OnInit {
         organization: null,
         registrationFormOpen: null,
         creator: null,
+        startDate: null,
+        endDate: null,
         createdAt: null,
         updatedAt: null,
     };
@@ -61,7 +66,22 @@ export class ModuleTournamentsViewComponent implements OnInit {
             this.tournament = data;
             this.untouchedTournament = this.tournament;
             this.form = this.tournament;
-            this.ngxLoader.stopLoader('page-loader');
+            this.userService.getCurrentUser().subscribe((data: any) => {
+                this.currentUser = data[0];
+                if(this.currentUser.roles.includes('ROLE_ADMIN')){
+                    this.organizationService.getOrganizations().subscribe((data: any) => {
+                        this.organizations = data;
+                    })
+                } else {
+                    this.organizationService.getOrganizationsByUser(this.currentUser.id).subscribe((data: any) => {
+                        this.organizations = data;
+                    })
+                }
+                this.userService.getUsers().subscribe((data: any) => {
+                    this.users = data;
+                    this.ngxLoader.stopLoader('page-loader');
+                })
+            })
         })
     }
 
@@ -81,15 +101,24 @@ export class ModuleTournamentsViewComponent implements OnInit {
     }
 
     onSubmit() {
-        const name = this.form.name;
-        this.service.updateTournament(this.tournament.id, {
+        const updatedTournament = {
             name: this.form.name,
             organization: this.form.organization,
+            address: this.form.address,
+            city: this.form.city,
+            postalCode: this.form.postalCode,
+            country: this.form.country,
+            startDate: this.form.startDate,
+            endDate: this.form.endDate,
             registrationFormOpen: this.form.registrationFormOpen
-        }).subscribe((data: any) => {
+        }
+        console.log(updatedTournament);
+        /*
+        this.service.updateTournament(this.tournament.id, updatedTournament).subscribe((data: any) => {
             this.tournament = data;
             this.form = data;
         })
+        */
         this.toggleForm()
     }
 

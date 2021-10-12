@@ -37,11 +37,9 @@
                         <div class="form-group row">
                             <label for="organization" class="col-sm-3 col-form-label">Organization</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-gray pl-2" name="organization" [(ngModel)]="form.organization" required
-                                #organization="ngModel" [readonly]="isReadonly"/>
-                            </div>
-                            <div class="alert alert-danger" role="alert" *ngIf="organization.errors && f.submitted">
-                                Organization is required!
+                                <select class="browser-default custom-select bg-gray text-light" name="organization"  id="organization" [(ngModel)]="form.organization" #organization="ngModel"  [disabled]="isReadonly">
+                                    <option *ngFor="let organization of organizations" [value]="'/api/organizations/' + organization.id">{{organization.name}}</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
@@ -89,38 +87,40 @@
                         <div class="form-group row">
                             <label for="createdAt" class="col-sm-3 col-form-label">Created at</label>
                             <div class="col-sm-9">
-                                <input type="createdAt" class="form-control bg-gray pl-2" name="createdAt" [value]="form.createdAt | date:'dd/MM/yyyy HH:mm'" required
+                                <input type="text" class="form-control bg-gray pl-2" name="createdAt" [value]="form.createdAt | date:'dd/MM/yyyy HH:mm'" required
                                 readonly/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="updatedAt" class="col-sm-3 col-form-label">Updated at</label>
                             <div class="col-sm-9">
-                                <input type="updatedAt" class="form-control bg-gray pl-2" name="updatedAt" [value]="form.updatedAt | date:'dd/MM/yyyy HH:mm'" required
+                                <input type="text" class="form-control bg-gray pl-2" name="updatedAt" [value]="form.updatedAt | date:'dd/MM/yyyy HH:mm'" required
                                 readonly/>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="creator" class="col-sm-3 col-form-label">Created By</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-gray pl-2" name="creator" [(ngModel)]="form.creator" required
-                                #creator="ngModel" [readonly]="isReadonly"/>
-                            </div>
-                            <div class="alert alert-danger" role="alert" *ngIf="creator.errors && f.submitted">
-                                Created By is required!
+                                <select class="browser-default custom-select bg-gray text-light" name="creator"  id="creator" [(ngModel)]="form.creator" #creator="ngModel" disabled>
+                                    <option *ngFor="let user of users" [value]="'/api/users/' + user.id">{{user.firstName}} {{user.lastName}}</option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="startDate" class="col-sm-3 col-form-label">Start date</label>
                             <div class="col-sm-9">
-                                <input type="startDate" class="form-control bg-gray pl-2" name="startDate" [value]="form.startDate | date:'dd/MM/yyyy HH:mm'" required
-                                readonly/>
+                                <input 
+                                    type="text" [owlDateTime]="startDate" [owlDateTimeTrigger]="startDate" 
+                                    class="form-control bg-gray pl-2" name="startDate"
+                                    id="startDate"
+                                />
+                                <owl-date-time #startDate></owl-date-time>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="endDate" class="col-sm-3 col-form-label">End date</label>
                             <div class="col-sm-9">
-                                <input type="endDate" class="form-control bg-gray pl-2" name="endDate" [value]="form.endDate | date:'dd/MM/yyyy HH:mm'" required
+                                <input type="text" class="form-control bg-gray pl-2" name="endDate" [value]="form.endDate | date:'dd/MM/yyyy HH:mm'" required
                                 readonly/>
                             </div>
                         </div>
@@ -147,5 +147,5 @@
 </div>
 
 <!-- Sous module users -->
-<app-module-users-submodule [parentModule]="'tournaments'" [parent]="tournament"></app-module-users-submodule>
+<!-- <app-module-users-submodule [parentModule]="'tournaments'" [parent]="tournament"></app-module-users-submodule> -->
 <!-- End::Sous module users -->
