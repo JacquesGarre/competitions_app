@@ -32,6 +32,7 @@ export class ModuleTournamentsViewComponent implements OnInit {
         endDate: '',
         createdAt: '',
         updatedAt: '',
+        description: ''
     };
     untouchedTournament: any;
     public isReadonly: boolean = true;
@@ -50,6 +51,7 @@ export class ModuleTournamentsViewComponent implements OnInit {
         endDate: null,
         createdAt: null,
         updatedAt: null,
+        description: ''
     };
 
     constructor(
@@ -116,9 +118,9 @@ export class ModuleTournamentsViewComponent implements OnInit {
             city: this.form.city,
             postalCode: this.form.postalCode,
             country: this.form.country,
-            startDate: new Date(Date.parse(this.startDate)+7200*1000).toUTCString(),
-            endDate: new Date(Date.parse(this.endDate)+7200*1000).toUTCString(),
-            registrationFormOpen: this.form.registrationFormOpen == "false" ? false : true,
+            startDate: new Date(Date.parse(this.startDate)+3600*1000).toUTCString(),
+            endDate: new Date(Date.parse(this.endDate)+3600*1000).toUTCString(),
+            registrationFormOpen: this.form.registrationFormOpen && this.form.registrationFormOpen !== 'false',
             description: this.form.description,
         }
         this.service.updateTournament(this.tournament.id, updatedTournament).subscribe((data: any) => {

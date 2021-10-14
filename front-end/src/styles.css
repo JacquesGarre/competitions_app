@@ -10745,7 +10745,8 @@ ng2-smart-table-pager {
     border-top-right-radius: 0.35em;
 }
 
-.ql-editor {
+.ql-editor[contenteditable="true"] {
+    background-color: var(--gray);
     border-bottom-left-radius: 0.35em;
     border-bottom-right-radius: 0.35em;
 }

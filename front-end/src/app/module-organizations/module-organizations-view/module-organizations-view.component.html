@@ -63,11 +63,11 @@
                     </div>
                 </div>
                 <div class="row mt-2" *ngIf=!isReadonly>
-                    <div class="col-md-12">
-                        <button class="btn btn-success mr-2" *ngIf=!isReadonly (click)=onSubmit()>
+                    <div class="col-md-12 text-right">
+                        <button class="btn btn-outline-success mr-2" *ngIf=!isReadonly (click)=onSubmit()>
                             Save
                         </button>
-                        <a class="btn btn-danger" *ngIf=!isReadonly (click)="toggleForm(); resetForm()">Cancel</a>
+                        <a class="btn btn-outline-danger" *ngIf=!isReadonly (click)="toggleForm(); resetForm()">Cancel</a>
                     </div>
                 </div>
             </form>

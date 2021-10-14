@@ -136,11 +136,11 @@
                     </div>
                 </div>
                 <div class="row mt-2" *ngIf=!isReadonly>
-                    <div class="col-md-12">
-                        <button class="btn btn-success mr-2" *ngIf=!isReadonly (click)=onSubmit()>
+                    <div class="col-md-12 text-right">
+                        <button class="btn btn-outline-success mr-2" *ngIf=!isReadonly (click)=onSubmit()>
                             Save
                         </button>
-                        <a class="btn btn-danger" *ngIf=!isReadonly (click)="toggleForm(); resetForm()">Cancel</a>
+                        <a class="btn btn-outline-danger" *ngIf=!isReadonly (click)="toggleForm(); resetForm()">Cancel</a>
                     </div>
                 </div>
         </div>
@@ -152,7 +152,7 @@
         <div class="card-header bg-dark text-light border-gray border-top-0 border-left-0 border-right-0 rounded-0 ">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-11">
-                    <h6 class="mb-0"><fa-icon [icon]="faAlignLeft" class="mr-2"></fa-icon>Informations</h6>
+                    <h6 class="mb-0"><fa-icon [icon]="faAlignLeft" class="mr-2"></fa-icon>Information</h6>
                 </div>
                 <div class="col-md-1">
                     <a class="btn btn-dark-gray btn-sm float-right" (click)=toggleForm() *ngIf=isReadonly><fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Edit</a>
@@ -164,7 +164,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="form-group row">
-                            <quill-view [content]="form.description" format="html" theme="snow" *ngIf="isReadonly"></quill-view>
+                            <quill-view [content]="form.description !== undefined ? form.description : '<i>No information filled</i>'" format="html" theme="snow" *ngIf="isReadonly"></quill-view>
                             <div class="col-sm-12">
                                 <quill-editor [(ngModel)]="form.description" name="description" *ngIf="!isReadonly"></quill-editor>
                             </div>
@@ -172,11 +172,11 @@
                     </div>
                 </div>
                 <div class="row mt-2" *ngIf=!isReadonly>
-                    <div class="col-md-12">
-                        <button class="btn btn-success mr-2" *ngIf=!isReadonly (click)=onSubmit()>
+                    <div class="col-md-12 text-right">
+                        <button class="btn btn-outline-success mr-2" *ngIf=!isReadonly (click)=onSubmit()>
                             Save
                         </button>
-                        <a class="btn btn-danger" *ngIf=!isReadonly (click)="toggleForm(); resetForm()">Cancel</a>
+                        <a class="btn btn-outline-danger" *ngIf=!isReadonly (click)="toggleForm(); resetForm()">Cancel</a>
                     </div>
                 </div>
             </form>
