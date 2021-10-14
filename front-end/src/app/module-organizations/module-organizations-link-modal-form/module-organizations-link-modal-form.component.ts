@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators, FormBuilder, ValidatorFn, AbstractControl, FormsModule } from '@angular/forms';
-import { faSitemap, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faGem, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { OrganizationService } from '../organization.service';
 @Component({
     selector: 'app-module-organizations-link-modal-form',
@@ -10,7 +10,7 @@ import { OrganizationService } from '../organization.service';
 })
 export class ModuleOrganizationsLinkModalFormComponent {
 
-    faSitemap = faSitemap;
+    faGem = faGem;
     organizationId: any = 0;
     addForm = new FormGroup({});
     organizations: any = [];

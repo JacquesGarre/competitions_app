@@ -1,0 +1,5 @@
+quill-editor[name="description"] {
+    display: block;
+    height: 300px;
+    margin-bottom: 60px;
+}

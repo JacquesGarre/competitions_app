@@ -13,6 +13,9 @@
 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
 */
 @import "~ng-pick-datetime/assets/style/picker.min.css";
+@import '~quill/dist/quill.core.css';
+@import '~quill/dist/quill.bubble.css';
+@import '~quill/dist/quill.snow.css';
 
 :root {
     --blue: #4e73df;
@@ -10735,4 +10738,14 @@ ng2-smart-table-pager {
     opacity: 1;
     background: none;
     padding-left: 0.5rem !important;
+}
+
+.ql-toolbar.ql-snow {
+    border-top-left-radius: 0.35em;
+    border-top-right-radius: 0.35em;
+}
+
+.ql-editor {
+    border-bottom-left-radius: 0.35em;
+    border-bottom-right-radius: 0.35em;
 }

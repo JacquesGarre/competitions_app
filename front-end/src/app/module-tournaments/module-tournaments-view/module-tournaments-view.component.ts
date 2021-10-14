@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Tournament } from '../tournament';
 import { TournamentService } from '../tournament.service';
 import { UserService } from '../../module-users/user.service';
-import { faUsers, faTrashAlt, faPencilAlt, faPlus, faChevronRight, faInfoCircle, faGem } from '@fortawesome/free-solid-svg-icons';
+import { faUsers, faTrashAlt, faPencilAlt, faPlus, faChevronRight, faInfoCircle, faSitemap, faAlignLeft } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { OrganizationService } from 'src/app/module-organizations/organization.service';
@@ -19,7 +19,8 @@ export class ModuleTournamentsViewComponent implements OnInit {
     faPencilAlt = faPencilAlt;
     faChevronRight = faChevronRight;
     faInfoCircle = faInfoCircle;
-    faGem = faGem;
+    faSitemap = faSitemap;
+    faAlignLeft = faAlignLeft;
 
     tournament: any = {
         id: '',
@@ -37,6 +38,8 @@ export class ModuleTournamentsViewComponent implements OnInit {
     users: any;
     currentUser: any;
     organizations: any;
+    startDate: any;
+    endDate: any;
 
     form: any = {
         id: null,
@@ -44,7 +47,6 @@ export class ModuleTournamentsViewComponent implements OnInit {
         organization: null,
         registrationFormOpen: null,
         creator: null,
-        startDate: null,
         endDate: null,
         createdAt: null,
         updatedAt: null,
@@ -58,12 +60,18 @@ export class ModuleTournamentsViewComponent implements OnInit {
         private ngxLoader: NgxUiLoaderService
     ){
         this.ngxLoader.startLoader('page-loader');
+        this.startDate = new Date();
+        this.endDate = new Date();
     }
 
     ngOnInit(): void {
         const id = this.route.snapshot.paramMap.get('id');
         this.service.getTournament(id).subscribe((data: any) => {
             this.tournament = data;
+
+            this.startDate = this.tournament.startDate;
+            this.endDate = this.tournament.endDate;
+
             this.untouchedTournament = this.tournament;
             this.form = this.tournament;
             this.userService.getCurrentUser().subscribe((data: any) => {
@@ -108,17 +116,15 @@ export class ModuleTournamentsViewComponent implements OnInit {
             city: this.form.city,
             postalCode: this.form.postalCode,
             country: this.form.country,
-            startDate: this.form.startDate,
-            endDate: this.form.endDate,
-            registrationFormOpen: this.form.registrationFormOpen
+            startDate: new Date(Date.parse(this.startDate)+7200*1000).toUTCString(),
+            endDate: new Date(Date.parse(this.endDate)+7200*1000).toUTCString(),
+            registrationFormOpen: this.form.registrationFormOpen == "false" ? false : true,
+            description: this.form.description,
         }
-        console.log(updatedTournament);
-        /*
         this.service.updateTournament(this.tournament.id, updatedTournament).subscribe((data: any) => {
             this.tournament = data;
             this.form = data;
         })
-        */
         this.toggleForm()
     }
 

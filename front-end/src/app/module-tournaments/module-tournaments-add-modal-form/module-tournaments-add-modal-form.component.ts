@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators, FormBuilder, ValidatorFn, AbstractControl, FormsModule } from '@angular/forms';
-import { faGem, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faGem, faTrashAlt, faPencilAlt, faPlus, faSitemap } from '@fortawesome/free-solid-svg-icons';
 import { OrganizationService } from 'src/app/module-organizations/organization.service';
 import { TokenStorageService } from 'src/app/_services/token-storage.service';
 import { UserService } from 'src/app/module-users/user.service';
@@ -13,7 +13,7 @@ import { UserService } from 'src/app/module-users/user.service';
 })
 export class ModuleTournamentsAddModalFormComponent {
 
-    faGem = faGem;
+    faSitemap = faSitemap;
 
     name: string = '';
     organization: string = '';

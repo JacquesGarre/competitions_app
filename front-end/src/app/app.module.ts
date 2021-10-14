@@ -50,6 +50,7 @@ import { ModuleTournamentsLinkModalFormComponent } from './module-tournaments/mo
 import { ModuleTournamentsViewComponent } from './module-tournaments/module-tournaments-view/module-tournaments-view.component';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
+import { QuillModule } from 'ngx-quill';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     "bgsColor": "red",
@@ -126,11 +127,12 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         NgxUiLoaderHttpModule, 
         NgxUiLoaderRouterModule,
         OwlDateTimeModule, 
-        OwlNativeDateTimeModule
+        OwlNativeDateTimeModule,
+        QuillModule.forRoot()
     ],
     providers: [
         authInterceptorProviders,
-        { provide: OWL_DATE_TIME_LOCALE, useValue: { useUtc: true } },
+        { provide: OWL_DATE_TIME_LOCALE, useValue: 'fr' },
     ],
     bootstrap: [AppComponent]
 })

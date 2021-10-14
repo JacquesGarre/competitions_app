@@ -4,10 +4,12 @@
 <!-- End of Loader -->
 
 <h4 class="mb-4 pr-4 pl-4 text-center">
-    <fa-icon [icon]="faGem" class="mr-2"></fa-icon>
+    <fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>
     <a routerLink="/admin/tournaments" class="text-light">Tournaments</a> <fa-icon [icon]="faChevronRight" class="ml-2" style="font-size: 16px;"></fa-icon> {{tournament.name}}
 </h4>
 
+
+<form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
 <div class="col-md-12 text-gray">
     <div class="card card-container shadow rounded-0 bg-dark-gray border-0">
         <div class="card-header bg-dark text-light border-gray border-top-0 border-left-0 border-right-0 rounded-0 ">
@@ -21,7 +23,7 @@
             </div>
         </div> 
         <div class="card-body text-light">
-            <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+            
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
@@ -109,26 +111,62 @@
                         <div class="form-group row">
                             <label for="startDate" class="col-sm-3 col-form-label">Start date</label>
                             <div class="col-sm-9">
-                                <input 
-                                    type="text" [owlDateTime]="startDate" [owlDateTimeTrigger]="startDate" 
-                                    class="form-control bg-gray pl-2" name="startDate"
-                                    id="startDate"
-                                />
-                                <owl-date-time #startDate></owl-date-time>
+                                <input class="form-control bg-gray pl-2" [(ngModel)]="startDate"  [ngModelOptions]="{standalone: true}"
+                                    [owlDateTimeTrigger]="startDatePicker" [owlDateTime]="startDatePicker" [readonly]="isReadonly">
+                                <owl-date-time #startDatePicker [disabled]="isReadonly"></owl-date-time>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="endDate" class="col-sm-3 col-form-label">End date</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-gray pl-2" name="endDate" [value]="form.endDate | date:'dd/MM/yyyy HH:mm'" required
-                                readonly/>
+                                <input class="form-control bg-gray pl-2" [(ngModel)]="endDate"  [ngModelOptions]="{standalone: true}"
+                                    [owlDateTimeTrigger]="endDatePicker" [owlDateTime]="endDatePicker" [readonly]="isReadonly">
+                                <owl-date-time #endDatePicker [disabled]="isReadonly"></owl-date-time>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label for="registrationFormOpen" class="col-sm-3 col-form-label">Registration Form</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-gray pl-2" name="registrationFormOpen" [value]="form.registrationFormOpen == false ? 'Closed' : 'Open'" required
-                                [readonly]="isReadonly"/>
+                                <select class="browser-default custom-select bg-gray text-light" name="registrationFormOpen"  id="registrationFormOpen" [(ngModel)]="form.registrationFormOpen" #registrationFormOpen="ngModel"  [disabled]="isReadonly">
+                                    <option value="false">Closed</option>
+                                    <option value="true">Open</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2" *ngIf=!isReadonly>
+                    <div class="col-md-12">
+                        <button class="btn btn-success mr-2" *ngIf=!isReadonly (click)=onSubmit()>
+                            Save
+                        </button>
+                        <a class="btn btn-danger" *ngIf=!isReadonly (click)="toggleForm(); resetForm()">Cancel</a>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 text-gray mt-5">
+    <div class="card card-container shadow rounded-0 bg-dark-gray border-0">
+        <div class="card-header bg-dark text-light border-gray border-top-0 border-left-0 border-right-0 rounded-0 ">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-11">
+                    <h6 class="mb-0"><fa-icon [icon]="faAlignLeft" class="mr-2"></fa-icon>Informations</h6>
+                </div>
+                <div class="col-md-1">
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=toggleForm() *ngIf=isReadonly><fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Edit</a>
+                </div>
+            </div>
+        </div> 
+        <div class="card-body text-light">
+            <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group row">
+                            <quill-view [content]="form.description" format="html" theme="snow" *ngIf="isReadonly"></quill-view>
+                            <div class="col-sm-12">
+                                <quill-editor [(ngModel)]="form.description" name="description" *ngIf="!isReadonly"></quill-editor>
                             </div>
                         </div>
                     </div>
@@ -145,6 +183,7 @@
         </div>
     </div>
 </div>
+</form>
 
 <!-- Sous module users -->
 <!-- <app-module-users-submodule [parentModule]="'tournaments'" [parent]="tournament"></app-module-users-submodule> -->
