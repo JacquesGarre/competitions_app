@@ -3,10 +3,10 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Pool } from '../pool';
 import { PoolService } from '../pool.service';
 import { UserService } from '../../module-users/user.service';
-import { faUser, faTrashAlt, faPencilAlt, faPlus, faChevronRight, faInfoCircle, faSitemap, faAlignLeft, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faTrashAlt, faPencilAlt, faPlus, faChevronRight, faInfoCircle, faSitemap, faAlignLeft, faCog, faObjectUngroup } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
-import { OrganizationService } from 'src/app/module-organizations/organization.service';
+import { TournamentService } from 'src/app/module-tournaments/tournament.service';
 
 @Component({
     selector: 'app-module-pools-view',
@@ -22,13 +22,15 @@ export class ModulePoolsViewComponent implements OnInit {
     faSitemap = faSitemap;
     faAlignLeft = faAlignLeft;
     faCog = faCog;
+    faObjectUngroup = faObjectUngroup;
 
     pool: any = {
         id: '',
         name: '',
-        organization: '',
-        registrationFormOpen: '',
-        creator: '',
+        tournament: '',
+        price: '',
+        minPoints: '',
+        maxPoints: '',
         startDate: '',
         endDate: '',
         createdAt: '',
@@ -39,26 +41,28 @@ export class ModulePoolsViewComponent implements OnInit {
     public isReadonly: boolean = true;
     users: any;
     currentUser: any;
-    organizations: any;
+    tournaments: any;
     startDate: any;
     endDate: any;
 
     form: any = {
         id: null,
-        name: null,
-        organization: null,
-        registrationFormOpen: null,
-        creator: null,
-        endDate: null,
-        createdAt: null,
-        updatedAt: null,
+        name: '',
+        tournament: '',
+        price: '',
+        minPoints: '',
+        maxPoints: '',
+        startDate: '',
+        endDate: '',
+        createdAt: '',
+        updatedAt: '',
         description: ''
     };
 
     constructor(
         public service: PoolService,
         public userService: UserService,
-        public organizationService: OrganizationService,
+        public tournamentService: TournamentService,
         private route: ActivatedRoute,
         private ngxLoader: NgxUiLoaderService
     ){
@@ -80,12 +84,12 @@ export class ModulePoolsViewComponent implements OnInit {
             this.userService.getCurrentUser().subscribe((data: any) => {
                 this.currentUser = data[0];
                 if(this.currentUser.roles.includes('ROLE_ADMIN')){
-                    this.organizationService.getOrganizations().subscribe((data: any) => {
-                        this.organizations = data;
+                    this.tournamentService.getTournaments().subscribe((data: any) => {
+                        this.tournaments = data;
                     })
                 } else {
-                    this.organizationService.getOrganizationsByUser(this.currentUser.id).subscribe((data: any) => {
-                        this.organizations = data;
+                    this.tournamentService.getTournamentsByUser(this.currentUser.id).subscribe((data: any) => {
+                        this.tournaments = data;
                     })
                 }
                 this.userService.getUsers().subscribe((data: any) => {
@@ -114,14 +118,12 @@ export class ModulePoolsViewComponent implements OnInit {
     onSubmit() {
         const updatedPool = {
             name: this.form.name,
-            organization: this.form.organization,
-            address: this.form.address,
-            city: this.form.city,
-            postalCode: this.form.postalCode,
-            country: this.form.country,
+            tournament: this.form.tournament,
+            minPoints: parseInt(this.form.minPoints),
+            maxPoints: parseInt(this.form.maxPoints),
             startDate: new Date(Date.parse(this.startDate)+3600*1000).toUTCString(),
             endDate: new Date(Date.parse(this.endDate)+3600*1000).toUTCString(),
-            registrationFormOpen: this.form.registrationFormOpen && this.form.registrationFormOpen !== 'false',
+            price: parseFloat(this.form.price),
             description: this.form.description,
         }
         this.service.updatePool(this.pool.id, updatedPool).subscribe((data: any) => {

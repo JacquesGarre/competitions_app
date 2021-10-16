@@ -3,7 +3,7 @@
 <!-- End of Loader -->
 
 <h5 class="mb-4 pr-4">
-    <fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>
+    <fa-icon [icon]="faObjectUngroup" class="mr-2"></fa-icon>
     Pools
     <a [routerLink]="" class="p-0 text-secondary float-right" (click)=createPool()>
         <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
@@ -18,10 +18,12 @@
             <tr>
                 <th scope="col" class="text-center border-gray">Actions</th>
                 <th scope="col" class="border-gray">Name</th>
-                <th scope="col" class="border-gray">Organization</th>
+                <th scope="col" class="border-gray">Min points</th>
+                <th scope="col" class="border-gray">Max points</th>
+                <th scope="col" class="border-gray">Price</th>
                 <th scope="col" class="border-gray">Start Date</th>
                 <th scope="col" class="border-gray">End Date</th>
-                <th scope="col" class="border-gray">Registration Form</th>
+                <th scope="col" class="border-gray">Tournament</th>
                 <th scope="col" class="border-gray">Created at</th>
                 <th scope="col" class="border-gray">Updated at</th>
             </tr>
@@ -43,9 +45,14 @@
                     <td class="text-light">
                         <input class="form-control pl-0" type="text" formControlName="name" readonly/>
                     </td>
-
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" formControlName="organization" readonly/>
+                        <input class="form-control pl-0" type="text" formControlName="minPoints" readonly/>
+                    </td>
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" formControlName="maxPoints" readonly/>
+                    </td>
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" formControlName="price" readonly/>
                     </td>
                     <td class="text-light">
                         <input class="form-control pl-0" type="text" [value]="pool.startDate | date:'dd/MM/yyyy HH:mm'" readonly/>
@@ -54,7 +61,7 @@
                         <input class="form-control pl-0" type="text" [value]="pool.endDate | date:'dd/MM/yyyy HH:mm'" readonly/>
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="pool.registrationFormOpen == 1 ? 'Open' : 'Closed'"  readonly/>
+                        <input class="form-control pl-0" type="text" formControlName="tournament"  readonly/>
                     </td>
                     <td class="text-light">
                         <input class="form-control pl-0" type="text" [value]="pool.createdAt | date:'dd/MM/yyyy HH:mm'" readonly/>

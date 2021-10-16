@@ -7,7 +7,7 @@ import { PoolService } from '../pool.service';
 import { UserService } from '../../module-users/user.service';
 import { Router } from '@angular/router';
 
-import { faUser, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faSitemap, faTimes} from '@fortawesome/free-solid-svg-icons';
+import { faUser, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faSitemap, faTimes, faObjectUngroup } from '@fortawesome/free-solid-svg-icons';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
@@ -35,6 +35,8 @@ export class ModulePoolsSubmoduleComponent implements OnChanges {
     faPen = faPen;
     faEye = faEye;
     faPlus = faPlus;
+    faObjectUngroup = faObjectUngroup;
+
     pools: any = [];
     poolForm: any;
     allPoolDetails: any;
@@ -63,8 +65,8 @@ export class ModulePoolsSubmoduleComponent implements OnChanges {
 
     initPools() {
         // Pools as submodule in user
-        if(this.parent.id && this.parentModule == 'users'){
-            this.service.getPoolsByUser(this.parent.id).subscribe((data: any) => {
+        if(this.parent.id && this.parentModule == 'tournaments'){
+            this.service.getPoolsByTournament(this.parent.id).subscribe((data: any) => {
                 if (data.length) {
                     this.pools = data;
                     this.poolForm = this.formBuilder.group({
@@ -73,7 +75,11 @@ export class ModulePoolsSubmoduleComponent implements OnChanges {
                                 this.formBuilder.group({
                                     id: [x.id, [Validators.required, Validators.minLength(2)]],
                                     name: [x.name, [Validators.required, Validators.minLength(2)]],
-                                    subdomain: [x.subdomain, [Validators.required, Validators.minLength(2)]],
+                                    minPoints: [x.minPoints, [Validators.required, Validators.minLength(2)]],
+                                    maxPoints: [x.maxPoints, [Validators.required, Validators.minLength(2)]],
+                                    startDate: [x.startDate, [Validators.required, Validators.minLength(2)]],
+                                    endDate: [x.endDate, [Validators.required, Validators.minLength(2)]],
+                                    price: [x.price, [Validators.required, Validators.minLength(2)]],
                                     createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
                                     updatedAt: x.updatedAt, 
                                     isReadonly: true
@@ -88,26 +94,26 @@ export class ModulePoolsSubmoduleComponent implements OnChanges {
         }
     }
 
-    // Add orga to parent module
-    linkPool() {
+    // Create pool
+    createPool() {
         const modalRef = this.modalService.open(ModulePoolsLinkModalFormComponent, { centered: true });
-        modalRef.componentInstance.parentPoolIDS = this.parent.pools.map((url: any) => {return url.replace('/api/pools/', '')})
         modalRef.result.then((result) => {
             if (result == 'save') {
+                this.ngxLoader.startLoader('page-loader');
                 let values = modalRef.componentInstance.addForm.value;
-                switch(this.parentModule){
-                    case 'users':
-                        this.service.getPool(values.poolId).subscribe((pool: any) => {
-                            console.log(this.parent.pools);
-                            if (!pool.users.includes(this.parent.id)) {
-                                pool.users.push('/api/users/'+this.parent.id);
-                                this.service.updatePool(pool.id, pool).subscribe((data: any) => {
-                                    this.initPools();
-                                })
-                            }
-                        })
-                    break;
+                let pool: any = {
+                    name: values.name,
+                    tournament: 'api/tournaments/' + this.parent.id,
+                    minPoints: parseInt(values.minPoints),
+                    maxPoints: parseInt(values.maxPoints),
+                    startDate: new Date(Date.parse(values.startDate)+7200*1000).toUTCString(),
+                    endDate: new Date(Date.parse(values.endDate)+7200*1000).toUTCString(),
+                    price: parseFloat(values.price)
                 }
+                this.service.createPool(pool).subscribe(data => {
+                    this.initPools();
+                    this.ngxLoader.stopLoader('page-loader');
+                })
             }
         });
     }
@@ -139,7 +145,7 @@ export class ModulePoolsSubmoduleComponent implements OnChanges {
     // Delete pool
     deletePool(pool: any) {
         const modalRef = this.modalService.open(ModalConfirmComponent, { centered: true });
-        modalRef.componentInstance.title = 'Deleting an pool';
+        modalRef.componentInstance.title = 'Deleting a pool';
         modalRef.componentInstance.content = 'Are you sure you want to delete <i>' + pool.name + '</i> ?';
         modalRef.componentInstance.confirmBtn = 'Confirm';
         modalRef.result.then((result) => {

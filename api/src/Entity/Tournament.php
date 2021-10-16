@@ -5,6 +5,8 @@ namespace App\Entity;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
 use App\Repository\TournamentRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -86,6 +88,17 @@ class Tournament
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
+
+    /**
+     * @ApiSubresource()
+     * @ORM\OneToMany(targetEntity=Pool::class, mappedBy="tournament", orphanRemoval=true)
+     */
+    private $pools;
+
+    public function __construct()
+    {
+        $this->pools = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -244,6 +257,36 @@ class Tournament
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Pool[]
+     */
+    public function getPools(): Collection
+    {
+        return $this->pools;
+    }
+
+    public function addPool(Pool $pool): self
+    {
+        if (!$this->pools->contains($pool)) {
+            $this->pools[] = $pool;
+            $pool->setTournament($this);
+        }
+
+        return $this;
+    }
+
+    public function removePool(Pool $pool): self
+    {
+        if ($this->pools->removeElement($pool)) {
+            // set the owning side to null (unless already changed)
+            if ($pool->getTournament() === $this) {
+                $pool->setTournament(null);
+            }
+        }
 
         return $this;
     }

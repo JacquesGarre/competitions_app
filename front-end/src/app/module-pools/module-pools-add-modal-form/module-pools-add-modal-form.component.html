@@ -1,6 +1,6 @@
 <div class="modal-header bg-dark rounded-0">
     <h5 class="modal-title text-light">
-        <fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>New pool</h5>
+        <fa-icon [icon]="faObjectUngroup" class="mr-2"></fa-icon>New pool</h5>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
         <span aria-hidden="true" class="text-light text-hover-orange">&times;</span>
     </button>
@@ -9,6 +9,17 @@
     <form [formGroup]="addForm" (ngSubmit)="submitForm()">
         <div class="modal-boy">
             <div class="container">
+                <label for="tournament">Tournament</label>
+                <div class="input-group mb-4">
+                    <select class="browser-default custom-select" name="tournament"  id="tournament" formControlName="tournament" required>
+                        <option *ngFor="let tournament of tournaments" [value]="tournament.id">{{tournament.name}}</option>
+                    </select>
+                    <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
+                        <div *ngIf="addForm.get('tournament')?.errors?.required">
+                            Tournament is required.
+                        </div>
+                    </div>
+                </div>
                 <label for="name">Name</label>
                 <div class="input-group mb-4">
                     <input type="text" [className]="
@@ -23,12 +34,19 @@
                         </div>
                     </div>
                 </div>
-                <label for="organization">Organization</label>
+                <label for="minPoints">Minimum points</label>
                 <div class="input-group mb-4">
-                    <select class="browser-default custom-select" name="organization"  id="organization" formControlName="organization">
-                        <option *ngFor="let organization of organizations" [value]="organization.id">{{organization.name}}</option>
-                    </select>
+                    <input type="text" [className]="
+                            (addForm.invalid && (addForm.get('minPoints')?.dirty || addForm.get('minPoints')?.touched) && addForm.get('minPoints')?.errors) ? 
+                            'form-control is-invalid' : (addForm.invalid && (addForm.get('minPoints')?.dirty || addForm.get('minPoints')?.touched)) ? 'form-control is-valid' : 'form-control'" id="minPoints" name="minPoints" formControlName="minPoints" autocomplete="off">
                 </div>
+                <label for="maxPoints">Maximum points</label>
+                <div class="input-group mb-4">
+                    <input type="text" [className]="
+                            (addForm.invalid && (addForm.get('maxPoints')?.dirty || addForm.get('maxPoints')?.touched) && addForm.get('maxPoints')?.errors) ? 
+                            'form-control is-invalid' : (addForm.invalid && (addForm.get('maxPoints')?.dirty || addForm.get('maxPoints')?.touched)) ? 'form-control is-valid' : 'form-control'" id="maxPoints" name="maxPoints" formControlName="maxPoints" autocomplete="off">
+                </div>
+
                 <label for="startDate">Start date</label>
                 <div class="input-group mb-4">
                     <input type="text" [owlDateTime]="startDate" [owlDateTimeTrigger]="startDate" placeholder="Date Time" [className]="
@@ -40,7 +58,6 @@
                             Start date is required.
                         </div>
                     </div>
-                    
                 </div>
                 <label for="endDate">End date</label>
                 <div class="input-group mb-4">
@@ -53,6 +70,12 @@
                             End date is required.
                         </div>
                     </div>
+                </div>
+                <label for="price">Price</label>
+                <div class="input-group mb-4">
+                    <input type="text"  [className]="
+                            (addForm.invalid && (addForm.get('price')?.dirty || addForm.get('price')?.touched) && addForm.get('price')?.errors) ? 
+                            'form-control is-invalid' : (addForm.invalid && (addForm.get('price')?.dirty || addForm.get('price')?.touched)) ? 'form-control is-valid' : 'form-control'" id="price" name="price" formControlName="price" autocomplete="off">
                 </div>
             </div>
         </div>

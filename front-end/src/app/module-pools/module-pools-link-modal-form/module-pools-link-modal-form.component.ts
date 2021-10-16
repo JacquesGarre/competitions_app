@@ -1,8 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators, FormBuilder, ValidatorFn, AbstractControl, FormsModule } from '@angular/forms';
-import { faSitemap, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
-import { PoolService } from '../pool.service';
+import { faGem, faTrashAlt, faPencilAlt, faPlus, faSitemap, faObjectUngroup } from '@fortawesome/free-solid-svg-icons';
+import { TournamentService } from 'src/app/module-tournaments/tournament.service';
+import { TokenStorageService } from 'src/app/_services/token-storage.service';
+import { UserService } from 'src/app/module-users/user.service';
+
 @Component({
     selector: 'app-module-pools-link-modal-form',
     templateUrl: './module-pools-link-modal-form.component.html',
@@ -11,37 +14,77 @@ import { PoolService } from '../pool.service';
 export class ModulePoolsLinkModalFormComponent {
 
     faSitemap = faSitemap;
-    poolId: any = 0;
-    addForm = new FormGroup({});
-    pools: any = [];
+    faObjectUngroup = faObjectUngroup;
 
-    @Input() parentPoolIDS: any;
+    name: string = '';
+    tournament: string = '';
+    startDate: Date = new Date();
+    endDate: Date = new Date();
+    addForm = new FormGroup({});
+    currentUser: any;
+    tournaments: any;
+    minPoints: string = '';
+    maxPoints: string = '';
+    price: string = '';
 
     constructor(
         public activeModal: NgbActiveModal,
         private formBuilder: FormBuilder,
-        public service: PoolService
+        public tournamentService: TournamentService,
+        public token: TokenStorageService,
+        public userService: UserService
     ) { 
         this.addForm = new FormGroup({
-            poolId: new FormControl(
-                this.poolId, 
+            name: new FormControl(
+                this.name, 
                 [
-                    Validators.required
+                    Validators.required,
+                    Validators.minLength(4)
                 ]
+            ),
+            startDate: new FormControl(
+                this.startDate, 
+                []
+            ),
+            endDate: new FormControl(
+                this.endDate, 
+                []
+            ),
+            minPoints: new FormControl(
+                this.minPoints, 
+                []
+            ),
+            maxPoints: new FormControl(
+                this.maxPoints, 
+                []
+            ),
+            price: new FormControl(
+                this.price, 
+                []
             )
         });
-
-        this.service.getPools().subscribe((data: any) => {
-            if (data.length) {
-                this.pools = data.filter((pool: any) => !this.parentPoolIDS.includes(pool.id.toString()));
+        this.userService.getCurrentUser().subscribe((data: any) => {
+            this.currentUser = data[0];
+            if(this.currentUser.roles.includes('ROLE_ADMIN')){
+                this.tournamentService.getTournaments().subscribe((data: any) => {
+                    this.tournaments = data;
+                })
+            } else {
+                this.tournamentService.getTournamentsByUser(this.currentUser.id).subscribe((data: any) => {
+                    this.tournaments = data;
+                })
             }
         })
-
     }
 
     private createForm() {
         this.addForm = this.formBuilder.group({
-            poolId: 0
+            name: '',
+            startDate: new Date(),
+            endDate: new Date(),
+            minPoints: '',
+            maxPoints: '',
+            price: '',
         });
     }
 

@@ -1,12 +1,12 @@
-<div class="col-md-12 text-gray mt-5">
+<div class="col-md-12 text-gray">
     <div class="card card-container shadow rounded-0 bg-dark-gray border-0 border-left-danger">
         <div class="card-header bg-dark text-light border-gray border-0 rounded-0 ">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-10">
-                    <h6 class="mb-0"><fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>Pools</h6>
+                    <h6 class="mb-0"><fa-icon [icon]="faObjectUngroup" class="mr-2"></fa-icon>Pools</h6>
                 </div>
                 <div class="col-md-2">
-                    <a class="btn btn-dark-gray btn-sm float-right" (click)=linkPool()><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add pool</a>
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=createPool()><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add pool</a>
                 </div>
             </div>
         </div>
@@ -22,44 +22,44 @@
                         <tr>
                             <th scope="col" class="text-center border-gray">Actions</th>
                             <th scope="col" class="border-gray">Name</th>
-                            <th scope="col" class="border-gray">Subdomain</th>
-                            <th scope="col" class="border-gray">Created At</th>
-                            <th scope="col" class="border-gray">Updated At</th>
+                            <th scope="col" class="border-gray">Min points</th>
+                            <th scope="col" class="border-gray">Max points</th>
+                            <th scope="col" class="border-gray">Price</th>
+                            <th scope="col" class="border-gray">Start Date</th>
+                            <th scope="col" class="border-gray">End Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <ng-container formArrayName="poolDetails"
-                            *ngFor="let pool of pools; let $index=index">
-                            <tr [formGroupName]="$index" class="bg-dark-gray">
+                        <ng-container formArrayName="poolDetails" *ngFor="let pool of pools; let $index=index">
+                            <tr [formGroupName]="$index"  class="bg-dark-gray">
                                 <td class="text-center">
                                     <a class="btn text-light text-hover-orange" (click)=showPool(pool)>
                                         <fa-icon [icon]="faEye" class="mr-2"></fa-icon>
                                     </a>
                                     <!-- <a class="btn text-light text-hover-orange">
-                            <fa-icon [icon]="faPen" class="mr-2"></fa-icon>
-                        </a> -->
-                                    <a class="btn text-light text-hover-orange"
-                                        (click)=deletePool(pool)>
+                                        <fa-icon [icon]="faPen" class="mr-2"></fa-icon>
+                                    </a> -->
+                                    <a class="btn text-light text-hover-orange" (click)=deletePool(pool)>
                                         <fa-icon [icon]="faTrash" class="mr-2"></fa-icon>
                                     </a>
-                                    <a class="btn text-light text-hover-orange" (click)=removePool(pool) title="Remove from pool">
-                                        <fa-icon [icon]="faTimes" class="mr-2"></fa-icon>
-                                    </a>
                                 </td>
                                 <td class="text-light">
-                                    <input class="form-control pl-0" type="text" formControlName="name" readonly />
+                                    <input class="form-control pl-0" type="text" formControlName="name" readonly/>
                                 </td>
                                 <td class="text-light">
-                                    <input class="form-control pl-0" type="text" formControlName="subdomain" readonly />
+                                    <input class="form-control pl-0" type="text" formControlName="minPoints" readonly/>
                                 </td>
                                 <td class="text-light">
-                                    <input class="form-control pl-0" type="text"
-                                        [value]="pool.createdAt | date:'dd/MM/yyyy HH:mm'" readonly />
+                                    <input class="form-control pl-0" type="text" formControlName="maxPoints" readonly/>
                                 </td>
                                 <td class="text-light">
-                                    <input class="form-control pl-0" type="text"
-                                        [value]="(pool.updatedAt !== null) ? (pool.updatedAt | date: 'dd/MM/yyyy HH:mm') : ''"
-                                        readonly />
+                                    <input class="form-control pl-0" type="text" formControlName="price" readonly/>
+                                </td>
+                                <td class="text-light">
+                                    <input class="form-control pl-0" type="text" [value]="pool.startDate | date:'dd/MM/yyyy HH:mm'" readonly/>
+                                </td>
+                                <td class="text-light">
+                                    <input class="form-control pl-0" type="text" [value]="pool.endDate | date:'dd/MM/yyyy HH:mm'" readonly/>
                                 </td>
                             </tr>
                         </ng-container>

@@ -74,12 +74,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $tournamentsCreated;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Pool::class, mappedBy="registrations")
+     */
+    private $pools;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
         $this->organizations = new ArrayCollection();
         $this->tournaments = new ArrayCollection();
         $this->tournamentsCreated = new ArrayCollection();
+        $this->pools = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -277,6 +283,33 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             if ($tournamentsCreated->getCreator() === $this) {
                 $tournamentsCreated->setCreator(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Pool[]
+     */
+    public function getPools(): Collection
+    {
+        return $this->pools;
+    }
+
+    public function addPool(Pool $pool): self
+    {
+        if (!$this->pools->contains($pool)) {
+            $this->pools[] = $pool;
+            $pool->addRegistration($this);
+        }
+
+        return $this;
+    }
+
+    public function removePool(Pool $pool): self
+    {
+        if ($this->pools->removeElement($pool)) {
+            $pool->removeRegistration($this);
         }
 
         return $this;

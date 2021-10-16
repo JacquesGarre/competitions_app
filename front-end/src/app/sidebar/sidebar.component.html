@@ -10,24 +10,23 @@
     </a>
 
     <!-- Divider -->
-    <hr class="sidebar-divider my-0" *ngIf="showAdminBoard">
-
-    <!-- Nav Item - Dashboard -->
-    <li class="nav-item" *ngIf="showAdminBoard">
-        <a class="nav-link text-hover-orange" routerLink="/">
-            <fa-icon [icon]="faTachometerAlt" class="mr-2"></fa-icon>
-            <span>Dashboard</span>
-            <fa-icon [icon]="faChevronRight" class="float-right mt-1 arrowRight"></fa-icon>
-        </a>
-    </li>
-
-    <!-- Divider -->
     <hr class="sidebar-divider">
 
+
     <!-- Heading -->
-    <div class="sidebar-heading" *ngIf="showAdminBoard || showModeratorBoard">
+    <div class="sidebar-heading mb-2 text-center" *ngIf="showAdminBoard || showModeratorBoard">
         Administration
     </div>
+
+        <!-- Nav Item - Dashboard -->
+        <li class="nav-item" *ngIf="showAdminBoard">
+            <a class="nav-link text-hover-orange" routerLink="/">
+                <fa-icon [icon]="faTachometerAlt" class="mr-2"></fa-icon>
+                <span>Dashboard</span>
+                <fa-icon [icon]="faChevronRight" class="float-right mt-1 arrowRight"></fa-icon>
+            </a>
+        </li>
+    
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item" *ngIf="showAdminBoard">
@@ -47,6 +46,13 @@
         </a>
     </li>
 
+    <!-- Divider -->
+    <hr class="sidebar-divider mt-2">
+    <!-- Heading -->
+    <div class="sidebar-heading mb-2 text-center" *ngIf="showAdminBoard || showModeratorBoard">
+        Competition
+    </div>
+
     <!-- Nav Item - Dashboard -->
     <li class="nav-item" *ngIf="showAdminBoard">
         <a class="nav-link text-hover-orange" routerLink="/admin/tournaments" routerLinkActive="active">
@@ -59,7 +65,7 @@
     <!-- Nav Item - Dashboard -->
     <li class="nav-item" *ngIf="showAdminBoard">
         <a class="nav-link text-hover-orange" routerLink="/admin/pools" routerLinkActive="active">
-            <fa-icon [icon]="faChalkboardTeacher" class="mr-2"></fa-icon>
+            <fa-icon [icon]="faObjectUngroup" class="mr-2"></fa-icon>
             <span>Pools</span>
             <fa-icon [icon]="faChevronRight" class="float-right mt-1 arrowRight"></fa-icon>
         </a>

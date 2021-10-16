@@ -38,9 +38,15 @@ export class PoolService {
         .pipe(retry(1), catchError(this.handleError))
     }  
 
-    // Read by id
+    // Read by user id
     getPoolsByUser(id: any): Observable<Pool> {
         return this.http.get<Pool>(Env.API_URL + 'users/' + id + '/pools.json')
+        .pipe(retry(1), catchError(this.handleError))
+    }  
+
+    // Read by Tournament id
+    getPoolsByTournament(id: any): Observable<Pool> {
+        return this.http.get<Pool>(Env.API_URL + 'tournaments/' + id + '/pools.json')
         .pipe(retry(1), catchError(this.handleError))
     }  
 

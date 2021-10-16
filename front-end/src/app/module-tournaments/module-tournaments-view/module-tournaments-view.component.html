@@ -8,9 +8,9 @@
     <fa-icon [icon]="faChevronRight" class="ml-2" style="font-size: 16px;"></fa-icon> {{tournament.name}}
 </h5>
 
-<ul ngbNav #nav="ngbNav" class="nav-tabs col-md-12">
+<ul ngbNav #nav="ngbNav" class="nav-tabs">
     <li ngbNavItem>
-        <a ngbNavLink><fa-icon [icon]="faCog"></fa-icon> Settings</a>
+        <a ngbNavLink>Settings</a>
         <ng-template ngbNavContent>
             <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
                 <div class="col-md-12 text-gray">
@@ -232,8 +232,10 @@
         </ng-template>
     </li>
     <li ngbNavItem>
-        <a ngbNavLink>Second</a>
-        <ng-template ngbNavContent>Second content</ng-template>
+        <a ngbNavLink>Pools</a>
+        <ng-template ngbNavContent>
+            <app-module-pools-submodule [parentModule]="'tournaments'" [parent]="tournament"></app-module-pools-submodule>
+        </ng-template>
     </li>
 </ul>
 <div [ngbNavOutlet]="nav"></div>

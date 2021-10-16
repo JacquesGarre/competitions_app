@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Tournament } from '../tournament';
 import { TournamentService } from '../tournament.service';
 import { UserService } from '../../module-users/user.service';
-import { faUser, faTrashAlt, faPencilAlt, faPlus, faChevronRight, faInfoCircle, faSitemap, faAlignLeft, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faTrashAlt, faPencilAlt, faPlus, faChevronRight, faInfoCircle, faSitemap, faAlignLeft, faCog, faObjectUngroup } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { OrganizationService } from 'src/app/module-organizations/organization.service';
@@ -22,6 +22,7 @@ export class ModuleTournamentsViewComponent implements OnInit {
     faSitemap = faSitemap;
     faAlignLeft = faAlignLeft;
     faCog = faCog;
+    faObjectUngroup = faObjectUngroup;
 
     tournament: any = {
         id: '',
