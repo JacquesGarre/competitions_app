@@ -6,7 +6,7 @@ import { Organization } from './organization';
 import { OrganizationService } from './organization.service';
 import { Router } from '@angular/router';
 
-import { faUsers, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faGem } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faGem } from '@fortawesome/free-solid-svg-icons';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
@@ -25,7 +25,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 export class ModuleOrganizationsComponent implements OnInit {
 
     faGem = faGem;
-    faUsers = faUsers;
+    faUser = faUser;
     faTrashAlt = faTrashAlt;
     faPencilAlt = faPencilAlt;
     faTrash = faTrash;

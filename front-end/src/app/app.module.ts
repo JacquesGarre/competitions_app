@@ -49,6 +49,12 @@ import { ModuleTournamentsAddModalFormComponent } from './module-tournaments/mod
 import { ModuleTournamentsLinkModalFormComponent } from './module-tournaments/module-tournaments-link-modal-form/module-tournaments-link-modal-form.component';
 import { ModuleTournamentsViewComponent } from './module-tournaments/module-tournaments-view/module-tournaments-view.component';
 
+import { ModulePoolsComponent } from './module-pools/module-pools.component';
+import { ModulePoolsSubmoduleComponent } from './module-pools/module-pools-submodule/module-pools-submodule.component';
+import { ModulePoolsAddModalFormComponent } from './module-pools/module-pools-add-modal-form/module-pools-add-modal-form.component';
+import { ModulePoolsLinkModalFormComponent } from './module-pools/module-pools-link-modal-form/module-pools-link-modal-form.component';
+import { ModulePoolsViewComponent } from './module-pools/module-pools-view/module-pools-view.component';
+
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { QuillModule } from 'ngx-quill';
 
@@ -111,6 +117,13 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         ModuleTournamentsAddModalFormComponent,
         ModuleTournamentsLinkModalFormComponent,
         ModuleTournamentsViewComponent,
+
+        ModulePoolsComponent,
+        ModulePoolsSubmoduleComponent,
+        ModulePoolsAddModalFormComponent,
+        ModulePoolsLinkModalFormComponent,
+        ModulePoolsViewComponent,
+
     ],  
     imports: [
         BrowserModule,

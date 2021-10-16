@@ -3,19 +3,19 @@
         <div class="card-header bg-dark text-light border-gray border-0 rounded-0 ">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-10">
-                    <h6 class="mb-0"><fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>Tournaments</h6>
+                    <h6 class="mb-0"><fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>Pools</h6>
                 </div>
                 <div class="col-md-2">
-                    <a class="btn btn-dark-gray btn-sm float-right" (click)=linkTournament()><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add tournament</a>
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=linkPool()><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add pool</a>
                 </div>
             </div>
         </div>
         <div class="card-body text-light p-0">
 
-            <p class="w-100 text-center pt-3" *ngIf="!tournaments.length"><i>No tournaments found.</i></p>
+            <p class="w-100 text-center pt-3" *ngIf="!pools.length"><i>No pools found.</i></p>
 
             <!--This is your master form-->
-            <form [formGroup]="tournamentForm" *ngIf="tournaments.length">
+            <form [formGroup]="poolForm" *ngIf="pools.length">
 
                 <table class="table table-hover m-0">
                     <thead class="text-light border-0">
@@ -28,21 +28,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <ng-container formArrayName="tournamentDetails"
-                            *ngFor="let tournament of tournaments; let $index=index">
+                        <ng-container formArrayName="poolDetails"
+                            *ngFor="let pool of pools; let $index=index">
                             <tr [formGroupName]="$index" class="bg-dark-gray">
                                 <td class="text-center">
-                                    <a class="btn text-light text-hover-orange" (click)=showTournament(tournament)>
+                                    <a class="btn text-light text-hover-orange" (click)=showPool(pool)>
                                         <fa-icon [icon]="faEye" class="mr-2"></fa-icon>
                                     </a>
                                     <!-- <a class="btn text-light text-hover-orange">
                             <fa-icon [icon]="faPen" class="mr-2"></fa-icon>
                         </a> -->
                                     <a class="btn text-light text-hover-orange"
-                                        (click)=deleteTournament(tournament)>
+                                        (click)=deletePool(pool)>
                                         <fa-icon [icon]="faTrash" class="mr-2"></fa-icon>
                                     </a>
-                                    <a class="btn text-light text-hover-orange" (click)=removeTournament(tournament) title="Remove from tournament">
+                                    <a class="btn text-light text-hover-orange" (click)=removePool(pool) title="Remove from pool">
                                         <fa-icon [icon]="faTimes" class="mr-2"></fa-icon>
                                     </a>
                                 </td>
@@ -54,11 +54,11 @@
                                 </td>
                                 <td class="text-light">
                                     <input class="form-control pl-0" type="text"
-                                        [value]="tournament.createdAt | date:'dd/MM/yyyy HH:mm'" readonly />
+                                        [value]="pool.createdAt | date:'dd/MM/yyyy HH:mm'" readonly />
                                 </td>
                                 <td class="text-light">
                                     <input class="form-control pl-0" type="text"
-                                        [value]="(tournament.updatedAt !== null) ? (tournament.updatedAt | date: 'dd/MM/yyyy HH:mm') : ''"
+                                        [value]="(pool.updatedAt !== null) ? (pool.updatedAt | date: 'dd/MM/yyyy HH:mm') : ''"
                                         readonly />
                                 </td>
                             </tr>

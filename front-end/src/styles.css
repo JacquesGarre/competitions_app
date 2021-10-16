@@ -9445,7 +9445,7 @@ a:focus {
 }
 
 .border-left-danger {
-    border-left: 0.25rem solid #e74a3b !important;
+    border-left: 0.25rem solid var(--orange) !important;
 }
 
 .border-bottom-danger {
@@ -10749,4 +10749,55 @@ ng2-smart-table-pager {
     background-color: var(--gray);
     border-bottom-left-radius: 0.35em;
     border-bottom-right-radius: 0.35em;
+}
+
+
+.tab-content {
+    margin-top: 30px;
+}
+
+.nav-tabs {
+    margin-right: 0.75rem;
+    margin-left: 0.75rem;
+    border-bottom: 1px solid var(--orange);
+}
+
+.nav-tabs .nav-link {
+    margin-bottom: 0px;
+    border: 1px solid transparent;
+    border-top-left-radius: 0rem;
+    border-top-right-radius: 0rem;
+    color: var(--secondary);
+    transition: all .1s;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    color: var(--light);
+    background-color: var(--dark-gray);
+    border-color: var( --orange);
+    border-bottom: 1px solid transparent;
+}
+
+.nav-tabs .nav-link:hover {
+    color: var(--light);
+    border-color: transparent;
+    border-bottom: var(--orange);
+}
+
+.nav-tabs .nav-link:focus {
+    color: var(--light);
+    background-color: var(--dark-gray);
+    border-color: var( --orange);
+    border-bottom: 1px solid transparent;
+}
+
+.nav-tabs .nav-link.active:hover, .nav-tabs .nav-item.show .nav-link:hover {
+    color: var(--light);
+    background-color: var(--dark-gray);
+    border-color: var( --orange);
+    border-bottom: 1px solid transparent;
+}
+
+body, .form-control {
+    font-size: 0.85rem;
 }

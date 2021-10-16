@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { Tournament } from '../tournament';
-import { TournamentService } from '../tournament.service';
+import { Pool } from '../pool';
+import { PoolService } from '../pool.service';
 import { UserService } from '../../module-users/user.service';
 import { faUser, faTrashAlt, faPencilAlt, faPlus, faChevronRight, faInfoCircle, faSitemap, faAlignLeft, faCog } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
@@ -9,11 +9,11 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { OrganizationService } from 'src/app/module-organizations/organization.service';
 
 @Component({
-    selector: 'app-module-tournaments-view',
-    templateUrl: './module-tournaments-view.component.html',
-    styleUrls: ['./module-tournaments-view.component.css']
+    selector: 'app-module-pools-view',
+    templateUrl: './module-pools-view.component.html',
+    styleUrls: ['./module-pools-view.component.css']
 })
-export class ModuleTournamentsViewComponent implements OnInit {
+export class ModulePoolsViewComponent implements OnInit {
 
     faUser = faUser;
     faPencilAlt = faPencilAlt;
@@ -23,7 +23,7 @@ export class ModuleTournamentsViewComponent implements OnInit {
     faAlignLeft = faAlignLeft;
     faCog = faCog;
 
-    tournament: any = {
+    pool: any = {
         id: '',
         name: '',
         organization: '',
@@ -35,7 +35,7 @@ export class ModuleTournamentsViewComponent implements OnInit {
         updatedAt: '',
         description: ''
     };
-    untouchedTournament: any;
+    untouchedPool: any;
     public isReadonly: boolean = true;
     users: any;
     currentUser: any;
@@ -56,7 +56,7 @@ export class ModuleTournamentsViewComponent implements OnInit {
     };
 
     constructor(
-        public service: TournamentService,
+        public service: PoolService,
         public userService: UserService,
         public organizationService: OrganizationService,
         private route: ActivatedRoute,
@@ -69,14 +69,14 @@ export class ModuleTournamentsViewComponent implements OnInit {
 
     ngOnInit(): void {
         const id = this.route.snapshot.paramMap.get('id');
-        this.service.getTournament(id).subscribe((data: any) => {
-            this.tournament = data;
+        this.service.getPool(id).subscribe((data: any) => {
+            this.pool = data;
 
-            this.startDate = this.tournament.startDate;
-            this.endDate = this.tournament.endDate;
+            this.startDate = this.pool.startDate;
+            this.endDate = this.pool.endDate;
 
-            this.untouchedTournament = this.tournament;
-            this.form = this.tournament;
+            this.untouchedPool = this.pool;
+            this.form = this.pool;
             this.userService.getCurrentUser().subscribe((data: any) => {
                 this.currentUser = data[0];
                 if(this.currentUser.roles.includes('ROLE_ADMIN')){
@@ -103,16 +103,16 @@ export class ModuleTournamentsViewComponent implements OnInit {
     resetForm(){
         this.ngxLoader.startLoader('page-loader');
         const id = this.route.snapshot.paramMap.get('id');
-        this.service.getTournament(id).subscribe((data: any) => {
-            this.tournament = data;
-            this.untouchedTournament = data;
-            this.form = this.tournament;
+        this.service.getPool(id).subscribe((data: any) => {
+            this.pool = data;
+            this.untouchedPool = data;
+            this.form = this.pool;
             this.ngxLoader.stopLoader('page-loader');
         })
     }
 
     onSubmit() {
-        const updatedTournament = {
+        const updatedPool = {
             name: this.form.name,
             organization: this.form.organization,
             address: this.form.address,
@@ -124,8 +124,8 @@ export class ModuleTournamentsViewComponent implements OnInit {
             registrationFormOpen: this.form.registrationFormOpen && this.form.registrationFormOpen !== 'false',
             description: this.form.description,
         }
-        this.service.updateTournament(this.tournament.id, updatedTournament).subscribe((data: any) => {
-            this.tournament = data;
+        this.service.updatePool(this.pool.id, updatedPool).subscribe((data: any) => {
+            this.pool = data;
             this.form = data;
         })
         this.toggleForm()

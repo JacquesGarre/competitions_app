@@ -41,8 +41,8 @@
     <!-- Nav Item - Dashboard -->
     <li class="nav-item" *ngIf="showAdminBoard">
         <a class="nav-link text-hover-orange" routerLink="/admin/users" routerLinkActive="active">
-            <fa-icon [icon]="faUsers" class="mr-2"></fa-icon>
-            <span>Users</span>
+            <fa-icon [icon]="faUser" class="mr-2" style="margin-left: 2px;"></fa-icon>
+            <span style="margin-left: 2px;">Users</span>
             <fa-icon [icon]="faChevronRight" class="float-right mt-1 arrowRight"></fa-icon>
         </a>
     </li>
@@ -55,6 +55,16 @@
             <fa-icon [icon]="faChevronRight" class="float-right mt-1 arrowRight"></fa-icon>
         </a>
     </li>
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item" *ngIf="showAdminBoard">
+        <a class="nav-link text-hover-orange" routerLink="/admin/pools" routerLinkActive="active">
+            <fa-icon [icon]="faChalkboardTeacher" class="mr-2"></fa-icon>
+            <span>Pools</span>
+            <fa-icon [icon]="faChevronRight" class="float-right mt-1 arrowRight"></fa-icon>
+        </a>
+    </li>
+    
 
     <!-- Divider -->
     <!-- <hr class="sidebar-divider mt-2"> -->

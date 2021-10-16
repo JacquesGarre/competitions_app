@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators, FormBuilder, ValidatorFn, AbstractControl, FormsModule } from '@angular/forms';
-import { faUsers, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-module-users-add-modal-form',
@@ -10,7 +10,7 @@ import { faUsers, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-soli
 })
 export class ModuleUsersAddModalFormComponent {
 
-    faUsers = faUsers;
+    faUser = faUser;
 
     email: string = '';
     firstName: string = '';

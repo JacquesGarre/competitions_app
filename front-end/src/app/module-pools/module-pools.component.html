@@ -4,14 +4,14 @@
 
 <h5 class="mb-4 pr-4">
     <fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>
-    Tournaments
-    <a [routerLink]="" class="p-0 text-secondary float-right" (click)=createTournament()>
+    Pools
+    <a [routerLink]="" class="p-0 text-secondary float-right" (click)=createPool()>
         <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
     </a>
 </h5>
 
 <!--This is your master form-->
-<form [formGroup]="tournamentForm">
+<form [formGroup]="poolForm">
 
     <table class="table table-hover table-striped shadow border-left-danger">
         <thead class="bg-dark text-light border-top-0 border-right-0 border-left-0">
@@ -27,16 +27,16 @@
             </tr>
         </thead>
         <tbody>
-            <ng-container formArrayName="tournamentDetails" *ngFor="let tournament of tournaments; let $index=index">
+            <ng-container formArrayName="poolDetails" *ngFor="let pool of pools; let $index=index">
                 <tr [formGroupName]="$index"  class="bg-dark-gray">
                     <td class="text-center">
-                        <a class="btn text-light text-hover-orange" (click)=showTournament(tournament)>
+                        <a class="btn text-light text-hover-orange" (click)=showPool(pool)>
                             <fa-icon [icon]="faEye" class="mr-2"></fa-icon>
                         </a>
                         <!-- <a class="btn text-light text-hover-orange">
                             <fa-icon [icon]="faPen" class="mr-2"></fa-icon>
                         </a> -->
-                        <a class="btn text-light text-hover-orange" (click)=deleteTournament(tournament)>
+                        <a class="btn text-light text-hover-orange" (click)=deletePool(pool)>
                             <fa-icon [icon]="faTrash" class="mr-2"></fa-icon>
                         </a>
                     </td>
@@ -48,19 +48,19 @@
                         <input class="form-control pl-0" type="text" formControlName="organization" readonly/>
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="tournament.startDate | date:'dd/MM/yyyy HH:mm'" readonly/>
+                        <input class="form-control pl-0" type="text" [value]="pool.startDate | date:'dd/MM/yyyy HH:mm'" readonly/>
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="tournament.endDate | date:'dd/MM/yyyy HH:mm'" readonly/>
+                        <input class="form-control pl-0" type="text" [value]="pool.endDate | date:'dd/MM/yyyy HH:mm'" readonly/>
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="tournament.registrationFormOpen == 1 ? 'Open' : 'Closed'"  readonly/>
+                        <input class="form-control pl-0" type="text" [value]="pool.registrationFormOpen == 1 ? 'Open' : 'Closed'"  readonly/>
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="tournament.createdAt | date:'dd/MM/yyyy HH:mm'" readonly/>
+                        <input class="form-control pl-0" type="text" [value]="pool.createdAt | date:'dd/MM/yyyy HH:mm'" readonly/>
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="(tournament.updatedAt !== null) ? (tournament.updatedAt | date: 'dd/MM/yyyy HH:mm') : ''" readonly/>
+                        <input class="form-control pl-0" type="text" [value]="(pool.updatedAt !== null) ? (pool.updatedAt | date: 'dd/MM/yyyy HH:mm') : ''" readonly/>
                     </td>
                 </tr>
             </ng-container>

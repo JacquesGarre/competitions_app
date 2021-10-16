@@ -7,7 +7,7 @@ import { OrganizationService } from '../organization.service';
 import { UserService } from '../../module-users/user.service';
 import { Router } from '@angular/router';
 
-import { faUsers, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faGem, faTimes} from '@fortawesome/free-solid-svg-icons';
+import { faUser, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faGem, faTimes} from '@fortawesome/free-solid-svg-icons';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
@@ -28,7 +28,7 @@ export class ModuleOrganizationsSubmoduleComponent implements OnChanges {
 
     faTimes = faTimes;
     faGem = faGem;
-    faUsers = faUsers;
+    faUser = faUser;
     faTrashAlt = faTrashAlt;
     faPencilAlt = faPencilAlt;
     faTrash = faTrash;

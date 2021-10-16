@@ -4,8 +4,8 @@
 
 <h5 class="mb-4 pr-4">
     <fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>
-    <a routerLink="/admin/tournaments" class="text-light">Tournaments</a>
-    <fa-icon [icon]="faChevronRight" class="ml-2" style="font-size: 16px;"></fa-icon> {{tournament.name}}
+    <a routerLink="/admin/pools" class="text-light">Pools</a>
+    <fa-icon [icon]="faChevronRight" class="ml-2" style="font-size: 16px;"></fa-icon> {{pool.name}}
 </h5>
 
 <ul ngbNav #nav="ngbNav" class="nav-tabs col-md-12">
@@ -239,5 +239,5 @@
 <div [ngbNavOutlet]="nav"></div>
 
 <!-- Sous module users -->
-<!-- <app-module-users-submodule [parentModule]="'tournaments'" [parent]="tournament"></app-module-users-submodule> -->
+<!-- <app-module-users-submodule [parentModule]="'pools'" [parent]="pool"></app-module-users-submodule> -->
 <!-- End::Sous module users -->

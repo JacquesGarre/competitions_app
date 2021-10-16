@@ -17,6 +17,9 @@ import { ModuleUsersViewComponent } from './module-users/module-users-view/modul
 import { ModuleTournamentsComponent } from './module-tournaments/module-tournaments.component';
 import { ModuleTournamentsViewComponent } from './module-tournaments/module-tournaments-view/module-tournaments-view.component';
 
+import { ModulePoolsComponent } from './module-pools/module-pools.component';
+import { ModulePoolsViewComponent } from './module-pools/module-pools-view/module-pools-view.component';
+
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
@@ -63,6 +66,14 @@ const routes: Routes = [
             {
                 path: 'tournaments/:id',
                 component: ModuleTournamentsViewComponent,
+            },
+            {
+                path: 'pools',
+                component: ModulePoolsComponent,
+            },
+            {
+                path: 'pools/:id',
+                component: ModulePoolsViewComponent,
             }
         ]
 

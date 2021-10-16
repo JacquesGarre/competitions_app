@@ -7,7 +7,7 @@ import { TournamentService } from '../tournament.service';
 import { UserService } from '../../module-users/user.service';
 import { Router } from '@angular/router';
 
-import { faUsers, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faSitemap, faTimes} from '@fortawesome/free-solid-svg-icons';
+import { faUser, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faSitemap, faTimes} from '@fortawesome/free-solid-svg-icons';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalConfirmComponent } from '../../modal-confirm/modal-confirm.component';
@@ -28,7 +28,7 @@ export class ModuleTournamentsSubmoduleComponent implements OnChanges {
 
     faTimes = faTimes;
     faSitemap = faSitemap;
-    faUsers = faUsers;
+    faUser = faUser;
     faTrashAlt = faTrashAlt;
     faPencilAlt = faPencilAlt;
     faTrash = faTrash;

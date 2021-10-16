@@ -1,0 +1,64 @@
+<div class="modal-header bg-dark rounded-0">
+    <h5 class="modal-title text-light">
+        <fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>New pool</h5>
+    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
+        <span aria-hidden="true" class="text-light text-hover-orange">&times;</span>
+    </button>
+</div>
+<div class="modal-body text-light bg-dark-gray rounded-0">
+    <form [formGroup]="addForm" (ngSubmit)="submitForm()">
+        <div class="modal-boy">
+            <div class="container">
+                <label for="name">Name</label>
+                <div class="input-group mb-4">
+                    <input type="text" [className]="
+                            (addForm.invalid && (addForm.get('name')?.dirty || addForm.get('name')?.touched) && addForm.get('name')?.errors) ? 
+                            'form-control is-invalid' : (addForm.invalid && (addForm.get('name')?.dirty || addForm.get('name')?.touched)) ? 'form-control is-valid' : 'form-control'" id="name" name="name" formControlName="name" autocomplete="off">
+                    <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
+                        <div *ngIf="addForm.get('name')?.errors?.required">
+                            Name is required.
+                        </div>
+                        <div *ngIf="addForm.get('name')?.errors?.minlength">
+                            Name must be at least 4 characters long.
+                        </div>
+                    </div>
+                </div>
+                <label for="organization">Organization</label>
+                <div class="input-group mb-4">
+                    <select class="browser-default custom-select" name="organization"  id="organization" formControlName="organization">
+                        <option *ngFor="let organization of organizations" [value]="organization.id">{{organization.name}}</option>
+                    </select>
+                </div>
+                <label for="startDate">Start date</label>
+                <div class="input-group mb-4">
+                    <input type="text" [owlDateTime]="startDate" [owlDateTimeTrigger]="startDate" placeholder="Date Time" [className]="
+                            (addForm.invalid && (addForm.get('startDate')?.dirty || addForm.get('startDate')?.touched) && addForm.get('startDate')?.errors) ? 
+                            'form-control is-invalid' : (addForm.invalid && (addForm.get('startDate')?.dirty || addForm.get('startDate')?.touched)) ? 'form-control is-valid' : 'form-control'" id="startDate" name="startDate" formControlName="startDate" autocomplete="off">
+                    <owl-date-time #startDate ></owl-date-time>
+                    <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
+                        <div *ngIf="addForm.get('startDate')?.errors?.required">
+                            Start date is required.
+                        </div>
+                    </div>
+                    
+                </div>
+                <label for="endDate">End date</label>
+                <div class="input-group mb-4">
+                    <input type="text"  [owlDateTime]="endDate" [owlDateTimeTrigger]="endDate" placeholder="Date Time"  [className]="
+                            (addForm.invalid && (addForm.get('endDate')?.dirty || addForm.get('endDate')?.touched) && addForm.get('endDate')?.errors) ? 
+                            'form-control is-invalid' : (addForm.invalid && (addForm.get('endDate')?.dirty || addForm.get('endDate')?.touched)) ? 'form-control is-valid' : 'form-control'" id="endDate" name="endDate" formControlName="endDate" autocomplete="off">
+                    <owl-date-time #endDate ></owl-date-time>
+                    <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
+                        <div *ngIf="addForm.get('endDate')?.errors?.required">
+                            End date is required.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-outline-success" [disabled]="!addForm.valid" (click)="activeModal.close('save')">Save</button>
+            <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss()">Cancel</button>
+        </div>
+    </form>
+</div>

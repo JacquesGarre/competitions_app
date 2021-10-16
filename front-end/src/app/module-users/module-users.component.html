@@ -2,19 +2,19 @@
 <ngx-ui-loader [loaderId]="'page-loader'"></ngx-ui-loader>
 <!-- End of Loader -->
 
-<h4 class="mb-4 pr-4 pl-4 text-center">
-    <fa-icon [icon]="faUsers" class="mr-2"></fa-icon>
+<h5 class="mb-4 pr-4">
+    <fa-icon [icon]="faUser" class="mr-2"></fa-icon>
     Users
     <a [routerLink]="" class="p-0 text-secondary float-right" (click)=createUser()>
         <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
     </a>
-</h4>
+</h5>
 
 
 <!--This is your master form-->
 <form [formGroup]="userForm">
 
-    <table class="table table-hover shadow">
+    <table class="table table-hover shadow  border-left-danger">
         <thead class="bg-dark text-light border-top-0 border-right-0 border-left-0">
             <tr>
                 <th scope="col" class="text-center border-gray">Actions</th>

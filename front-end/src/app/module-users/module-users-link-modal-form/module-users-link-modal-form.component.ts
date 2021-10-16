@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators, FormBuilder, ValidatorFn, AbstractControl, FormsModule } from '@angular/forms';
-import { faUsers, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { UserService } from '../user.service';
 @Component({
     selector: 'app-module-users-link-modal-form',
@@ -10,7 +10,7 @@ import { UserService } from '../user.service';
 })
 export class ModuleUsersLinkModalFormComponent {
 
-    faUsers = faUsers;
+    faUser = faUser;
     userId: number = 0;
     addForm = new FormGroup({});
     users: any = [];
