@@ -13,7 +13,7 @@
         <div class="card-header bg-dark text-light border-gray border-top-0 border-left-0 border-right-0 rounded-0 ">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-11">
-                    <h6 class="mb-0"><fa-icon [icon]="faInfoCircle" class="mr-2"></fa-icon>Details</h6>
+                    <h6 class="mb-0"><fa-icon [icon]="faInfoCircle" class="mr-2"></fa-icon>Personal details</h6>
                 </div>
                 <div class="col-md-1">
                     <a class="btn btn-dark-gray btn-sm float-right" (click)=toggleForm() *ngIf=isReadonly><fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Edit</a>
@@ -44,6 +44,17 @@
                                 Last name is required!
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="genre" class="col-sm-3 col-form-label">Genre</label>
+                            <div class="col-sm-9">
+                                <select class="browser-default custom-select bg-gray text-light"
+                                    name="genre" id="genre" [(ngModel)]="form.genre"
+                                    #genre="ngModel" [disabled]="isReadonly">
+                                    <option [value]="'m'">M</option>
+                                    <option [value]="'f'">F</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group row">
@@ -64,6 +75,60 @@
                             </div>
                             <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
                                 Password is required!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-2" *ngIf=!isReadonly>
+                    <div class="col-md-12 text-right">
+                        <button class="btn  btn-outline-success mr-2" *ngIf=!isReadonly (click)=onSubmit()>
+                            Save
+                        </button>
+                        <a class="btn btn-outline-danger" *ngIf=!isReadonly (click)="toggleForm(); resetForm()">Cancel</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-12 text-gray mt-5">
+    <div class="card card-container shadow rounded-0 bg-dark-gray border-0 border-left-danger">
+        <div class="card-header bg-dark text-light border-gray border-top-0 border-left-0 border-right-0 rounded-0 ">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-11">
+                    <h6 class="mb-0"><fa-icon [icon]="faTableTennis" class="mr-2"></fa-icon>Player details</h6>
+                </div>
+                <div class="col-md-1">
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=toggleForm() *ngIf=isReadonly><fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Edit</a>
+                </div>
+            </div>
+        </div> 
+        <div class="card-body text-light">
+            <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="licenceNumber" class="col-sm-3 col-form-label">Licence number</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="licenceNumber" [(ngModel)]="form.licenceNumber"
+                                #licenceNumber="ngModel" [readonly]="isReadonly"/>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="points" class="col-sm-3 col-form-label">Points</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="points" [(ngModel)]="form.points"
+                                #points="ngModel" [readonly]="isReadonly"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group row">
+                            <label for="club" class="col-sm-3 col-form-label">Club</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="club" [(ngModel)]="form.club"
+                                #club="ngModel" [readonly]="isReadonly"/>
                             </div>
                         </div>
                     </div>

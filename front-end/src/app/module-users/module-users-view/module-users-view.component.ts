@@ -3,7 +3,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { User } from '../user';
 import { UserService } from '../user.service';
 import { OrganizationService } from '../../module-organizations/organization.service';
-import { faUser, faTrashAlt, faPencilAlt, faPlus, faChevronRight, faSitemap, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faTrashAlt, faPencilAlt, faPlus, faChevronRight, faSitemap, faInfoCircle, faTableTennis } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
 import { Organization } from 'src/app/module-organizations/organization';
@@ -20,6 +20,7 @@ export class ModuleUsersViewComponent implements OnInit {
     faChevronRight = faChevronRight;
     faSitemap = faSitemap;
     faInfoCircle = faInfoCircle;
+    faTableTennis = faTableTennis;
 
     organizations: Organization[];
     user: any = {
@@ -31,6 +32,10 @@ export class ModuleUsersViewComponent implements OnInit {
         organizations: [],
         createdAt: '',
         updatedAt: '',
+        licenceNumber: '',
+        points: '',
+        genre: '',
+        club: '',
     };
     untouchedUser: any;
     public isReadonly: boolean = true;
@@ -44,6 +49,10 @@ export class ModuleUsersViewComponent implements OnInit {
         organizations: [],
         createdAt: null,
         updatedAt: null,
+        licenceNumber: '',
+        points: '',
+        genre: '',
+        club: '',
     };
 
     constructor(
@@ -86,12 +95,15 @@ export class ModuleUsersViewComponent implements OnInit {
     }
 
     onSubmit() {
-        const firstName = this.form.firstName;
         this.service.updateUser(this.user.id, {
             email: this.form.email,
             firstName: this.form.firstName,
             lastName: this.form.lastName,
-            password: this.form.password
+            password: this.form.password,
+            licenceNumber: this.form.licenceNumber,
+            points: this.form.points,
+            genre: this.form.genre,
+            club: this.form.club,
         }).subscribe((data: any) => {
             this.user = data;
             this.form = data;

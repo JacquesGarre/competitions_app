@@ -77,7 +77,6 @@ export class SidebarComponent implements OnInit {
     faTrophy = faTrophy;
     faObjectUngroup = faObjectUngroup;
 
-
     private roles: string[] = [];
     isLoggedIn = false;
     showAdminBoard = false;

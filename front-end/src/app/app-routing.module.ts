@@ -20,6 +20,9 @@ import { ModuleTournamentsViewComponent } from './module-tournaments/module-tour
 import { ModulePoolsComponent } from './module-pools/module-pools.component';
 import { ModulePoolsViewComponent } from './module-pools/module-pools-view/module-pools-view.component';
 
+import { ModuleRegistrationsComponent } from './module-registrations/module-registrations.component';
+import { ModuleRegistrationsViewComponent } from './module-registrations/module-registrations-view/module-registrations-view.component';
+
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
@@ -74,6 +77,14 @@ const routes: Routes = [
             {
                 path: 'pools/:id',
                 component: ModulePoolsViewComponent,
+            },
+            {
+                path: 'registrations',
+                component: ModuleRegistrationsComponent,
+            },
+            {
+                path: 'registrations/:id',
+                component: ModuleRegistrationsViewComponent,
             }
         ]
 

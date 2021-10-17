@@ -1,0 +1,73 @@
+<div class="col-md-12 text-gray">
+    <div class="card card-container shadow rounded-0 bg-dark-gray border-0 border-left-danger">
+        <div class="card-header bg-dark text-light border-gray border-0 rounded-0 ">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-md-10">
+                    <h6 class="mb-0"><fa-icon [icon]="faObjectUngroup" class="mr-2"></fa-icon>Registrations</h6>
+                </div>
+                <div class="col-md-2">
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=createRegistration()><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add registration</a>
+                </div>
+            </div>
+        </div>
+        <div class="card-body text-light p-0">
+
+            <p class="w-100 text-center pt-3" *ngIf="!registrations.length"><i>No registrations found.</i></p>
+
+            <!--This is your master form-->
+            <form [formGroup]="registrationForm" *ngIf="registrations.length">
+
+                <table class="table table-hover m-0">
+                    <thead class="text-light border-0">
+                        <tr>
+                            <th scope="col" class="text-center border-gray">Actions</th>
+                            <th scope="col" class="border-gray">Name</th>
+                            <th scope="col" class="border-gray">Min points</th>
+                            <th scope="col" class="border-gray">Max points</th>
+                            <th scope="col" class="border-gray">Price</th>
+                            <th scope="col" class="border-gray">Start Date</th>
+                            <th scope="col" class="border-gray">End Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container formArrayName="registrationDetails" *ngFor="let registration of registrations; let $index=index">
+                            <tr [formGroupName]="$index"  class="bg-dark-gray">
+                                <td class="text-center">
+                                    <a class="btn text-light text-hover-orange" (click)=showRegistration(registration)>
+                                        <fa-icon [icon]="faEye" class="mr-2"></fa-icon>
+                                    </a>
+                                    <!-- <a class="btn text-light text-hover-orange">
+                                        <fa-icon [icon]="faPen" class="mr-2"></fa-icon>
+                                    </a> -->
+                                    <a class="btn text-light text-hover-orange" (click)=deleteRegistration(registration)>
+                                        <fa-icon [icon]="faTrash" class="mr-2"></fa-icon>
+                                    </a>
+                                </td>
+                                <td class="text-light">
+                                    <input class="form-control pl-0" type="text" formControlName="name" readonly/>
+                                </td>
+                                <td class="text-light">
+                                    <input class="form-control pl-0" type="text" formControlName="minPoints" readonly/>
+                                </td>
+                                <td class="text-light">
+                                    <input class="form-control pl-0" type="text" formControlName="maxPoints" readonly/>
+                                </td>
+                                <td class="text-light">
+                                    <input class="form-control pl-0" type="text" formControlName="price" readonly/>
+                                </td>
+                                <td class="text-light">
+                                    <input class="form-control pl-0" type="text" [value]="registration.startDate | date:'dd/MM/yyyy HH:mm'" readonly/>
+                                </td>
+                                <td class="text-light">
+                                    <input class="form-control pl-0" type="text" [value]="registration.endDate | date:'dd/MM/yyyy HH:mm'" readonly/>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+
+            </form>
+
+        </div>
+    </div>
+</div>

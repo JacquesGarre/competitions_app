@@ -55,6 +55,12 @@ import { ModulePoolsAddModalFormComponent } from './module-pools/module-pools-ad
 import { ModulePoolsLinkModalFormComponent } from './module-pools/module-pools-link-modal-form/module-pools-link-modal-form.component';
 import { ModulePoolsViewComponent } from './module-pools/module-pools-view/module-pools-view.component';
 
+import { ModuleRegistrationsComponent } from './module-registrations/module-registrations.component';
+import { ModuleRegistrationsSubmoduleComponent } from './module-registrations/module-registrations-submodule/module-registrations-submodule.component';
+import { ModuleRegistrationsAddModalFormComponent } from './module-registrations/module-registrations-add-modal-form/module-registrations-add-modal-form.component';
+import { ModuleRegistrationsLinkModalFormComponent } from './module-registrations/module-registrations-link-modal-form/module-registrations-link-modal-form.component';
+import { ModuleRegistrationsViewComponent } from './module-registrations/module-registrations-view/module-registrations-view.component';
+
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { QuillModule } from 'ngx-quill';
 
@@ -123,6 +129,12 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         ModulePoolsAddModalFormComponent,
         ModulePoolsLinkModalFormComponent,
         ModulePoolsViewComponent,
+
+        ModuleRegistrationsComponent,
+        ModuleRegistrationsSubmoduleComponent,
+        ModuleRegistrationsAddModalFormComponent,
+        ModuleRegistrationsLinkModalFormComponent,
+        ModuleRegistrationsViewComponent,
 
     ],  
     imports: [

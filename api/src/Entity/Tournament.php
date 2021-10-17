@@ -95,9 +95,15 @@ class Tournament
      */
     private $pools;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Registration::class, mappedBy="tournament", orphanRemoval=true)
+     */
+    private $registrations;
+
     public function __construct()
     {
         $this->pools = new ArrayCollection();
+        $this->registrations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -285,6 +291,36 @@ class Tournament
             // set the owning side to null (unless already changed)
             if ($pool->getTournament() === $this) {
                 $pool->setTournament(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Registration[]
+     */
+    public function getRegistrations(): Collection
+    {
+        return $this->registrations;
+    }
+
+    public function addRegistration(Registration $registration): self
+    {
+        if (!$this->registrations->contains($registration)) {
+            $this->registrations[] = $registration;
+            $registration->setTournament($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRegistration(Registration $registration): self
+    {
+        if ($this->registrations->removeElement($registration)) {
+            // set the owning side to null (unless already changed)
+            if ($registration->getTournament() === $this) {
+                $registration->setTournament(null);
             }
         }
 

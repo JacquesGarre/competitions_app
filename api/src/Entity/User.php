@@ -75,9 +75,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $tournamentsCreated;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Pool::class, mappedBy="registrations")
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $pools;
+    private $licenceNumber;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $points;
+
+    /**
+     * @ORM\Column(type="string", length=1, nullable=true)
+     */
+    private $genre;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $club;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Registration::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $registrations;
 
     public function __construct()
     {
@@ -85,7 +105,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->organizations = new ArrayCollection();
         $this->tournaments = new ArrayCollection();
         $this->tournamentsCreated = new ArrayCollection();
-        $this->pools = new ArrayCollection();
+        $this->registrations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -288,28 +308,79 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Pool[]
-     */
-    public function getPools(): Collection
+    public function getLicenceNumber(): ?string
     {
-        return $this->pools;
+        return $this->licenceNumber;
     }
 
-    public function addPool(Pool $pool): self
+    public function setLicenceNumber(?string $licenceNumber): self
     {
-        if (!$this->pools->contains($pool)) {
-            $this->pools[] = $pool;
-            $pool->addRegistration($this);
+        $this->licenceNumber = $licenceNumber;
+
+        return $this;
+    }
+
+    public function getPoints(): ?string
+    {
+        return $this->points;
+    }
+
+    public function setPoints(?string $points): self
+    {
+        $this->points = $points;
+
+        return $this;
+    }
+
+    public function getGenre(): ?string
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(?string $genre): self
+    {
+        $this->genre = $genre;
+
+        return $this;
+    }
+
+    public function getClub(): ?string
+    {
+        return $this->club;
+    }
+
+    public function setClub(?string $club): self
+    {
+        $this->club = $club;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Registration[]
+     */
+    public function getRegistrations(): Collection
+    {
+        return $this->registrations;
+    }
+
+    public function addRegistration(Registration $registration): self
+    {
+        if (!$this->registrations->contains($registration)) {
+            $this->registrations[] = $registration;
+            $registration->setUser($this);
         }
 
         return $this;
     }
 
-    public function removePool(Pool $pool): self
+    public function removeRegistration(Registration $registration): self
     {
-        if ($this->pools->removeElement($pool)) {
-            $pool->removeRegistration($this);
+        if ($this->registrations->removeElement($registration)) {
+            // set the owning side to null (unless already changed)
+            if ($registration->getUser() === $this) {
+                $registration->setUser(null);
+            }
         }
 
         return $this;

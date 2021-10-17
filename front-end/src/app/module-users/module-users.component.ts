@@ -73,7 +73,11 @@ export class ModuleUsersComponent implements OnInit {
                                 roles: [x.roles],
                                 organizations: [x.organizations, [Validators.required, Validators.minLength(2)]],
                                 createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
-                                updatedAt: x.updatedAt, 
+                                updatedAt: [x.updatedAt], 
+                                licenceNumber: [x.licenceNumber], 
+                                points: [x.points], 
+                                club: [x.club],
+                                genre: [x.genre],
                                 isReadonly: true
                             })
                         })

@@ -10774,7 +10774,7 @@ ng2-smart-table-pager {
     background-color: var(--dark-gray);
     border-color: var( --orange);
     border-bottom: 1px solid transparent;
-    box-shadow: 0px 0px 15px 0px #141414 !important;
+    box-shadow: 0px 0px 5px 0px #141414 !important;
 }
 
 .nav-tabs .nav-link:hover {

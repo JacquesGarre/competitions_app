@@ -1,0 +1,84 @@
+<!-- Loader -->
+<ngx-ui-loader [loaderId]="'page-loader'"></ngx-ui-loader>
+<!-- End of Loader -->
+
+<h5 class="mb-4 pr-4">
+    <fa-icon [icon]="faClipboardList" class="mr-2"></fa-icon>
+    Registrations
+    <a [routerLink]="" class="p-0 text-secondary float-right" (click)=createRegistration()>
+        <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
+    </a>
+</h5>
+
+<!--This is your master form-->
+<form [formGroup]="registrationForm">
+
+    <table class="table table-hover table-striped shadow border-left-danger">
+        <thead class="bg-dark text-light border-top-0 border-right-0 border-left-0">
+            <tr>
+                <th scope="col" class="text-center border-gray">Actions</th>
+                <th scope="col" class="border-gray">User</th>
+                <th scope="col" class="border-gray">Tournament</th>
+                <th scope="col" class="border-gray">Pools</th>
+                <th scope="col" class="border-gray">Payable amount</th>
+                <th scope="col" class="border-gray">Paid amount</th>
+                <th scope="col" class="border-gray">Jersey number</th>
+                <th scope="col" class="border-gray">Present</th>
+                <th scope="col" class="border-gray">Available</th>
+                <th scope="col" class="border-gray">Created at</th>
+                <th scope="col" class="border-gray">Updated at</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container formArrayName="registrationDetails" *ngFor="let registration of registrations; let $index=index">
+                <tr [formGroupName]="$index"  class="bg-dark-gray">
+                    <td class="text-center">
+                        <a class="btn text-light text-hover-orange" (click)=showRegistration(registration)>
+                            <fa-icon [icon]="faEye" class="mr-2"></fa-icon>
+                        </a>
+                        <!-- <a class="btn text-light text-hover-orange">
+                            <fa-icon [icon]="faPen" class="mr-2"></fa-icon>
+                        </a> -->
+                        <a class="btn text-light text-hover-orange" (click)=deleteRegistration(registration)>
+                            <fa-icon [icon]="faTrash" class="mr-2"></fa-icon>
+                        </a>
+                    </td>
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" formControlName="user" readonly/>
+                    </td>
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" formControlName="tournament"  readonly/>
+                    </td>
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" formControlName="pools"  readonly/>
+                    </td>
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" formControlName="payableAmount" readonly/>
+                    </td>
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" [value]="registration.paidAmount ? registration.paidAmount : 0" readonly/>
+                    </td>
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" formControlName="jerseyNumber" readonly/>
+                    </td>
+                    <td class="text-light pt-3">
+                        <fa-icon [icon]="faCheck" class="text-success mt-2" *ngIf="registration.presence"></fa-icon>
+                        <fa-icon [icon]="faTimes" class="text-danger mt-2" *ngIf="!registration.presence"></fa-icon>
+                    </td>
+                    <td class="text-light pt-3">
+                        <fa-icon [icon]="faCheck" class="text-success mt-2" *ngIf="registration.available"></fa-icon>
+                        <fa-icon [icon]="faTimes" class="text-danger mt-2" *ngIf="!registration.available"></fa-icon>
+                    </td>
+
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" [value]="registration.createdAt | date:'dd/MM/yyyy HH:mm'" readonly/>
+                    </td>
+                    <td class="text-light">
+                        <input class="form-control pl-0" type="text" [value]="(registration.updatedAt !== null) ? (registration.updatedAt | date: 'dd/MM/yyyy HH:mm') : ''" readonly/>
+                    </td>
+                </tr>
+            </ng-container>
+        </tbody>
+    </table>
+
+</form>

@@ -9,4 +9,8 @@ export interface User {
     createdAt: Date;
     updatedAt: Date;
     password: string;
+    licenceNumber: string;
+    points: string;
+    club: string;
+    genre: string;
 }

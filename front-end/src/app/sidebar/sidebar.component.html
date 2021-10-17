@@ -23,7 +23,7 @@
             <a class="nav-link text-hover-orange" routerLink="/">
                 <fa-icon [icon]="faTachometerAlt" class="mr-2"></fa-icon>
                 <span>Dashboard</span>
-                <fa-icon [icon]="faChevronRight" class="float-right mt-1 arrowRight"></fa-icon>
+                <fa-icon [icon]="faChevronRight" class="float-right arrowRight"></fa-icon>
             </a>
         </li>
     
@@ -33,7 +33,7 @@
         <a class="nav-link text-hover-orange" routerLink="/admin/organizations" routerLinkActive="active">
             <fa-icon [icon]="faGem" class="mr-2"></fa-icon>
             <span>Organizations</span>
-            <fa-icon [icon]="faChevronRight" class="float-right mt-1 arrowRight"></fa-icon>
+            <fa-icon [icon]="faChevronRight" class="float-right arrowRight"></fa-icon>
         </a>
     </li>
 
@@ -42,7 +42,7 @@
         <a class="nav-link text-hover-orange" routerLink="/admin/users" routerLinkActive="active">
             <fa-icon [icon]="faUser" class="mr-2" style="margin-left: 2px;"></fa-icon>
             <span style="margin-left: 2px;">Users</span>
-            <fa-icon [icon]="faChevronRight" class="float-right mt-1 arrowRight"></fa-icon>
+            <fa-icon [icon]="faChevronRight" class="float-right arrowRight"></fa-icon>
         </a>
     </li>
 
@@ -58,7 +58,7 @@
         <a class="nav-link text-hover-orange" routerLink="/admin/tournaments" routerLinkActive="active">
             <fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>
             <span>Tournaments</span>
-            <fa-icon [icon]="faChevronRight" class="float-right mt-1 arrowRight"></fa-icon>
+            <fa-icon [icon]="faChevronRight" class="float-right arrowRight"></fa-icon>
         </a>
     </li>
 
@@ -66,10 +66,20 @@
     <li class="nav-item" *ngIf="showAdminBoard">
         <a class="nav-link text-hover-orange" routerLink="/admin/pools" routerLinkActive="active">
             <fa-icon [icon]="faObjectUngroup" class="mr-2"></fa-icon>
-            <span>Pools</span>
-            <fa-icon [icon]="faChevronRight" class="float-right mt-1 arrowRight"></fa-icon>
+            <span style="margin-left: 1px;">Pools</span>
+            <fa-icon [icon]="faChevronRight" class="float-right arrowRight"></fa-icon>
         </a>
     </li>
+
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item" *ngIf="showAdminBoard">
+        <a class="nav-link text-hover-orange" routerLink="/admin/registrations" routerLinkActive="active">
+            <fa-icon [icon]="faClipboardList" class="mr-2" style="margin-left: 3px;"></fa-icon>
+            <span style="margin-left: 3px;">Registrations</span>
+            <fa-icon [icon]="faChevronRight" class="float-right arrowRight"></fa-icon>
+        </a>
+    </li>
+        
     
 
     <!-- Divider -->
