@@ -39,7 +39,7 @@ export class ModulePoolsLinkModalFormComponent {
                 this.name, 
                 [
                     Validators.required,
-                    Validators.minLength(4)
+                    Validators.minLength(1)
                 ]
             ),
             startDate: new FormControl(

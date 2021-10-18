@@ -53,7 +53,7 @@
                         <input class="form-control pl-0" type="text" formControlName="pools"  readonly/>
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" formControlName="payableAmount" readonly/>
+                        <input class="form-control pl-0" type="text" [value]="registration.payableAmount ? registration.payableAmount : 0" readonly/>
                     </td>
                     <td class="text-light">
                         <input class="form-control pl-0" type="text" [value]="registration.paidAmount ? registration.paidAmount : 0" readonly/>

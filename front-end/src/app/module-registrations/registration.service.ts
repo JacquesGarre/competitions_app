@@ -1,9 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, forkJoin } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
+import { TokenStorageService } from '../_services/token-storage.service';
+
+import { UserService } from '../module-users/user.service';
+import { PoolService } from '../module-pools/pool.service';
+import { TournamentService } from '../module-tournaments/tournament.service';
+
 import { Registration } from './registration';
+import { User } from '../module-users/user';
+import { Tournament } from '../module-tournaments/tournament';
+import { Pool } from '../module-pools/pool';
 import { Env } from '../_globals/env';
 
 @Injectable({ providedIn: 'root' })
@@ -16,12 +25,17 @@ export class RegistrationService {
         })
     }
 
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+        public userService: UserService,
+        public poolService: PoolService,
+        public tournamentService: TournamentService,
+        public token: TokenStorageService,
+        
+    ) { }
 
     // Create
     createRegistration(registration: any): Observable<Registration> {
-        console.log('registration:');
-        console.log(registration);
         return this.http.post<Registration>(Env.API_URL + 'registrations', JSON.stringify(registration), this.httpOptions)
         .pipe(retry(1), catchError(this.handleError))
     }  

@@ -39,7 +39,7 @@ export class ModulePoolsAddModalFormComponent {
                 this.name, 
                 [
                     Validators.required,
-                    Validators.minLength(4)
+                    Validators.minLength(1)
                 ]
             ),
             tournament: new FormControl(

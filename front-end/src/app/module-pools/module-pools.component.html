@@ -17,13 +17,13 @@
         <thead class="bg-dark text-light border-top-0 border-right-0 border-left-0">
             <tr>
                 <th scope="col" class="text-center border-gray">Actions</th>
+                <th scope="col" class="border-gray">Tournament</th>
                 <th scope="col" class="border-gray">Name</th>
                 <th scope="col" class="border-gray">Min points</th>
                 <th scope="col" class="border-gray">Max points</th>
                 <th scope="col" class="border-gray">Price</th>
                 <th scope="col" class="border-gray">Start Date</th>
                 <th scope="col" class="border-gray">End Date</th>
-                <th scope="col" class="border-gray">Tournament</th>
                 <th scope="col" class="border-gray">Created at</th>
                 <th scope="col" class="border-gray">Updated at</th>
             </tr>
@@ -43,6 +43,9 @@
                         </a>
                     </td>
                     <td class="text-light">
+                        <input class="form-control pl-0" type="text" formControlName="tournament"  readonly/>
+                    </td>
+                    <td class="text-light">
                         <input class="form-control pl-0" type="text" formControlName="name" readonly/>
                     </td>
                     <td class="text-light">
@@ -59,9 +62,6 @@
                     </td>
                     <td class="text-light">
                         <input class="form-control pl-0" type="text" [value]="pool.endDate | date:'dd/MM/yyyy HH:mm'" readonly/>
-                    </td>
-                    <td class="text-light">
-                        <input class="form-control pl-0" type="text" formControlName="tournament"  readonly/>
                     </td>
                     <td class="text-light">
                         <input class="form-control pl-0" type="text" [value]="pool.createdAt | date:'dd/MM/yyyy HH:mm'" readonly/>

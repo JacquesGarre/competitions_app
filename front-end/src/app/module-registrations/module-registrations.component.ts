@@ -1,10 +1,18 @@
 import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
 import { NgxUiLoaderService } from 'ngx-ui-loader';
+import { Observable, throwError, forkJoin } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Registration } from './registration';
 import { RegistrationService } from './registration.service';
 import { Router } from '@angular/router';
+
+import { User } from '../module-users/user';
+import { Tournament } from '../module-tournaments/tournament';
+import { Pool } from '../module-pools/pool';
+
+import { Env } from '../_globals/env';
 
 import { faUser, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faSitemap, faGem, faObjectUngroup, faClipboardList,faCheck,faTimes } from '@fortawesome/free-solid-svg-icons';
 
@@ -53,6 +61,7 @@ export class ModuleRegistrationsComponent implements OnInit {
     pools: any = [];
 
     constructor(
+        private http: HttpClient,
         private token: TokenStorageService,
         public service: RegistrationService,
         public userService: UserService,
@@ -76,6 +85,62 @@ export class ModuleRegistrationsComponent implements OnInit {
         this.initRegistrations();
     }
 
+    initRegistrations(){
+        let user = this.token.getUser();
+        let pools = this.http.get<Pool>(Env.API_URL + 'pools.json')
+        let users = this.http.get<User>(Env.API_URL + 'users.json')
+        let tournaments = this.http.get<Tournament>(Env.API_URL + 'tournaments.json')
+        let registrations = this.http.get<Registration>(Env.API_URL + 'registrations.json');
+        forkJoin([
+            pools,
+            users,
+            tournaments,
+            registrations
+        ]).subscribe(results => {
+            this.pools = results[0];
+            this.users = results[1];
+            this.currentUser = this.users.filter((el: any) => {
+                return el.email === user.email
+            })[0];
+            this.tournaments = results[2];
+            this.registrations = results[3];
+            this.registrationForm = this.formBuilder.group({
+                registrationDetails: this.formBuilder.array(
+                    this.registrations.map((x: any) => {
+                        var tournament: any = this.tournaments.filter((tournament: any) => {
+                            return tournament.id.toString() === x.tournament.replace('/api/tournaments/','')
+                        })[0]?.name
+                        var user: any = this.users.filter((user: any) => {
+                            return user.id.toString() === x.user.replace('/api/users/','')
+                        })[0];
+                        user = user.firstName + ' ' + user.lastName;
+                        var pools: any = this.pools.filter((pool: any) => {
+                            return x.pools.includes('/api/pools/'+pool.id.toString())
+                        });
+                        var poolsTxt: any = pools.map((pool: any) => {
+                            return pool.name;
+                        }).join(", ")
+                        return this.formBuilder.group({
+                            id: [x.id, [Validators.required, Validators.minLength(2)]],
+                            user: [user, [Validators.required, Validators.minLength(2)]],
+                            tournament: [tournament, [Validators.required, Validators.minLength(2)]],
+                            payableAmount: [x.payableAmount, [Validators.required, Validators.minLength(2)]],
+                            paidAmount: [x.paidAmount, [Validators.required, Validators.minLength(2)]],
+                            jerseyNumber: [x.jerseyNumber, [Validators.required, Validators.minLength(2)]],
+                            pools: [poolsTxt],
+                            createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
+                            updatedAt: x.updatedAt,
+                            isReadonly: true
+                        })
+                    })
+                )
+            })
+            this.ngxLoader.stopLoader('page-loader');
+        });
+
+    }
+
+    /*
     initRegistrations() {
         this.userService.getUserByEmail(this.currentUser.email).subscribe((data: any) => {
             if (data.length) {
@@ -129,7 +194,7 @@ export class ModuleRegistrationsComponent implements OnInit {
                 });
             });
         })
-    }
+    }*/
 
     // Create registration
     createRegistration() {
@@ -139,13 +204,11 @@ export class ModuleRegistrationsComponent implements OnInit {
                 this.ngxLoader.startLoader('page-loader');
                 let values = modalRef.componentInstance.addForm.value;
                 let registration: any = {
-                    name: values.name,
+                    user: 'api/users/' + values.user,
                     tournament: 'api/tournaments/' + values.tournament,
-                    minPoints: parseInt(values.minPoints),
-                    maxPoints: parseInt(values.maxPoints),
-                    startDate: new Date(Date.parse(values.startDate)+7200*1000).toUTCString(),
-                    endDate: new Date(Date.parse(values.endDate)+7200*1000).toUTCString(),
-                    price: parseFloat(values.price)
+                    creator: 'api/users/' + this.currentUser.id,
+                    presence: false,
+                    available: true,
                 }
                 this.service.createRegistration(registration).subscribe(data => {
                     this.initRegistrations();
@@ -159,7 +222,7 @@ export class ModuleRegistrationsComponent implements OnInit {
     deleteRegistration(registration: any) {
         const modalRef = this.modalService.open(ModalConfirmComponent, { centered: true });
         modalRef.componentInstance.title = 'Deleting a registration';
-        modalRef.componentInstance.content = 'Are you sure you want to delete <i>' + registration.name + '</i> ?';
+        modalRef.componentInstance.content = 'Are you sure you want to delete this registration ?';
         modalRef.componentInstance.confirmBtn = 'Confirm';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
