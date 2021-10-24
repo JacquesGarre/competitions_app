@@ -19,22 +19,18 @@ class RegistrationRepository extends ServiceEntityRepository
         parent::__construct($registry, Registration::class);
     }
 
-    // /**
-    //  * @return Registration[] Returns an array of Registration objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @return Registration[] Returns an array of Registration objects
+     */
+    public function countByTournament($value)
     {
         return $this->createQueryBuilder('r')
-            ->andWhere('r.exampleField = :val')
+            ->select('count(r.id)')
+            ->andWhere('r.tournament = :val')
             ->setParameter('val', $value)
-            ->orderBy('r.id', 'ASC')
-            ->setMaxResults(10)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getSingleScalarResult();
     }
-    */
 
     /*
     public function findOneBySomeField($value): ?Registration

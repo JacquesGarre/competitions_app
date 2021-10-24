@@ -5,6 +5,7 @@
 namespace App\DataPersister;
 
 use App\Entity\Registration;
+use App\Repository\RegistrationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -26,10 +27,12 @@ class RegistrationDataPersister implements ContextAwareDataPersisterInterface
     private $_request;
 
     public function __construct(
+        RegistrationRepository $repo,
         EntityManagerInterface $entityManager,
         RequestStack $request
     ) {
         $this->_entityManager = $entityManager;
+        $this->repo = $repo;
         $this->_request = $request->getCurrentRequest();
     }
 
@@ -46,17 +49,19 @@ class RegistrationDataPersister implements ContextAwareDataPersisterInterface
      */
     public function persist($data, array $context = [])
     {
-        // Set the updatedAt value if it's not a POST request
+
+        // A l'update
         if ($this->_request->getMethod() !== 'POST') {
             $data->setUpdatedAt(new \DateTime());
+
+        // A la creation
         } else {
+            $totalRegistrations = $this->repo->countByTournament($data->getTournament());
+            $totalRegistrations++;
+            $data->setJerseyNumber($totalRegistrations);
             $data->setCreatedAt(new \DateTimeImmutable());
         }
         
-
-        // JERSEY NUMBER // Get last registration by tournament id + 1
-        $data->setJerseyNumber(50);
-
         $this->_entityManager->persist($data);
         $this->_entityManager->flush();
     }    

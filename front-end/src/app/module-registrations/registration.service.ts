@@ -64,6 +64,13 @@ export class RegistrationService {
         .pipe(retry(1), catchError(this.handleError))
     }  
 
+    
+    // Read by Tournament id and user id
+    getRegistrationsByTournamentAndUser(tournamentID: any, userID: any): Observable<Registration> {
+        return this.http.get<Registration>(Env.API_URL + 'tournaments/' + tournamentID + '/registrations.json?user='+userID)
+        .pipe(retry(1), catchError(this.handleError))
+    }  
+
     // Update
     updateRegistration(id: any, registration: any): Observable<Registration> {
         return this.http.put<Registration>(Env.API_URL + 'registrations/' + id + '.json', JSON.stringify(registration), this.httpOptions)

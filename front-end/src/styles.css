@@ -10816,3 +10816,7 @@ table tbody tr > td:first-of-type {
     padding-right: 1.5rem;
     min-height: 100vh;
 }
+
+.dropdown-btn {
+    background-color: #fff;
+}

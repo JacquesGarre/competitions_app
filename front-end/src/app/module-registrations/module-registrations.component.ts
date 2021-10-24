@@ -140,62 +140,6 @@ export class ModuleRegistrationsComponent implements OnInit {
 
     }
 
-    /*
-    initRegistrations() {
-        this.userService.getUserByEmail(this.currentUser.email).subscribe((data: any) => {
-            if (data.length) {
-                this.currentUser = data[0];
-            }
-            this.poolService.getPools().subscribe((data: any) => {
-                this.pools = data;
-                this.userService.getUsers().subscribe((data: any) => {
-                    this.users = data;
-                    this.tournamentService.getTournaments().subscribe((data: any) => {
-                        this.tournaments = data;
-                        this.service.getRegistrations().subscribe((data: any) => {
-                            if (data.length) {
-                                this.registrations = data;
-                                this.registrationForm = this.formBuilder.group({
-                                    registrationDetails: this.formBuilder.array(
-                                        this.registrations.map((x: any) => {
-                                            var tournament: any = this.tournaments.filter((tournament: any) => {
-                                                return tournament.id.toString() === x.tournament.replace('/api/tournaments/','')
-                                            })[0]?.name
-                                            var user: any = this.users.filter((user: any) => {
-                                                return user.id.toString() === x.user.replace('/api/users/','')
-                                            })[0];
-                                            user = user.firstName + ' ' + user.lastName;
-                                            var pools: any = this.pools.filter((pool: any) => {
-                                                return x.pools.includes('/api/pools/'+pool.id.toString())
-                                            });
-                                            var poolsTxt: any = pools.map((pool: any) => {
-                                                return pool.name;
-                                            }).join(", ")
-                                            console.log(pools)
-                                            return this.formBuilder.group({
-                                                id: [x.id, [Validators.required, Validators.minLength(2)]],
-                                                user: [user, [Validators.required, Validators.minLength(2)]],
-                                                tournament: [tournament, [Validators.required, Validators.minLength(2)]],
-                                                payableAmount: [x.payableAmount, [Validators.required, Validators.minLength(2)]],
-                                                paidAmount: [x.paidAmount, [Validators.required, Validators.minLength(2)]],
-                                                jerseyNumber: [x.jerseyNumber, [Validators.required, Validators.minLength(2)]],
-                                                pools: [poolsTxt],
-                                                createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
-                                                updatedAt: x.updatedAt,
-                                                isReadonly: true
-                                            })
-                                        })
-                                    )
-                                })
-                            }
-                            this.ngxLoader.stopLoader('page-loader');
-                        })
-                    })
-                });
-            });
-        })
-    }*/
-
     // Create registration
     createRegistration() {
         const modalRef = this.modalService.open(ModuleRegistrationsAddModalFormComponent, { centered: true });
@@ -203,17 +147,73 @@ export class ModuleRegistrationsComponent implements OnInit {
             if (result == 'save') {
                 this.ngxLoader.startLoader('page-loader');
                 let values = modalRef.componentInstance.addForm.value;
-                let registration: any = {
-                    user: 'api/users/' + values.user,
-                    tournament: 'api/tournaments/' + values.tournament,
-                    creator: 'api/users/' + this.currentUser.id,
-                    presence: false,
-                    available: true,
+
+
+                if(values.creationMode == 'newUser'){
+
+                    let user: any = {
+                        email: values.email,
+                        firstName: values.firstName,
+                        lastName: values.lastName,
+                        password: values.password,
+                        licenceNumber: values.licenceNumber,
+                        points: values.points,
+                        genre: values.genre,
+                        club: values.club,
+                    }
+                    this.userService.createUser(user).subscribe(data => {
+
+                        let registration: any = {
+                            tournament: 'api/tournaments/' + values.tournament,
+                            pools: values.selectedPools.map((pool:any) => {
+                                return 'api/pools/' + pool.id
+                            }),
+                            user: 'api/users/' + data.id,
+                            payableAmount: parseFloat(values.payableAmount),
+                            paidAmount: parseFloat(values.paidAmount),
+                            presence: values.presence == "1",
+                            available: values.presence == "1",
+                            creator: 'api/users/' + this.currentUser.id
+                        }
+
+                        this.service.createRegistration(registration).subscribe(data => {
+                            this.initRegistrations();
+                            this.ngxLoader.stopLoader('page-loader');
+                        })
+                        
+                    })
+
+                } else {
+
+                    let registration: any = {
+                        tournament: 'api/tournaments/' + values.tournament,
+                        pools: values.selectedPools.map((pool:any) => {
+                            return 'api/pools/' + pool.id
+                        }),
+                        user: 'api/users/' + values.user,
+                        payableAmount: parseFloat(values.payableAmount),
+                        paidAmount: parseFloat(values.paidAmount),
+                        presence: values.presence == "1",
+                        available: values.presence == "1",
+                        creator: 'api/users/' + this.currentUser.id
+                    }
+    
+                    // registration exists, we update it
+                    if(values.registrationID !== ""){
+                        this.service.updateRegistration(values.registrationID, registration).subscribe(data => {
+                            this.initRegistrations();
+                            this.ngxLoader.stopLoader('page-loader');
+                        })
+                    // else we create it
+                    } else {
+                        this.service.createRegistration(registration).subscribe(data => {
+                            this.initRegistrations();
+                            this.ngxLoader.stopLoader('page-loader');
+                        })
+                    }
+
                 }
-                this.service.createRegistration(registration).subscribe(data => {
-                    this.initRegistrations();
-                    this.ngxLoader.stopLoader('page-loader');
-                })
+                
             }
         });
     }

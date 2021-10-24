@@ -96,6 +96,7 @@ class Tournament
     private $pools;
 
     /**
+     * @ApiSubresource()
      * @ORM\OneToMany(targetEntity=Registration::class, mappedBy="tournament", orphanRemoval=true)
      */
     private $registrations;
