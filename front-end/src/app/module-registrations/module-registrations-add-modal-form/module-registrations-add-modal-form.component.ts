@@ -37,9 +37,6 @@ export class ModuleRegistrationsAddModalFormComponent {
     registrationID: any; 
     pools: any;
     users: any;
-    minPoints: string = '';
-    maxPoints: string = '';
-    price: string = '';
     displayUserDetails: boolean = false;
     email: string = '';
     firstName: string = '';

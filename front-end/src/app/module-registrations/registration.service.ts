@@ -54,7 +54,7 @@ export class RegistrationService {
 
     // Read by user id
     getRegistrationsByUser(id: any): Observable<Registration> {
-        return this.http.get<Registration>(Env.API_URL + 'users/' + id + '/registrations.json')
+        return this.http.get<Registration>(Env.API_URL + 'registrations.json?user=' + id)
         .pipe(retry(1), catchError(this.handleError))
     }  
 

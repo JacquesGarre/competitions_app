@@ -1,6 +1,6 @@
 <div class="modal-header bg-dark rounded-0">
     <h5 class="modal-title text-light">
-        <fa-icon [icon]="faObjectUngroup" class="mr-2"></fa-icon>Add registration</h5>
+        <fa-icon [icon]="faClipboardList" class="mr-2"></fa-icon>New registration</h5>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
         <span aria-hidden="true" class="text-light text-hover-orange">&times;</span>
     </button>
@@ -9,67 +9,181 @@
     <form [formGroup]="addForm" (ngSubmit)="submitForm()">
         <div class="modal-boy">
             <div class="container">
-                <label for="name">Name</label>
+                <label for="tournament">Tournament</label>
                 <div class="input-group mb-4">
-                    <input type="text" [className]="
-                            (addForm.invalid && (addForm.get('name')?.dirty || addForm.get('name')?.touched) && addForm.get('name')?.errors) ? 
-                            'form-control is-invalid' : (addForm.invalid && (addForm.get('name')?.dirty || addForm.get('name')?.touched)) ? 'form-control is-valid' : 'form-control'" id="name" name="name" formControlName="name" autocomplete="off">
+                    <select class="browser-default custom-select" name="tournament"  id="tournament" formControlName="tournament" required
+                    (change)="tournamentChanged()"
+                    >
+                        <option *ngFor="let tournament of tournaments" [value]="tournament.id">{{tournament.name}}</option>
+                    </select>
                     <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
-                        <div *ngIf="addForm.get('name')?.errors?.required">
-                            Name is required.
-                        </div>
-                        <div *ngIf="addForm.get('name')?.errors?.minlength">
-                            Name must be at least 4 characters long.
+                        <div *ngIf="addForm.get('tournament')?.errors?.required">
+                            Tournament is required.
                         </div>
                     </div>
-                </div>
-                <label for="minPoints">Minimum points</label>
-                <div class="input-group mb-4">
-                    <input type="text" [className]="
-                            (addForm.invalid && (addForm.get('minPoints')?.dirty || addForm.get('minPoints')?.touched) && addForm.get('minPoints')?.errors) ? 
-                            'form-control is-invalid' : (addForm.invalid && (addForm.get('minPoints')?.dirty || addForm.get('minPoints')?.touched)) ? 'form-control is-valid' : 'form-control'" id="minPoints" name="minPoints" formControlName="minPoints" autocomplete="off">
-                </div>
-                <label for="maxPoints">Maximum points</label>
-                <div class="input-group mb-4">
-                    <input type="text" [className]="
-                            (addForm.invalid && (addForm.get('maxPoints')?.dirty || addForm.get('maxPoints')?.touched) && addForm.get('maxPoints')?.errors) ? 
-                            'form-control is-invalid' : (addForm.invalid && (addForm.get('maxPoints')?.dirty || addForm.get('maxPoints')?.touched)) ? 'form-control is-valid' : 'form-control'" id="maxPoints" name="maxPoints" formControlName="maxPoints" autocomplete="off">
                 </div>
 
-                <label for="startDate">Start date</label>
-                <div class="input-group mb-4">
-                    <input type="text" [owlDateTime]="startDate" [owlDateTimeTrigger]="startDate" placeholder="Date Time" [className]="
-                            (addForm.invalid && (addForm.get('startDate')?.dirty || addForm.get('startDate')?.touched) && addForm.get('startDate')?.errors) ? 
-                            'form-control is-invalid' : (addForm.invalid && (addForm.get('startDate')?.dirty || addForm.get('startDate')?.touched)) ? 'form-control is-valid' : 'form-control'" id="startDate" name="startDate" formControlName="startDate" autocomplete="off">
-                    <owl-date-time #startDate ></owl-date-time>
-                    <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
-                        <div *ngIf="addForm.get('startDate')?.errors?.required">
-                            Start date is required.
+                <span *ngIf="addForm.value.tournament !== null && parentModule !== 'users' ">
+                    <label for="user">User</label>
+                    <div class="input-group mb-4">
+                        <select 
+                            class="browser-default custom-select" 
+                            name="creationMode"  
+                            id="creationMode" 
+                            formControlName="creationMode"
+                            (change)="userChanged()"
+                            required>
+                            <option value="existingUser" ngSelected>Existing user</option>
+                            <option value="newUser">New user</option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-4" *ngIf="addForm.value.creationMode == 'existingUser'">
+                        <select class="browser-default custom-select" name="user"  id="user" formControlName="user" 
+                            (change)="userChanged()"
+                            required>
+                            <option>...</option>
+                            <option *ngFor="let user of users" [value]="user.id">{{user.firstName}} {{user.lastName}}</option>
+                        </select>
+                    </div>
+
+                </span>
+
+                <input type="hidden" id="registrationID" name="registrationID" formControlName="registrationID" autocomplete="off">
+
+                <span *ngIf="addForm.value.creationMode == 'newUser'">
+                    <label for="licenceNumber">Licence number</label>
+                    <div class="input-group mb-4">
+                        <input 
+                        (change)="fetchPlayerInfos()"
+                        type="text" [className]="
+                                (addForm.invalid && (addForm.get('licenceNumber')?.dirty || addForm.get('licenceNumber')?.touched) && addForm.get('licenceNumber')?.errors) ? 
+                                'form-control is-invalid' : (addForm.invalid && (addForm.get('licenceNumber')?.dirty || addForm.get('licenceNumber')?.touched)) ? 'form-control is-valid' : 'form-control'" id="licenceNumber" name="licenceNumber" formControlName="licenceNumber" autocomplete="off">
+                        <div *ngIf="fetching" class="invalid-feedback">
+                            Fetching data, please wait...
                         </div>
                     </div>
-                </div>
-                <label for="endDate">End date</label>
-                <div class="input-group mb-4">
-                    <input type="text"  [owlDateTime]="endDate" [owlDateTimeTrigger]="endDate" placeholder="Date Time"  [className]="
-                            (addForm.invalid && (addForm.get('endDate')?.dirty || addForm.get('endDate')?.touched) && addForm.get('endDate')?.errors) ? 
-                            'form-control is-invalid' : (addForm.invalid && (addForm.get('endDate')?.dirty || addForm.get('endDate')?.touched)) ? 'form-control is-valid' : 'form-control'" id="endDate" name="endDate" formControlName="endDate" autocomplete="off">
-                    <owl-date-time #endDate ></owl-date-time>
-                    <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
-                        <div *ngIf="addForm.get('endDate')?.errors?.required">
-                            End date is required.
+                    <label for="points">Points</label>
+                    <div class="input-group mb-4">
+                        <input type="text" [className]="
+                                (addForm.invalid && (addForm.get('points')?.dirty || addForm.get('points')?.touched) && addForm.get('points')?.errors) ? 
+                                'form-control is-invalid' : (addForm.invalid && (addForm.get('points')?.dirty || addForm.get('points')?.touched)) ? 'form-control is-valid' : 'form-control'" id="points" name="points" formControlName="points" autocomplete="off">
+                    </div>
+                    <label for="club">Club</label>
+                    <div class="input-group mb-4">
+                        <input type="text" [className]="
+                                (addForm.invalid && (addForm.get('club')?.dirty || addForm.get('club')?.touched) && addForm.get('club')?.errors) ? 
+                                'form-control is-invalid' : (addForm.invalid && (addForm.get('club')?.dirty || addForm.get('club')?.touched)) ? 'form-control is-valid' : 'form-control'" id="club" name="club" formControlName="club" autocomplete="off">
+                    </div>
+                    <label for="genre">Genre</label>
+                    <div class="input-group mb-4">
+                        <select class="browser-default custom-select" name="genre"  id="genre" formControlName="genre" 
+                        required>
+                            <option value="m">M</option>
+                            <option value="f">F</option>
+                        </select>
+                    </div>
+                    <label for="name">First name</label>
+                    <div class="input-group mb-4">
+                        <input type="text" [className]="
+                                (addForm.invalid && (addForm.get('firstName')?.dirty || addForm.get('firstName')?.touched) && addForm.get('firstName')?.errors) ? 
+                                'form-control is-invalid' : (addForm.invalid && (addForm.get('firstName')?.dirty || addForm.get('firstName')?.touched)) ? 'form-control is-valid' : 'form-control'" id="firstName" name="firstName" formControlName="firstName" autocomplete="off">
+                        <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
+                            <div *ngIf="addForm.get('firstName')?.errors?.required">
+                                First name is required.
+                            </div>
+                            <div *ngIf="addForm.get('firstName')?.errors?.minlength">
+                                First name must be at least 4 characters long.
+                            </div>
                         </div>
                     </div>
-                </div>
-                <label for="price">Price</label>
-                <div class="input-group mb-4">
-                    <input type="text"  [className]="
-                            (addForm.invalid && (addForm.get('price')?.dirty || addForm.get('price')?.touched) && addForm.get('price')?.errors) ? 
-                            'form-control is-invalid' : (addForm.invalid && (addForm.get('price')?.dirty || addForm.get('price')?.touched)) ? 'form-control is-valid' : 'form-control'" id="price" name="price" formControlName="price" autocomplete="off">
-                </div>
+                    <label for="name">Last name</label>
+                    <div class="input-group mb-4">
+                        <input type="text" [className]="
+                                (addForm.invalid && (addForm.get('lastName')?.dirty || addForm.get('lastName')?.touched) && addForm.get('lastName')?.errors) ? 
+                                'form-control is-invalid' : (addForm.invalid && (addForm.get('lastName')?.dirty || addForm.get('lastName')?.touched)) ? 'form-control is-valid' : 'form-control'" id="lastName" name="lastName" formControlName="lastName" autocomplete="off">
+                        <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
+                            <div *ngIf="addForm.get('lastName')?.errors?.required">
+                                Last name is required.
+                            </div>
+                            <div *ngIf="addForm.get('lastName')?.errors?.minlength">
+                                Last name must be at least 4 characters long.
+                            </div>
+                        </div>
+                    </div>
+                    <label for="name">Email</label>
+                    <div class="input-group mb-4">
+                        <input type="text" [className]="
+                                (addForm.invalid && (addForm.get('email')?.dirty || addForm.get('email')?.touched) && addForm.get('email')?.errors) ? 
+                                'form-control is-invalid' : (addForm.invalid && (addForm.get('email')?.dirty || addForm.get('email')?.touched)) ? 'form-control is-valid' : 'form-control'" id="email" name="email" formControlName="email" autocomplete="off">
+                        <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
+                            <div *ngIf="addForm.get('email')?.errors?.required">
+                                Email is required.
+                            </div>
+                            <div *ngIf="addForm.get('email')?.errors?.minlength">
+                                Email must be at least 4 characters long.
+                            </div>
+                        </div>
+                    </div>
+                    <label for="name">Password</label>
+                    <div class="input-group mb-4">
+                        <input type="text" [className]="
+                                (addForm.invalid && (addForm.get('password')?.dirty || addForm.get('password')?.touched) && addForm.get('password')?.errors) ? 
+                                'form-control is-invalid' : (addForm.invalid && (addForm.get('password')?.dirty || addForm.get('password')?.touched)) ? 'form-control is-valid' : 'form-control'" id="password" name="password" formControlName="password" autocomplete="off">
+                        <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
+                            <div *ngIf="addForm.get('password')?.errors?.required">
+                                Password is required.
+                            </div>
+                            <div *ngIf="addForm.get('password')?.errors?.minlength">
+                                Password must be at least 4 characters long.
+                            </div>
+                        </div>
+                    </div>
+                </span>
+
+                <span *ngIf="addForm.value.tournament !== null && parentModule == 'users' ">
+                    <label for="presence">Present</label>
+                    <div class="input-group mb-4">
+                        <select class="browser-default custom-select" name="presence"  id="presence" formControlName="presence" 
+                            required>
+                            <option value="1">Yes</option>
+                            <option value="0">No</option>
+                        </select>
+                    </div>
+                </span>
+
+
+                <span *ngIf="addForm.value.tournament !== null && parentModule == 'users' ">
+                    <label for="poolIDS">Pools</label>
+                    <div class="mb-4">
+                        <ng-multiselect-dropdown
+                            [placeholder]="'Pools'"
+                            [settings]="dropdownSettings"
+                            [data]="pools"
+                            formControlName="selectedPools"
+                            (onSelect)="onItemSelect($event)"
+                            (onDeSelect)="onItemSelect($event)"
+                            (onSelectAll)="onSelectAll($event)"
+                        >
+                        </ng-multiselect-dropdown>
+                    </div>
+                </span>
+
+                <span *ngIf="addForm.value.selectedPools.length">
+                    <label for="payableAmount">Payable amount</label>
+                    <div class="input-group mb-4">
+                        <input type="text" [className]="'form-control'" id="payableAmount" name="payableAmount" formControlName="payableAmount" [value]="payableAmount" autocomplete="off">
+                    </div>
+
+                    <label for="payableAmount">Paid amount</label>
+                    <div class="input-group mb-4">
+                        <input type="text" [className]="'form-control'" id="paidAmount" name="paidAmount" formControlName="paidAmount" autocomplete="off">
+                    </div>
+                </span>
+
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-outline-success" [disabled]="!addForm.valid" (click)="activeModal.close('save')">Save</button>
+            <button class="btn btn-outline-success" (click)="activeModal.close('save')">Save</button>
             <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss()">Cancel</button>
         </div>
     </form>

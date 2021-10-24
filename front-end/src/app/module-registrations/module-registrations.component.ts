@@ -137,7 +137,6 @@ export class ModuleRegistrationsComponent implements OnInit {
             })
             this.ngxLoader.stopLoader('page-loader');
         });
-
     }
 
     // Create registration

@@ -1,9 +1,9 @@
-<div class="col-md-12 text-gray">
+<div class="col-md-12 text-gray mt-5 mb-5">
     <div class="card card-container shadow rounded-0 bg-dark-gray border-0 border-left-danger">
         <div class="card-header bg-dark text-light border-gray border-0 rounded-0 ">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-10">
-                    <h6 class="mb-0"><fa-icon [icon]="faObjectUngroup" class="mr-2"></fa-icon>Registrations</h6>
+                    <h6 class="mb-0"><fa-icon [icon]="faClipboardList" class="mr-2"></fa-icon>Registrations</h6>
                 </div>
                 <div class="col-md-2">
                     <a class="btn btn-dark-gray btn-sm float-right" (click)=createRegistration()><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add registration</a>
@@ -18,15 +18,19 @@
             <form [formGroup]="registrationForm" *ngIf="registrations.length">
 
                 <table class="table table-hover m-0">
-                    <thead class="text-light border-0">
+                    <thead class="text-light border-top-0 border-right-0 border-left-0">
                         <tr>
                             <th scope="col" class="text-center border-gray">Actions</th>
-                            <th scope="col" class="border-gray">Name</th>
-                            <th scope="col" class="border-gray">Min points</th>
-                            <th scope="col" class="border-gray">Max points</th>
-                            <th scope="col" class="border-gray">Price</th>
-                            <th scope="col" class="border-gray">Start Date</th>
-                            <th scope="col" class="border-gray">End Date</th>
+                            <th scope="col" class="border-gray" *ngIf="parentModule !== 'users'">User</th>
+                            <th scope="col" class="border-gray">Tournament</th>
+                            <th scope="col" class="border-gray">Pools</th>
+                            <th scope="col" class="border-gray">Payable amount</th>
+                            <th scope="col" class="border-gray">Paid amount</th>
+                            <th scope="col" class="border-gray">Jersey number</th>
+                            <th scope="col" class="border-gray">Present</th>
+                            <th scope="col" class="border-gray">Available</th>
+                            <th scope="col" class="border-gray">Created at</th>
+                            <th scope="col" class="border-gray">Updated at</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -43,23 +47,38 @@
                                         <fa-icon [icon]="faTrash" class="mr-2"></fa-icon>
                                     </a>
                                 </td>
-                                <td class="text-light">
-                                    <input class="form-control pl-0" type="text" formControlName="name" readonly/>
+                                <td class="text-light" *ngIf="parentModule !== 'users'">
+                                    <input class="form-control pl-0" type="text" formControlName="user" readonly/>
                                 </td>
                                 <td class="text-light">
-                                    <input class="form-control pl-0" type="text" formControlName="minPoints" readonly/>
+                                    <input class="form-control pl-0" type="text" formControlName="tournament"  readonly/>
                                 </td>
                                 <td class="text-light">
-                                    <input class="form-control pl-0" type="text" formControlName="maxPoints" readonly/>
+                                    <input class="form-control pl-0" type="text" formControlName="pools"  readonly/>
                                 </td>
                                 <td class="text-light">
-                                    <input class="form-control pl-0" type="text" formControlName="price" readonly/>
+                                    <input class="form-control pl-0" type="text" [value]="registration.payableAmount ? registration.payableAmount : 0" readonly/>
                                 </td>
                                 <td class="text-light">
-                                    <input class="form-control pl-0" type="text" [value]="registration.startDate | date:'dd/MM/yyyy HH:mm'" readonly/>
+                                    <input class="form-control pl-0" type="text" [value]="registration.paidAmount ? registration.paidAmount : 0" readonly/>
                                 </td>
                                 <td class="text-light">
-                                    <input class="form-control pl-0" type="text" [value]="registration.endDate | date:'dd/MM/yyyy HH:mm'" readonly/>
+                                    <input class="form-control pl-0" type="text" formControlName="jerseyNumber" readonly/>
+                                </td>
+                                <td class="text-light pt-3">
+                                    <fa-icon [icon]="faCheck" class="text-success mt-2" *ngIf="registration.presence"></fa-icon>
+                                    <fa-icon [icon]="faTimes" class="text-danger mt-2" *ngIf="!registration.presence"></fa-icon>
+                                </td>
+                                <td class="text-light pt-3">
+                                    <fa-icon [icon]="faCheck" class="text-success mt-2" *ngIf="registration.available"></fa-icon>
+                                    <fa-icon [icon]="faTimes" class="text-danger mt-2" *ngIf="!registration.available"></fa-icon>
+                                </td>
+
+                                <td class="text-light">
+                                    <input class="form-control pl-0" type="text" [value]="registration.createdAt | date:'dd/MM/yyyy HH:mm'" readonly/>
+                                </td>
+                                <td class="text-light">
+                                    <input class="form-control pl-0" type="text" [value]="(registration.updatedAt !== null) ? (registration.updatedAt | date: 'dd/MM/yyyy HH:mm') : ''" readonly/>
                                 </td>
                             </tr>
                         </ng-container>
