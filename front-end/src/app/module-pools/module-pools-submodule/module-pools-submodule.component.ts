@@ -92,6 +92,35 @@ export class ModulePoolsSubmoduleComponent implements OnChanges {
                 }
             })
         }
+
+        // Pools as submodule in registration
+        if(this.parent.id && this.parentModule == 'registrations'){
+            this.service.getPoolsByRegistration(this.parent.id).subscribe((data: any) => {
+                if (data.length) {
+                    this.pools = data;
+                    this.poolForm = this.formBuilder.group({
+                        poolDetails: this.formBuilder.array(
+                            this.pools.map((x: any) => 
+                                this.formBuilder.group({
+                                    id: [x.id, [Validators.required, Validators.minLength(2)]],
+                                    name: [x.name, [Validators.required, Validators.minLength(2)]],
+                                    minPoints: [x.minPoints, [Validators.required, Validators.minLength(2)]],
+                                    maxPoints: [x.maxPoints, [Validators.required, Validators.minLength(2)]],
+                                    startDate: [x.startDate, [Validators.required, Validators.minLength(2)]],
+                                    endDate: [x.endDate, [Validators.required, Validators.minLength(2)]],
+                                    price: [x.price, [Validators.required, Validators.minLength(2)]],
+                                    createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
+                                    updatedAt: x.updatedAt, 
+                                    isReadonly: true
+                                })
+                            )
+                        )
+                    })
+                } else {
+                    this.pools = [];
+                }
+            })
+        }
     }
 
     // Create pool

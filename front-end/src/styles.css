@@ -12,11 +12,11 @@
 * Copyright 2011-2020 Twitter, Inc.
 * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
 */
+
 @import "~ng-pick-datetime/assets/style/picker.min.css";
 @import '~quill/dist/quill.core.css';
 @import '~quill/dist/quill.bubble.css';
 @import '~quill/dist/quill.snow.css';
-
 :root {
     --blue: #4e73df;
     --indigo: #6610f2;
@@ -1459,9 +1459,7 @@ a.text-light:focus, a.text-light:hover {
     text-decoration: none;
 }
 
-input[type="text"]:not
-
-.table {
+input[type="text"]:not .table {
     width: 100%;
     margin-bottom: 1rem;
     color: #858796;
@@ -1899,7 +1897,7 @@ textarea.form-control {
 }
 
 .form-group:not(:read-only) {
-    color:var(--dark-gray);
+    color: var(--dark-gray);
 }
 
 .form-text {
@@ -1915,7 +1913,7 @@ textarea.form-control {
 }
 
 .modal-content input {
-    color:var(--dark-gray);
+    color: var(--dark-gray);
 }
 
 .form-row>.col, .form-row>[class*="col-"] {
@@ -2271,7 +2269,6 @@ a.btn.disabled, fieldset:disabled a.btn {
     background-color: var(--dark-gray);
     border-color: var(--dark-gray);
 }
-
 
 .btn-primary:hover {
     color: #fff;
@@ -10721,7 +10718,7 @@ ng2-smart-table-pager {
 }
 
 .owl-dt-calendar-table .owl-dt-calendar-cell-selected {
-    color: rgba(255,255,255,.85);
+    color: rgba(255, 255, 255, .85);
     background-color: var(--orange);
 }
 
@@ -10750,8 +10747,6 @@ ng2-smart-table-pager {
     border-bottom-left-radius: 0.35em;
     border-bottom-right-radius: 0.35em;
 }
-
-
 
 .nav-tabs {
     border-bottom: 1px solid var(--orange);
@@ -10801,7 +10796,7 @@ body, .form-control {
     font-size: 0.85rem;
 }
 
-table tbody tr > td:first-of-type {
+table tbody tr>td:first-of-type {
     min-width: 120px;
 }
 
@@ -10819,4 +10814,28 @@ table tbody tr > td:first-of-type {
 
 .dropdown-btn {
     background-color: #fff;
+}
+
+.multiselect-dropdown .disabled .dropdown-btn{
+    display: inline-block;
+    width: 100%;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-weight: 400;
+    line-height: 1.52857143;
+    text-align: left;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border-radius: 4px;
+    background-color: var(--gray) !important;
+    border: 1px solid var(--gray) !important;
+}
+
+.multiselect-dropdown .disabled .dropdown-multiselect__caret {
+    display:none !important;
+}
+
+.multiselect-dropdown .disabled .selected-item a {
+    display:none !important;
 }

@@ -43,6 +43,7 @@ export class ModuleUsersSubmoduleComponent implements OnChanges {
 
     @Input() parent: any;
     @Input() parentModule: any;
+    @Input() title: any;
 
     constructor(
         public service: UserService,
@@ -90,6 +91,32 @@ export class ModuleUsersSubmoduleComponent implements OnChanges {
             })
         }
 
+        // Users as submodule in registration
+        if(this.parent.id && this.parentModule == 'registrations'){
+            this.service.getUserByRegistration(this.parent.id).subscribe((data: any) => {
+                this.users = [];
+                this.users.push(data);
+                this.userForm = this.formBuilder.group({
+                    userDetails: this.formBuilder.array(
+                        this.users.map((x: any) => {
+                            return this.formBuilder.group({
+                                id: [x.id, [Validators.required, Validators.minLength(2)]],
+                                email: [x.email, [Validators.required, Validators.minLength(2)]],
+                                firstName: [x.firstName, [Validators.required, Validators.minLength(2)]],
+                                lastName: [x.lastName, [Validators.required, Validators.minLength(2)]],
+                                licenceNumber: [x.licenceNumber, [Validators.required, Validators.minLength(2)]],
+                                points: [x.points, [Validators.required, Validators.minLength(2)]],
+                                organizations: [x.organizations, [Validators.required, Validators.minLength(2)]],
+                                createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
+                                updatedAt: x.updatedAt, 
+                                isReadonly: true
+                            })
+                        })
+                    )
+                })
+
+            })
+        }
 
     }
 

@@ -3,13 +3,13 @@
 <!-- End of Loader -->
 
 <h5 class="mb-4 pr-4">
-    <fa-icon [icon]="faObjectUngroup" class="mr-2"></fa-icon>
+    <fa-icon [icon]="faClipboardList" class="mr-2"></fa-icon>
     <a routerLink="/admin/registrations" class="text-light">Registrations</a>
-    <fa-icon [icon]="faChevronRight" class="ml-2" style="font-size: 16px;"></fa-icon> {{registration.name}}
+    <fa-icon [icon]="faChevronRight" class="ml-2" style="font-size: 16px;"></fa-icon> {{title}}
 </h5>
 
 <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-    <div class="col-md-12 text-gray">
+    <div class="col-md-12 text-gray mb-5">
         <div class="card card-container shadow rounded-0 bg-dark-gray border-0 border-left-danger">
             <div
                 class="card-header bg-dark text-light border-gray border-top-0 border-left-0 border-right-0 rounded-0 ">
@@ -32,22 +32,11 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label for="name" class="col-sm-3 col-form-label">Name</label>
-                            <div class="col-sm-9">
-                                <input type="text" class="form-control bg-gray pl-2" name="name"
-                                    [(ngModel)]="form.name" required #name="ngModel"
-                                    [readonly]="isReadonly" />
-                            </div>
-                            <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
-                                Name is required!
-                            </div>
-                        </div>
-                        <div class="form-group row">
                             <label for="tournament" class="col-sm-3 col-form-label">Tournament</label>
                             <div class="col-sm-9">
                                 <select class="browser-default custom-select bg-gray text-light"
                                     name="tournament" id="tournament" [(ngModel)]="form.tournament"
-                                    #tournament="ngModel" [disabled]="isReadonly">
+                                    #tournament="ngModel" disabled>
                                     <option *ngFor="let tournament of tournaments"
                                         [value]="'/api/tournaments/' + tournament.id">
                                         {{tournament.name}}
@@ -56,38 +45,94 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="minPoints" class="col-sm-3 col-form-label">Minimum points</label>
+                            <label for="user" class="col-sm-3 col-form-label">User</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-gray pl-2" name="minPoints"
-                                    [(ngModel)]="form.minPoints" #minPoints="ngModel"
-                                    [readonly]="isReadonly" />
-                            </div>
-                            <div class="alert alert-danger" role="alert" *ngIf="minPoints.errors && f.submitted">
-                                Minimum points is required!
+                                <select class="browser-default custom-select bg-gray text-light"
+                                    name="user" id="user" [(ngModel)]="form.user"
+                                    #user="ngModel" disabled>
+                                    <option *ngFor="let user of users"
+                                        [value]="'/api/users/' + user.id">
+                                        {{user.firstName}} {{user.lastName}}
+                                    </option>
+                                </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="maxPoints" class="col-sm-3 col-form-label">Maximum points</label>
+                            <label for="jerseyNumber" class="col-sm-3 col-form-label">Jersey number</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-gray pl-2" name="maxPoints"
-                                    [(ngModel)]="form.maxPoints" #maxPoints="ngModel"
-                                    [readonly]="isReadonly" />
+                                <input type="text" class="form-control bg-gray pl-2" name="jerseyNumber"
+                                    [(ngModel)]="form.jerseyNumber" required #jerseyNumber="ngModel"
+                                    readonly />
                             </div>
-                            <div class="alert alert-danger" role="alert" *ngIf="maxPoints.errors && f.submitted">
-                                Maximum points is required!
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="jerseyNumber.errors && f.submitted">
+                                Jersey number is required!
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="price" class="col-sm-3 col-form-label">Price</label>
+                            <label for="pools" class="col-sm-3 col-form-label">Pools</label>
                             <div class="col-sm-9">
-                                <input type="text" class="form-control bg-gray pl-2" name="price"
-                                    [(ngModel)]="form.price" #price="ngModel"
-                                    [readonly]="isReadonly" />
-                            </div>
-                            <div class="alert alert-danger" role="alert" *ngIf="price.errors && f.submitted">
-                                Price is required!
+                                <ng-multiselect-dropdown
+                                    [placeholder]="'Pools'"
+                                    [settings]="dropdownSettings"
+                                    [data]="pools"
+                                    [(ngModel)]="form.pools"
+                                    [ngModelOptions]="{standalone: true}"
+                                    (onSelect)="onItemSelect($event)"
+                                    (onDeSelect)="onItemSelect($event)"
+                                    (onSelectAll)="onSelectAll($event)"
+                                    [disabled]="isReadonly"
+                                >
+                                </ng-multiselect-dropdown>
                             </div>
                         </div>
+                        <div class="form-group row">
+                            <label for="payableAmount" class="col-sm-3 col-form-label">Payable amount</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="payableAmount"
+                                    [(ngModel)]="form.payableAmount" required #payableAmount="ngModel"
+                                    readonly />
+                            </div>
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="payableAmount.errors && f.submitted">
+                                Payable amount is required!
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="paidAmount" class="col-sm-3 col-form-label">Paid amount</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control bg-gray pl-2" name="paidAmount"
+                                    [(ngModel)]="form.paidAmount" required #paidAmount="ngModel"
+                                    [readonly]="isReadonly" />
+                            </div>
+                            <div class="alert alert-danger" role="alert"
+                                *ngIf="paidAmount.errors && f.submitted">
+                                Paid amount is required!
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="presence" class="col-sm-3 col-form-label">Present</label>
+                            <div class="col-sm-9">
+                                <select class="browser-default custom-select bg-gray text-light"
+                                    name="presence" id="presence" [(ngModel)]="form.presence"
+                                    #presence="ngModel" [disabled]="isReadonly">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="available" class="col-sm-3 col-form-label">Available</label>
+                            <div class="col-sm-9">
+                                <select class="browser-default custom-select bg-gray text-light"
+                                    name="available" id="available" [(ngModel)]="form.available"
+                                    #available="ngModel" [disabled]="isReadonly">
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+                        </div>
+
                     </div>
                     <div class="col-md-6">
                         <div class="form-group row">
@@ -104,26 +149,6 @@
                                     [value]="form.updatedAt | date:'dd/MM/yyyy HH:mm'" required readonly />
                             </div>
                         </div>
-                        <div class="form-group row">
-                            <label for="startDate" class="col-sm-3 col-form-label">Start date</label>
-                            <div class="col-sm-9">
-                                <input class="form-control bg-gray pl-2" [(ngModel)]="startDate"
-                                    [ngModelOptions]="{standalone: true}"
-                                    [owlDateTimeTrigger]="startDatePicker" [owlDateTime]="startDatePicker"
-                                    [readonly]="isReadonly">
-                                <owl-date-time #startDatePicker [disabled]="isReadonly"></owl-date-time>
-                            </div>
-                        </div>
-                        <div class="form-group row">
-                            <label for="endDate" class="col-sm-3 col-form-label">End date</label>
-                            <div class="col-sm-9">
-                                <input class="form-control bg-gray pl-2" [(ngModel)]="endDate"
-                                    [ngModelOptions]="{standalone: true}"
-                                    [owlDateTimeTrigger]="endDatePicker" [owlDateTime]="endDatePicker"
-                                    [readonly]="isReadonly">
-                                <owl-date-time #endDatePicker [disabled]="isReadonly"></owl-date-time>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="row mt-2" *ngIf=!isReadonly>
@@ -138,56 +163,14 @@
             </div>
         </div>
     </div>
-
-    <div class="col-md-12 text-gray mt-5">
-        <div class="card card-container shadow rounded-0 bg-dark-gray border-0 border-left-danger">
-            <div
-                class="card-header bg-dark text-light border-gray border-top-0 border-left-0 border-right-0 rounded-0 ">
-                <div class="row d-flex justify-content-center align-items-center h-100">
-                    <div class="col-md-11">
-                        <h6 class="mb-0">
-                            <fa-icon [icon]="faAlignLeft" class="mr-2"></fa-icon>Information
-                        </h6>
-                    </div>
-                    <div class="col-md-1">
-                        <a class="btn btn-dark-gray btn-sm float-right" (click)=toggleForm()
-                            *ngIf=isReadonly>
-                            <fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Edit
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="card-body text-light">
-                <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group row">
-                                <quill-view
-                                    [content]="form.description !== undefined ? form.description : '<i>No information filled</i>'"
-                                    format="html" theme="snow" *ngIf="isReadonly"></quill-view>
-                                <div class="col-sm-12">
-                                    <quill-editor [(ngModel)]="form.description" name="description"
-                                        *ngIf="!isReadonly"></quill-editor>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mt-2" *ngIf=!isReadonly>
-                        <div class="col-md-12 text-right">
-                            <button class="btn btn-outline-success mr-2" *ngIf=!isReadonly
-                                (click)=onSubmit()>
-                                Save
-                            </button>
-                            <a class="btn btn-outline-danger" *ngIf=!isReadonly
-                                (click)="toggleForm(); resetForm()">Cancel</a>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </form>
 
+
 <!-- Sous module users -->
-<!-- <app-module-users-submodule [parentModule]="'registrations'" [parent]="registration"></app-module-users-submodule> -->
+<app-module-users-submodule [parentModule]="'registrations'" [parent]="registration" [title]="'User'"></app-module-users-submodule>
 <!-- End::Sous module users -->
+
+
+<!-- Sous module pools -->
+<app-module-pools-submodule [parentModule]="'registrations'" [parent]="registration"></app-module-pools-submodule>
+<!-- End::Sous module pools -->

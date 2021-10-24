@@ -1,4 +1,4 @@
-<div class="col-md-12 text-gray">
+<div class="col-md-12 text-gray mt-5 mb-5">
     <div class="card card-container shadow rounded-0 bg-dark-gray border-0 border-left-danger">
         <div class="card-header bg-dark text-light border-gray border-0 rounded-0 ">
             <div class="row d-flex justify-content-center align-items-center h-100">
@@ -6,7 +6,7 @@
                     <h6 class="mb-0"><fa-icon [icon]="faObjectUngroup" class="mr-2"></fa-icon>Pools</h6>
                 </div>
                 <div class="col-md-2">
-                    <a class="btn btn-dark-gray btn-sm float-right" (click)=createPool()><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add pool</a>
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=createPool() *ngIf="parentModule !== 'registrations'"><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add pool</a>
                 </div>
             </div>
         </div>
@@ -39,7 +39,7 @@
                                     <!-- <a class="btn text-light text-hover-orange">
                                         <fa-icon [icon]="faPen" class="mr-2"></fa-icon>
                                     </a> -->
-                                    <a class="btn text-light text-hover-orange" (click)=deletePool(pool)>
+                                    <a class="btn text-light text-hover-orange" (click)=deletePool(pool) *ngIf="parentModule !== 'registrations'">
                                         <fa-icon [icon]="faTrash" class="mr-2"></fa-icon>
                                     </a>
                                 </td>

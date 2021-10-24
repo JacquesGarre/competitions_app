@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\RegistrationRepository;
+use ApiPlatform\Core\Annotation\ApiSubresource;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -25,6 +26,7 @@ class Registration
     private $id;
 
     /**
+     * @ApiSubresource()
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="registrations")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -37,6 +39,7 @@ class Registration
     private $tournament;
 
     /**
+     * @ApiSubresource()
      * @ORM\ManyToMany(targetEntity=Pool::class, inversedBy="registrations")
      */
     private $pools;

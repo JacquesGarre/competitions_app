@@ -3,10 +3,10 @@
         <div class="card-header bg-dark text-light border-gray border-0 rounded-0 ">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-11">
-                    <h6 class="mb-0"><fa-icon [icon]="faUser" class="mr-2"></fa-icon>Users</h6>
+                    <h6 class="mb-0"><fa-icon [icon]="faUser" class="mr-2"></fa-icon>{{title}}</h6>
                 </div>
                 <div class="col-md-1">
-                    <a class="btn btn-dark-gray btn-sm float-right" (click)=linkUser()><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add user</a>
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=linkUser() *ngIf="parentModule !== 'registrations'"><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add user</a>
                 </div>
             </div>
         </div>
@@ -26,6 +26,8 @@
                             <th scope="col" class="border-gray">Email</th>
                             <th scope="col" class="border-gray">First Name</th>
                             <th scope="col" class="border-gray">Last Name</th>
+                            <th scope="col" class="border-gray">Licence</th>
+                            <th scope="col" class="border-gray">Points</th>
                             <th scope="col" class="border-gray">Created At</th>
                             <th scope="col" class="border-gray">Updated At</th>
                         </tr>
@@ -40,10 +42,10 @@
                                     <!-- <a class="btn text-light text-hover-orange">
                             <fa-icon [icon]="faPen" class="mr-2"></fa-icon>
                         </a> -->
-                                    <a class="btn text-light text-hover-orange" (click)=deleteUser(user) title="Delete user">
+                                    <a class="btn text-light text-hover-orange" (click)=deleteUser(user) title="Delete user" *ngIf="parentModule !== 'registrations'">
                                         <fa-icon [icon]="faTrash" class="mr-2"></fa-icon>
                                     </a>
-                                    <a class="btn text-light text-hover-orange" (click)=removeUser(user) title="Remove user">
+                                    <a class="btn text-light text-hover-orange" (click)=removeUser(user) title="Remove user" *ngIf="parentModule !== 'registrations'">
                                         <fa-icon [icon]="faTimes" class="mr-2"></fa-icon>
                                     </a>
                                 </td>
@@ -55,6 +57,12 @@
                                 </td>
                                 <td class="text-light">
                                     <input class="form-control pl-0" type="text" formControlName="lastName" readonly />
+                                </td>
+                                <td class="text-light">
+                                    <input class="form-control pl-0" type="text" formControlName="licenceNumber" readonly />
+                                </td>
+                                <td class="text-light">
+                                    <input class="form-control pl-0" type="text" formControlName="points" readonly />
                                 </td>
                                 <td class="text-light">
                                     <input class="form-control pl-0" type="text"

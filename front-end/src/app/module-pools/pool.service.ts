@@ -50,6 +50,12 @@ export class PoolService {
         .pipe(retry(1), catchError(this.handleError))
     }  
 
+    // Read by Registration id
+    getPoolsByRegistration(id: any): Observable<Pool> {
+        return this.http.get<Pool>(Env.API_URL + 'registrations/' + id + '/pools.json')
+        .pipe(retry(1), catchError(this.handleError))
+    }  
+
     // Update
     updatePool(id: any, pool: any): Observable<Pool> {
         return this.http.put<Pool>(Env.API_URL + 'pools/' + id + '.json', JSON.stringify(pool), this.httpOptions)

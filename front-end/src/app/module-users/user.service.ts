@@ -40,6 +40,13 @@ export class UserService {
         .pipe(retry(1), catchError(this.handleError),)
     }
 
+    // Read
+    getUserByRegistration(id: any): Observable<User> {
+        return this.http.get<User>(Env.API_URL + 'registrations/'+ id +'/user.json')
+        .pipe(retry(1), catchError(this.handleError),)
+    }
+
+
     // Read by id
     getUser(id: any): Observable<User> {
         return this.http.get<User>(Env.API_URL + 'users/' + id + '.json')
