@@ -134,6 +134,9 @@ export class ModuleRegistrationsLinkModalFormComponent {
             )
         });
 
+        this.userService.getUsers().subscribe((data: any) => {
+            this.users = data;
+        })
 
         this.userService.getCurrentUser().subscribe((data: any) => {
             this.currentUser = data[0];
@@ -159,8 +162,6 @@ export class ModuleRegistrationsLinkModalFormComponent {
             itemsShowLimit: 15,
             allowSearchFilter: true
         };
-
-        console.log(this.user);
 
     }
 

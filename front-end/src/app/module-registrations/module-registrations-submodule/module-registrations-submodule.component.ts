@@ -80,91 +80,126 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
     }
 
     initRegistrations() {
-        // Registrations as submodule in user
-        // if(this.parent.id && this.parentModule == 'tournaments'){
-        //     this.service.getRegistrationsByTournament(this.parent.id).subscribe((data: any) => {
-        //         if (data.length) {
-        //             this.registrations = data;
-        //             this.registrationForm = this.formBuilder.group({
-        //                 registrationDetails: this.formBuilder.array(
-        //                     this.registrations.map((x: any) => 
-        //                         this.formBuilder.group({
-        //                             id: [x.id, [Validators.required, Validators.minLength(2)]],
-        //                             name: [x.name, [Validators.required, Validators.minLength(2)]],
-        //                             minPoints: [x.minPoints, [Validators.required, Validators.minLength(2)]],
-        //                             maxPoints: [x.maxPoints, [Validators.required, Validators.minLength(2)]],
-        //                             startDate: [x.startDate, [Validators.required, Validators.minLength(2)]],
-        //                             endDate: [x.endDate, [Validators.required, Validators.minLength(2)]],
-        //                             price: [x.price, [Validators.required, Validators.minLength(2)]],
-        //                             createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
-        //                             updatedAt: x.updatedAt, 
-        //                             isReadonly: true
-        //                         })
-        //                     )
-        //                 )
-        //             })
-        //         } else {
-        //             this.registrations = [];
-        //         }
-        //     })
-        // }
 
         // Registrations as submodule in user
         if(this.parent.id && this.parentModule == 'users'){
-
-            let user = this.token.getUser();
-            let pools = this.http.get<Pool>(Env.API_URL + 'pools.json')
-            let users = this.http.get<User>(Env.API_URL + 'users.json')
-            let tournaments = this.http.get<Tournament>(Env.API_URL + 'tournaments.json')
-            let registrations = this.http.get<Registration>(Env.API_URL + 'registrations.json?user='+this.parent.id);
-            forkJoin([
-                pools,
-                users,
-                tournaments,
-                registrations
-            ]).subscribe(results => {
-                this.pools = results[0];
-                this.users = results[1];
-                this.currentUser = this.users.filter((el: any) => {
-                    return el.email === user.email
-                })[0];
-                this.tournaments = results[2];
-                this.registrations = results[3];
-                this.registrationForm = this.formBuilder.group({
-                    registrationDetails: this.formBuilder.array(
-                        this.registrations.map((x: any) => {
-                            var tournament: any = this.tournaments.filter((tournament: any) => {
-                                return tournament.id.toString() === x.tournament.replace('/api/tournaments/','')
-                            })[0]?.name
-                            var user: any = this.users.filter((user: any) => {
-                                return user.id.toString() === x.user.replace('/api/users/','')
-                            })[0];
-                            user = user.firstName + ' ' + user.lastName;
-                            var pools: any = this.pools.filter((pool: any) => {
-                                return x.pools.includes('/api/pools/'+pool.id.toString())
-                            });
-                            var poolsTxt: any = pools.map((pool: any) => {
-                                return pool.name;
-                            }).join(", ")
-                            return this.formBuilder.group({
-                                id: [x.id, [Validators.required, Validators.minLength(2)]],
-                                user: [user, [Validators.required, Validators.minLength(2)]],
-                                tournament: [tournament, [Validators.required, Validators.minLength(2)]],
-                                payableAmount: [x.payableAmount, [Validators.required, Validators.minLength(2)]],
-                                paidAmount: [x.paidAmount, [Validators.required, Validators.minLength(2)]],
-                                jerseyNumber: [x.jerseyNumber, [Validators.required, Validators.minLength(2)]],
-                                pools: [poolsTxt],
-                                createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
-                                updatedAt: x.updatedAt,
-                                isReadonly: true
-                            })
-                        })
-                    )
-                })
-                this.ngxLoader.stopLoader('page-loader');
-            });
-
+            this.initAsUsersSubmodule();
         }
+
+        // Registrations as submodule in pools
+        if(this.parent.id && this.parentModule == 'pools'){
+            this.initAsPoolsSubmodule();
+        }
+
+    }
+
+    initAsPoolsSubmodule(){
+        let user = this.token.getUser();
+        let pools = this.http.get<Pool>(Env.API_URL + 'pools.json')
+        let users = this.http.get<User>(Env.API_URL + 'users.json')
+        let tournaments = this.http.get<Tournament>(Env.API_URL + 'tournaments.json')
+        let registrations = this.http.get<Registration>(Env.API_URL + 'registrations.json?pools='+this.parent.id);
+        forkJoin([
+            pools,
+            users,
+            tournaments,
+            registrations
+        ]).subscribe(results => {
+            this.pools = results[0];
+            this.users = results[1];
+            this.currentUser = this.users.filter((el: any) => {
+                return el.email === user.email
+            })[0];
+            this.tournaments = results[2];
+            this.registrations = results[3];
+            this.registrationForm = this.formBuilder.group({
+                registrationDetails: this.formBuilder.array(
+                    this.registrations.map((x: any) => {
+                        var tournament: any = this.tournaments.filter((tournament: any) => {
+                            return tournament.id.toString() === x.tournament.replace('/api/tournaments/','')
+                        })[0]?.name
+                        var user: any = this.users.filter((user: any) => {
+                            return user.id.toString() === x.user.replace('/api/users/','')
+                        })[0];
+                        user = user.firstName + ' ' + user.lastName;
+                        var pools: any = this.pools.filter((pool: any) => {
+                            return x.pools.includes('/api/pools/'+pool.id.toString())
+                        });
+                        var poolsTxt: any = pools.map((pool: any) => {
+                            return pool.name;
+                        }).join(", ")
+                        return this.formBuilder.group({
+                            id: [x.id, [Validators.required, Validators.minLength(2)]],
+                            user: [user, [Validators.required, Validators.minLength(2)]],
+                            tournament: [tournament, [Validators.required, Validators.minLength(2)]],
+                            payableAmount: [x.payableAmount, [Validators.required, Validators.minLength(2)]],
+                            paidAmount: [x.paidAmount, [Validators.required, Validators.minLength(2)]],
+                            jerseyNumber: [x.jerseyNumber, [Validators.required, Validators.minLength(2)]],
+                            pools: [poolsTxt],
+                            createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
+                            updatedAt: x.updatedAt,
+                            isReadonly: true
+                        })
+                    })
+                )
+            })
+            this.ngxLoader.stopLoader('page-loader');
+        });
+    }
+
+
+    initAsUsersSubmodule(){
+        let user = this.token.getUser();
+        let pools = this.http.get<Pool>(Env.API_URL + 'pools.json')
+        let users = this.http.get<User>(Env.API_URL + 'users.json')
+        let tournaments = this.http.get<Tournament>(Env.API_URL + 'tournaments.json')
+        let registrations = this.http.get<Registration>(Env.API_URL + 'registrations.json?user='+this.parent.id);
+        forkJoin([
+            pools,
+            users,
+            tournaments,
+            registrations
+        ]).subscribe(results => {
+            this.pools = results[0];
+            this.users = results[1];
+            this.currentUser = this.users.filter((el: any) => {
+                return el.email === user.email
+            })[0];
+            this.tournaments = results[2];
+            this.registrations = results[3];
+            this.registrationForm = this.formBuilder.group({
+                registrationDetails: this.formBuilder.array(
+                    this.registrations.map((x: any) => {
+                        var tournament: any = this.tournaments.filter((tournament: any) => {
+                            return tournament.id.toString() === x.tournament.replace('/api/tournaments/','')
+                        })[0]?.name
+                        var user: any = this.users.filter((user: any) => {
+                            return user.id.toString() === x.user.replace('/api/users/','')
+                        })[0];
+                        user = user.firstName + ' ' + user.lastName;
+                        var pools: any = this.pools.filter((pool: any) => {
+                            return x.pools.includes('/api/pools/'+pool.id.toString())
+                        });
+                        var poolsTxt: any = pools.map((pool: any) => {
+                            return pool.name;
+                        }).join(", ")
+                        return this.formBuilder.group({
+                            id: [x.id, [Validators.required, Validators.minLength(2)]],
+                            user: [user, [Validators.required, Validators.minLength(2)]],
+                            tournament: [tournament, [Validators.required, Validators.minLength(2)]],
+                            payableAmount: [x.payableAmount, [Validators.required, Validators.minLength(2)]],
+                            paidAmount: [x.paidAmount, [Validators.required, Validators.minLength(2)]],
+                            jerseyNumber: [x.jerseyNumber, [Validators.required, Validators.minLength(2)]],
+                            pools: [poolsTxt],
+                            createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
+                            updatedAt: x.updatedAt,
+                            isReadonly: true
+                        })
+                    })
+                )
+            })
+            this.ngxLoader.stopLoader('page-loader');
+        });
     }
 
     // Create registration
@@ -196,6 +231,32 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                 }
             });
         }
+
+        if(this.parentModule == 'pools'){
+            modalRef.result.then((result) => {
+                if (result == 'save') {
+                    this.ngxLoader.startLoader('page-loader');
+                    let values = modalRef.componentInstance.addForm.value;                    
+                    let registration: any = {
+                        tournament: 'api/tournaments/'+values.tournament,
+                        user: 'api/users/'+values.user,
+                        payableAmount: parseFloat(values.payableAmount),
+                        paidAmount: parseFloat(values.paidAmount),
+                        creator: 'api/users/' + this.currentUser.id,
+                        presence: values.presence == "1",
+                        available: values.presence == "1",
+                        pools: values.selectedPools.map((pool:any) => {
+                            return '/api/pools/'+ pool.id
+                        }),
+                    }
+                    this.service.createRegistration(registration).subscribe(data => {
+                        this.initRegistrations();
+                        this.ngxLoader.stopLoader('page-loader');
+                    })
+                }
+            });
+        }
+
 
     }
 

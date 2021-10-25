@@ -140,7 +140,7 @@
                     </div>
                 </span>
 
-                <span *ngIf="addForm.value.tournament !== null && parentModule == 'users' ">
+                <span *ngIf="addForm.value.tournament !== null && (parentModule == 'users' || parentModule == 'pools') ">
                     <label for="presence">Present</label>
                     <div class="input-group mb-4">
                         <select class="browser-default custom-select" name="presence"  id="presence" formControlName="presence" 
@@ -152,7 +152,7 @@
                 </span>
 
 
-                <span *ngIf="addForm.value.tournament !== null && parentModule == 'users' ">
+                <span *ngIf="addForm.value.tournament !== null && (parentModule == 'users' || parentModule == 'pools') ">
                     <label for="poolIDS">Pools</label>
                     <div class="mb-4">
                         <ng-multiselect-dropdown
