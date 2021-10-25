@@ -71,8 +71,11 @@ body {
     line-height: 1.5;
     color: var(--light);
     text-align: left;
-    background-color: #fff;
+    background-color: var(--gray);
+    min-height: 100vh;
 }
+
+
 
 [tabindex="-1"]:focus:not(:focus-visible) {
     outline: 0 !important;

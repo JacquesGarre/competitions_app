@@ -1,19 +1,67 @@
 <!-- Navbar -->
 <app-navbar></app-navbar>
 <!-- End of Navbar -->
+<!-- <a href="/register" class="nav-link" routerLink="/register" *ngIf="!isLoggedIn && false">Sign Up</a> -->
+<a href="/login" class="nav-link float-right text-light" routerLink="/login" *ngIf="!isLoggedIn">Login</a>
+<!-- <a class="nav-link" href (click)="logout()" *ngIf="isLoggedIn">Logout</a> -->
+
+<!-- <a class="nav-link" href="/admin" routerLink="/admin" *ngIf="showAdminBoard || showModeratorBoard">
+    Administration
+</a>
+<a class="nav-link" href="/user" routerLink="/user" *ngIf="showUserBoard">
+    My Account
+</a> -->
+
+
+<h1 class="text-center">Bienvenue sur Competizone</h1>
+
 <div class="container-fluid">
+    <h3 class="text-light">Les tournois</h3>
+    <div class="row">
+        <div class="col-md-2 rounded-0" *ngFor="let tournament of tournaments">
+            <div class="card bg-dark shadow border-0 rounded-0">
+                <div class="card-body rounded-0">
+                    <h5 class="card-title">{{tournament.name}}</h5>
+                    <p class="card-text">
+                        Organisé par <a href="/organization/{{tournament.organization.subdomain}}" class="text-orange">{{tournament.organization.name}}</a>
+                    </p>
+                    <p class="card-text">
+                        débute le {{tournament.startDate  | date:'dd/MM/yyyy à HH:mm' }}<br>
+                        fini le {{tournament.endDate  | date:'dd/MM/yyyy à HH:mm'}}
+                    </p>
+                    <a href="/organization/{{tournament.organization.subdomain}}/tournament/{{tournament.uri}}" class="btn  btn-dark-gray btn-sm" *ngIf="tournament.registrationFormOpen">S'inscrire</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <h1 class="text-dark-gray">Home page</h1>
+<div class="container-fluid">
+    <h3 class="text-light">Les clubs</h3>
+    <div class="row">
+        <div class="col-md-2 rounded-0" *ngFor="let organization of organizations">
+            <div class="card bg-dark shadow border-0 rounded-0">
+                <div class="card-body rounded-0">
+                    <h5 class="card-title">{{organization.name}}</h5>
+                    <p class="card-text"></p>
+                    <a href="/organization/{{organization.subdomain}}/articles/" class="btn btn-dark-gray btn-sm">Voir l'actualité</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-    <a href="/register" class="nav-link" routerLink="/register" *ngIf="!isLoggedIn">Sign Up</a>
-    <a href="/login" class="nav-link" routerLink="/login" *ngIf="!isLoggedIn">Login</a>
-    <a class="nav-link"href (click)="logout()" *ngIf="isLoggedIn">Logout</a>
-
-    <a class="nav-link" href="/admin" routerLink="/admin" *ngIf="showAdminBoard || showModeratorBoard">
-        Administration
-    </a>
-    <a class="nav-link" href="/user" routerLink="/user" *ngIf="showUserBoard">
-        My Account
-    </a>
-    
+<div class="container-fluid">
+    <h3 class="text-light">L'actualité</h3>
+    <div class="row">
+        <ng-container *ngFor="let organization of organizations">
+            <!-- <div class="card bg-dark col-md-2">
+                <div class="card-body bg-dark-gray">
+                    <h5 class="card-title">{{organization.name}}</h5>
+                    <p class="card-text"></p>
+                    <a href="/{{organization.subdomain}}" class="btn btn-primary btn-sm">Voir l'actualité</a>
+                </div>
+            </div> -->
+        </ng-container>
+    </div>
 </div>

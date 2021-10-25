@@ -19,13 +19,21 @@
     </div>
 
         <!-- Nav Item - Dashboard -->
-        <li class="nav-item" *ngIf="showAdminBoard">
+        <!-- <li class="nav-item" *ngIf="showAdminBoard">
             <a class="nav-link text-hover-orange" routerLink="/">
                 <fa-icon [icon]="faTachometerAlt" class="mr-2"></fa-icon>
                 <span>Dashboard</span>
                 <fa-icon [icon]="faChevronRight" class="float-right arrowRight"></fa-icon>
             </a>
-        </li>
+        </li> -->
+
+    <li class="nav-item" *ngIf="showAdminBoard">
+        <a class="nav-link text-hover-orange" routerLink="/">
+            <fa-icon [icon]="faHome" class="mr-2"></fa-icon>
+            <span>Home</span>
+            <fa-icon [icon]="faChevronRight" class="float-right arrowRight"></fa-icon>
+        </a>
+    </li>
     
 
     <!-- Nav Item - Dashboard -->

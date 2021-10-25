@@ -106,6 +106,17 @@
                                             Country is required!
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <label for="uri" class="col-sm-3 col-form-label">Uri</label>
+                                        <div class="col-sm-9">
+                                            <input type="text" class="form-control bg-gray pl-2" name="uri"
+                                                [(ngModel)]="form.uri" required #uri="ngModel"
+                                                [readonly]="isReadonly" />
+                                        </div>
+                                        <div class="alert alert-danger" role="alert" *ngIf="uri.errors && f.submitted">
+                                            Uri is required!
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group row">

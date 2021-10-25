@@ -4,4 +4,5 @@ export interface Tournament {
     subdomain: string;
     createdAt: Date;
     updatedAt: Date;
+    uri: string;
 }

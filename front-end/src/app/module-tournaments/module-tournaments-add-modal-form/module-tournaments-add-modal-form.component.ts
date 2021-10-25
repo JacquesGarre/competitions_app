@@ -19,6 +19,7 @@ export class ModuleTournamentsAddModalFormComponent {
     organization: string = '';
     startDate: Date = new Date();
     endDate: Date = new Date();
+    uri: any;
     addForm = new FormGroup({});
     currentUser: any;
     organizations: any;
@@ -51,6 +52,12 @@ export class ModuleTournamentsAddModalFormComponent {
             endDate: new FormControl(
                 this.endDate, 
                 []
+            ),
+            uri: new FormControl(
+                this.uri, 
+                [
+                    Validators.required
+                ]
             )
         });
         this.userService.getCurrentUser().subscribe((data: any) => {
@@ -72,7 +79,8 @@ export class ModuleTournamentsAddModalFormComponent {
             name: '',
             organization: '',
             startDate: new Date(),
-            endDate: new Date()
+            endDate: new Date(),
+            uri: '',
         });
     }
 

@@ -32,7 +32,8 @@ import {
     faTrophy,
     faSitemap,
     faGem,
-    faObjectUngroup
+    faObjectUngroup,
+    faHome
 } from '@fortawesome/free-solid-svg-icons';
 import { TokenStorageService } from '../_services/token-storage.service';
 import { Env } from '../_globals/env';
@@ -76,6 +77,7 @@ export class SidebarComponent implements OnInit {
     faChevronRight = faChevronRight;
     faTrophy = faTrophy;
     faObjectUngroup = faObjectUngroup;
+    faHome = faHome;
 
     private roles: string[] = [];
     isLoggedIn = false;

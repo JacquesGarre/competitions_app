@@ -101,6 +101,11 @@ class Tournament
      */
     private $registrations;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $uri;
+
     public function __construct()
     {
         $this->pools = new ArrayCollection();
@@ -324,6 +329,18 @@ class Tournament
                 $registration->setTournament(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUri(): ?string
+    {
+        return $this->uri;
+    }
+
+    public function setUri(string $uri): self
+    {
+        $this->uri = $uri;
 
         return $this;
     }

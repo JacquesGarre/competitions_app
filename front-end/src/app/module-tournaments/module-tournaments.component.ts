@@ -112,6 +112,7 @@ export class ModuleTournamentsComponent implements OnInit {
                     startDate: new Date(Date.parse(values.startDate)+7200*1000).toUTCString(),
                     endDate: new Date(Date.parse(values.endDate)+7200*1000).toUTCString(),
                     creator: 'api/users/' + this.currentUser.id,
+                    uri: values.uri,
                     registrationFormOpen: false
                 }
                 this.service.createTournament(tournament).subscribe(data => {
