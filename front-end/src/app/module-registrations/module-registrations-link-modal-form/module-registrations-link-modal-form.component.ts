@@ -48,6 +48,7 @@ export class ModuleRegistrationsLinkModalFormComponent {
     club: string = '';
     fetching: boolean = false;
     parentModule: string='';
+    parent: any;
 
     dropdownSettings: IDropdownSettings = {};
 
@@ -162,6 +163,18 @@ export class ModuleRegistrationsLinkModalFormComponent {
             itemsShowLimit: 15,
             allowSearchFilter: true
         };
+
+        if(this.parentModule == 'tournaments'){
+            this.poolService.getPoolsByTournament(this.tournament).subscribe((data: any) => {
+                this.pools = data;
+            })
+        }
+
+        if(this.parentModule == 'pools'){
+            this.poolService.getPoolsByTournament(this.parent.tournament.replace('/api/tournaments/','')).subscribe((data: any) => {
+                this.pools = data;
+            })
+        }
 
     }
 

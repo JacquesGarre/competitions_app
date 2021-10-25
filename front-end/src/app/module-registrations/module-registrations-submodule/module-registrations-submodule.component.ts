@@ -4,6 +4,7 @@ import { NgxUiLoaderService } from 'ngx-ui-loader';
 
 import { Registration } from '../registration';
 import { RegistrationService } from '../registration.service';
+import { PoolService } from 'src/app/module-pools/pool.service';
 import { UserService } from '../../module-users/user.service';
 import { Router } from '@angular/router';
 import { Observable, throwError, forkJoin } from 'rxjs';
@@ -64,6 +65,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
         private token: TokenStorageService,
         public service: RegistrationService,
         public userService: UserService,
+        public poolService: PoolService,
         private modalService: NgbModal,
         private router: Router,
         private datePipe: DatePipe,
@@ -89,6 +91,11 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
         // Registrations as submodule in pools
         if(this.parent.id && this.parentModule == 'pools'){
             this.initAsPoolsSubmodule();
+        }
+
+        // Registrations as submodule in tournaments
+        if(this.parent.id && this.parentModule == 'tournaments'){
+            this.initAsTournamentsSubmodule();
         }
 
     }
@@ -202,6 +209,60 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
         });
     }
 
+    initAsTournamentsSubmodule(){
+        let user = this.token.getUser();
+        let pools = this.http.get<Pool>(Env.API_URL + 'pools.json')
+        let users = this.http.get<User>(Env.API_URL + 'users.json')
+        let tournaments = this.http.get<Tournament>(Env.API_URL + 'tournaments.json')
+        let registrations = this.http.get<Registration>(Env.API_URL + 'tournaments/'+this.parent.id+'/registrations.json');
+        forkJoin([
+            pools,
+            users,
+            tournaments,
+            registrations
+        ]).subscribe(results => {
+            this.pools = results[0];
+            this.users = results[1];
+            this.currentUser = this.users.filter((el: any) => {
+                return el.email === user.email
+            })[0];
+            this.tournaments = results[2];
+            this.registrations = results[3];
+            this.registrationForm = this.formBuilder.group({
+                registrationDetails: this.formBuilder.array(
+                    this.registrations.map((x: any) => {
+                        var tournament: any = this.tournaments.filter((tournament: any) => {
+                            return tournament.id.toString() === x.tournament.replace('/api/tournaments/','')
+                        })[0]?.name
+                        var user: any = this.users.filter((user: any) => {
+                            return user.id.toString() === x.user.replace('/api/users/','')
+                        })[0];
+                        user = user.firstName + ' ' + user.lastName;
+                        var pools: any = this.pools.filter((pool: any) => {
+                            return x.pools.includes('/api/pools/'+pool.id.toString())
+                        });
+                        var poolsTxt: any = pools.map((pool: any) => {
+                            return pool.name;
+                        }).join(", ")
+                        return this.formBuilder.group({
+                            id: [x.id, [Validators.required, Validators.minLength(2)]],
+                            user: [user, [Validators.required, Validators.minLength(2)]],
+                            tournament: [tournament, [Validators.required, Validators.minLength(2)]],
+                            payableAmount: [x.payableAmount, [Validators.required, Validators.minLength(2)]],
+                            paidAmount: [x.paidAmount, [Validators.required, Validators.minLength(2)]],
+                            jerseyNumber: [x.jerseyNumber, [Validators.required, Validators.minLength(2)]],
+                            pools: [poolsTxt],
+                            createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
+                            updatedAt: x.updatedAt,
+                            isReadonly: true
+                        })
+                    })
+                )
+            })
+            this.ngxLoader.stopLoader('page-loader');
+        });
+    }
+
     // Create registration
     createRegistration() {
         const modalRef = this.modalService.open(ModuleRegistrationsLinkModalFormComponent, { centered: true });
@@ -233,30 +294,167 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
         }
 
         if(this.parentModule == 'pools'){
+            modalRef.componentInstance.parentModule = 'pools';
+            modalRef.componentInstance.parent = this.parent;
+            this.poolService.getPoolsByTournament(this.parent.tournament.replace('/api/tournaments/', '')).subscribe((data: any) => {
+                modalRef.componentInstance.pools = data;
+                modalRef.componentInstance.addForm.controls.tournament.setValue(this.parent.tournament.replace('/api/tournaments/', ''));
+                modalRef.componentInstance.tournament = this.parent.tournament.replace('/api/tournaments/', '');
+            })
+
+
             modalRef.result.then((result) => {
                 if (result == 'save') {
                     this.ngxLoader.startLoader('page-loader');
-                    let values = modalRef.componentInstance.addForm.value;                    
-                    let registration: any = {
-                        tournament: 'api/tournaments/'+values.tournament,
-                        user: 'api/users/'+values.user,
-                        payableAmount: parseFloat(values.payableAmount),
-                        paidAmount: parseFloat(values.paidAmount),
-                        creator: 'api/users/' + this.currentUser.id,
-                        presence: values.presence == "1",
-                        available: values.presence == "1",
-                        pools: values.selectedPools.map((pool:any) => {
-                            return '/api/pools/'+ pool.id
-                        }),
+                    let values = modalRef.componentInstance.addForm.value;
+    
+                    if(values.creationMode == 'newUser'){
+    
+                        let user: any = {
+                            email: values.email,
+                            firstName: values.firstName,
+                            lastName: values.lastName,
+                            password: values.password,
+                            licenceNumber: values.licenceNumber,
+                            points: values.points,
+                            genre: values.genre,
+                            club: values.club,
+                        }
+                        this.userService.createUser(user).subscribe(data => {
+    
+                            let registration: any = {
+                                tournament: values.tournament.id,
+                                pools: values.selectedPools.map((pool:any) => {
+                                    return 'api/pools/' + pool.id
+                                }),
+                                user: 'api/users/' + data.id,
+                                payableAmount: parseFloat(values.payableAmount),
+                                paidAmount: parseFloat(values.paidAmount),
+                                presence: values.presence == "1",
+                                available: values.presence == "1",
+                                creator: 'api/users/' + this.currentUser.id
+                            }
+    
+                            this.service.createRegistration(registration).subscribe(data => {
+                                this.initRegistrations();
+                                this.ngxLoader.stopLoader('page-loader');
+                            })
+                            
+                        })
+    
+                    } else {
+    
+                        let registration: any = {
+                            tournament: values.tournament.id,
+                            pools: values.selectedPools.map((pool:any) => {
+                                return 'api/pools/' + pool.id
+                            }),
+                            user: 'api/users/' + values.user,
+                            payableAmount: parseFloat(values.payableAmount),
+                            paidAmount: parseFloat(values.paidAmount),
+                            presence: values.presence == "1",
+                            available: values.presence == "1",
+                            creator: 'api/users/' + this.currentUser.id
+                        }
+        
+                        // registration exists, we update it
+                        if(values.registrationID !== ""){
+                            this.service.updateRegistration(values.registrationID, registration).subscribe(data => {
+                                this.initRegistrations();
+                                this.ngxLoader.stopLoader('page-loader');
+                            })
+                        // else we create it
+                        } else {
+                            this.service.createRegistration(registration).subscribe(data => {
+                                this.initRegistrations();
+                                this.ngxLoader.stopLoader('page-loader');
+                            })
+                        }
+    
                     }
-                    this.service.createRegistration(registration).subscribe(data => {
-                        this.initRegistrations();
-                        this.ngxLoader.stopLoader('page-loader');
-                    })
+                    
                 }
             });
         }
 
+        if(this.parentModule == 'tournaments'){
+            this.poolService.getPoolsByTournament(this.parent.id).subscribe((data: any) => {
+                modalRef.componentInstance.pools = data;
+            })
+            modalRef.componentInstance.addForm.controls.tournament.setValue(this.parent.id);
+            modalRef.componentInstance.tournament = this.parent.id;
+            modalRef.result.then((result) => {
+                if (result == 'save') {
+                    this.ngxLoader.startLoader('page-loader');
+                    let values = modalRef.componentInstance.addForm.value;
+    
+                    if(values.creationMode == 'newUser'){
+    
+                        let user: any = {
+                            email: values.email,
+                            firstName: values.firstName,
+                            lastName: values.lastName,
+                            password: values.password,
+                            licenceNumber: values.licenceNumber,
+                            points: values.points,
+                            genre: values.genre,
+                            club: values.club,
+                        }
+                        this.userService.createUser(user).subscribe(data => {
+    
+                            let registration: any = {
+                                tournament: 'api/tournaments/' + this.parent.id,
+                                pools: values.selectedPools.map((pool:any) => {
+                                    return 'api/pools/' + pool.id
+                                }),
+                                user: 'api/users/' + data.id,
+                                payableAmount: parseFloat(values.payableAmount),
+                                paidAmount: parseFloat(values.paidAmount),
+                                presence: values.presence == "1",
+                                available: values.presence == "1",
+                                creator: 'api/users/' + this.currentUser.id
+                            }
+    
+                            this.service.createRegistration(registration).subscribe(data => {
+                                this.initRegistrations();
+                                this.ngxLoader.stopLoader('page-loader');
+                            })
+                            
+                        })
+    
+                    } else {
+    
+                        let registration: any = {
+                            tournament: 'api/tournaments/' + this.parent.id,
+                            pools: values.selectedPools.map((pool:any) => {
+                                return 'api/pools/' + pool.id
+                            }),
+                            user: 'api/users/' + values.user,
+                            payableAmount: parseFloat(values.payableAmount),
+                            paidAmount: parseFloat(values.paidAmount),
+                            presence: values.presence == "1",
+                            available: values.presence == "1",
+                            creator: 'api/users/' + this.currentUser.id
+                        }
+        
+                        // registration exists, we update it
+                        if(values.registrationID !== ""){
+                            this.service.updateRegistration(values.registrationID, registration).subscribe(data => {
+                                this.initRegistrations();
+                                this.ngxLoader.stopLoader('page-loader');
+                            })
+                        // else we create it
+                        } else {
+                            this.service.createRegistration(registration).subscribe(data => {
+                                this.initRegistrations();
+                                this.ngxLoader.stopLoader('page-loader');
+                            })
+                        }
+    
+                    }
+                }
+            });
+        }
 
     }
 

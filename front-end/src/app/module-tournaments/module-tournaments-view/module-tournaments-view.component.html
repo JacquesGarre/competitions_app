@@ -237,6 +237,12 @@
             <app-module-pools-submodule [parentModule]="'tournaments'" [parent]="tournament"></app-module-pools-submodule>
         </ng-template>
     </li>
+    <li ngbNavItem>
+        <a ngbNavLink>Registrations</a>
+        <ng-template ngbNavContent>
+            <app-module-registrations-submodule [parentModule]="'tournaments'" [parent]="tournament"></app-module-registrations-submodule>
+        </ng-template>
+    </li>
 </ul>
 <div [ngbNavOutlet]="nav"></div>
 

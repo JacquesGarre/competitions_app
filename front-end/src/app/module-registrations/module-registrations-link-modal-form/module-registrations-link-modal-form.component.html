@@ -9,21 +9,24 @@
     <form [formGroup]="addForm" (ngSubmit)="submitForm()">
         <div class="modal-boy">
             <div class="container">
-                <label for="tournament">Tournament</label>
-                <div class="input-group mb-4">
-                    <select class="browser-default custom-select" name="tournament"  id="tournament" formControlName="tournament" required
-                    (change)="tournamentChanged()"
-                    >
-                        <option *ngFor="let tournament of tournaments" [value]="tournament.id">{{tournament.name}}</option>
-                    </select>
-                    <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
-                        <div *ngIf="addForm.get('tournament')?.errors?.required">
-                            Tournament is required.
+
+                <span *ngIf="parentModule !== 'tournaments' && parentModule !== 'pools'">
+                    <label for="tournament">Tournament</label>
+                    <div class="input-group mb-4">
+                        <select class="browser-default custom-select" name="tournament"  id="tournament" formControlName="tournament" required
+                        (change)="tournamentChanged()"
+                        >
+                            <option *ngFor="let tournament of tournaments" [value]="tournament.id">{{tournament.name}}</option>
+                        </select>
+                        <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
+                            <div *ngIf="addForm.get('tournament')?.errors?.required">
+                                Tournament is required.
+                            </div>
                         </div>
                     </div>
-                </div>
+                </span>
 
-                <span *ngIf="addForm.value.tournament !== null && parentModule !== 'users' ">
+                <span *ngIf="(addForm.value.tournament !== null && parentModule !== 'users') || parentModule == 'pools' ">
                     <label for="user">User</label>
                     <div class="input-group mb-4">
                         <select 
@@ -140,7 +143,7 @@
                     </div>
                 </span>
 
-                <span *ngIf="addForm.value.tournament !== null && (parentModule == 'users' || parentModule == 'pools') ">
+                <span *ngIf="addForm.value.tournament !== null && (parentModule == 'users' || parentModule == 'pools' || parentModule == 'tournaments') ">
                     <label for="presence">Present</label>
                     <div class="input-group mb-4">
                         <select class="browser-default custom-select" name="presence"  id="presence" formControlName="presence" 
@@ -152,7 +155,7 @@
                 </span>
 
 
-                <span *ngIf="addForm.value.tournament !== null && (parentModule == 'users' || parentModule == 'pools') ">
+                <span *ngIf="addForm.value.tournament !== null && (parentModule == 'users' || parentModule == 'pools' || parentModule == 'tournaments') ">
                     <label for="poolIDS">Pools</label>
                     <div class="mb-4">
                         <ng-multiselect-dropdown
