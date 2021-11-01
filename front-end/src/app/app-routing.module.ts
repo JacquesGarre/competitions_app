@@ -22,12 +22,16 @@ import { ModulePoolsViewComponent } from './module-pools/module-pools-view/modul
 
 import { ModuleRegistrationsComponent } from './module-registrations/module-registrations.component';
 import { ModuleRegistrationsViewComponent } from './module-registrations/module-registrations-view/module-registrations-view.component';
+import { ClubComponent } from './club/club.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'profile', component: ProfileComponent },
+    { path: 'club/:slug', component: ClubComponent },
+    { path: 'club/:slug/registration/:uri', component: RegistrationComponent },
     { 
         path: 'user', 
         component: BoardUserComponent,

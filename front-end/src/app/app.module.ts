@@ -64,6 +64,8 @@ import { ModuleRegistrationsViewComponent } from './module-registrations/module-
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
 import { QuillModule } from 'ngx-quill';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { ClubComponent } from './club/club.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     "bgsColor": "red",
@@ -136,6 +138,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         ModuleRegistrationsAddModalFormComponent,
         ModuleRegistrationsLinkModalFormComponent,
         ModuleRegistrationsViewComponent,
+        
+        ClubComponent,
+                  RegistrationComponent,
 
     ],  
     imports: [

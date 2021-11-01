@@ -23,13 +23,13 @@
                 <div class="card-body rounded-0">
                     <h5 class="card-title">{{tournament.name}}</h5>
                     <p class="card-text">
-                        Organisé par <a href="/organization/{{tournament.organization.subdomain}}" class="text-orange">{{tournament.organization.name}}</a>
+                        Organisé par <a href="/club/{{tournament.organization.subdomain}}" class="text-orange">{{tournament.organization.name}}</a>
                     </p>
                     <p class="card-text">
                         débute le {{tournament.startDate  | date:'dd/MM/yyyy à HH:mm' }}<br>
                         fini le {{tournament.endDate  | date:'dd/MM/yyyy à HH:mm'}}
                     </p>
-                    <a href="/organization/{{tournament.organization.subdomain}}/tournament/{{tournament.uri}}" class="btn  btn-dark-gray btn-sm" *ngIf="tournament.registrationFormOpen">S'inscrire</a>
+                    <a href="/club/{{tournament.organization.subdomain}}/registration/{{tournament.uri}}" class="btn  btn-dark-gray btn-sm" *ngIf="tournament.registrationFormOpen">S'inscrire</a>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
                 <div class="card-body rounded-0">
                     <h5 class="card-title">{{organization.name}}</h5>
                     <p class="card-text"></p>
-                    <a href="/organization/{{organization.subdomain}}/articles/" class="btn btn-dark-gray btn-sm">Voir l'actualité</a>
+                    <a href="/club/{{organization.subdomain}}/articles/" class="btn btn-dark-gray btn-sm">Voir l'actualité</a>
                 </div>
             </div>
         </div>

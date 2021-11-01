@@ -1,0 +1,104 @@
+<div class="container register">
+    <div class="row" style="height: 100%;">
+        <div class="col-md-2 register-left">
+            <h3>{{tournament.name}}</h3>
+            <p class="infos mb-5">
+                <i>Organisé par {{organization.name}}</i>
+            </p>
+            <p class="infos" style="margin-top: 13vh;">
+                <fa-icon [icon]="faCalendarCheck"></fa-icon>
+                <span>
+                    Du {{tournament.startDate | date:'dd/MM/yyyy à HH\'h\'mm'}} <br>au {{tournament.endDate | date:'dd/MM/yyyy à HH\'h\'mm'}}
+                </span>
+            </p>
+            <p class="infos mb-5">
+                <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
+                <span>
+                    {{tournament.address}}<br>{{tournament.postalCode}} {{tournament.city}}
+                </span>
+            </p>
+            <div class="description" [innerHtml]="tournament.description"></div>
+        </div>
+        <div class="col-md-10 register-right">
+            <h3 class="register-heading">Votre inscription</h3>
+            <div class="row register-form">
+                <h5>Renseignez vos données personnelles</h5>
+                <hr class="mb-4 mt-0">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Votre numéro de licence *" value="" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Prénom *" value="" />
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Nom *" value="" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <input type="email" class="form-control" placeholder="Email *" value="" />
+                    </div>
+                    <div class="form-group">
+                        <div class="maxl">
+                            <label class="radio inline"> 
+                                <input type="radio" name="gender" value="m" checked>
+                                <span>Homme</span> 
+                            </label>
+                            <label class="radio inline"> 
+                                <input type="radio" name="gender" value="f">
+                                <span>Femme</span> 
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <h5 class="mt-5">Sélectionnez les tableaux auxquels vous souhaitez vous inscrire</h5>
+                <hr class="mb-4 mt-0">
+                <div class="table-responsive">
+                    <table class="table border-0">
+                        <thead>
+                            <th style="min-width: 100px;">Tableau</th>
+                            <th style="min-width: 123px;">Points minimum</th>
+                            <th style="min-width: 130px;">Points maximum</th>
+                            <th style="min-width: 70px;">Prix</th>
+                            <th>Information</th>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox" class="mr-2">A</td>
+                                <td>500</td>
+                                <td>1000</td>
+                                <td>5.0 €</td>
+                                <td>liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="mr-2">B</td>
+                                <td>500</td>
+                                <td>1000</td>
+                                <td>5.0 €</td>
+                                <td>liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd </td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" class="mr-2">C</td>
+                                <td>500</td>
+                                <td>1000</td>
+                                <td>5.0 €</td>
+                                <td>liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h5 class="mt-5">Montant total à régler</h5>
+                <hr class="mb-4 mt-0">
+                <h5><strong>11,0 €</strong></h5>
+            </div>
+
+
+            <input type="submit" class="btnRegister mb-4"  value="S'inscrire"/>
+        </div>
+    </div>
+
+</div>

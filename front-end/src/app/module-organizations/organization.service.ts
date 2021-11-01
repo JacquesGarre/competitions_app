@@ -46,6 +46,13 @@ export class OrganizationService {
         .pipe(retry(1), catchError(this.handleError))
     }  
 
+    
+    // Read by slug
+    getOrganizationBySlug(slug: any): Observable<Organization> {
+        return this.http.get<Organization>(Env.API_URL + 'organizations.json?subdomain='+slug)
+        .pipe(retry(1), catchError(this.handleError))
+    }  
+
     // Update
     updateOrganization(id: any, organization: any): Observable<Organization> {
         return this.http.put<Organization>(Env.API_URL + 'organizations/' + id + '.json', JSON.stringify(organization), this.httpOptions)

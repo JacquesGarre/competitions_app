@@ -44,6 +44,12 @@ export class TournamentService {
         .pipe(retry(1), catchError(this.handleError))
     }  
 
+    // Read by org id & uri
+    getTournamentByOrganizationAndUri(organizationID: any, uri: any): Observable<Tournament> {
+        return this.http.get<Tournament>(Env.API_URL + 'organizations/' + organizationID + '/tournaments.json?uri='+uri)
+        .pipe(retry(1), catchError(this.handleError))
+    }  
+
     // Update
     updateTournament(id: any, tournament: any): Observable<Tournament> {
         return this.http.put<Tournament>(Env.API_URL + 'tournaments/' + id + '.json', JSON.stringify(tournament), this.httpOptions)
