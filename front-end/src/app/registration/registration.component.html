@@ -1,103 +1,141 @@
 <div class="container register">
     <div class="row" style="height: 100%;">
         <div class="col-md-2 register-left">
-            <h3>{{tournament.name}}</h3>
+            <h3>{{ tournament?.name }}</h3>
             <p class="infos mb-5">
-                <i>Organisé par {{organization.name}}</i>
+                <i>Organisé par {{ organization?.name }}</i>
             </p>
             <p class="infos" style="margin-top: 13vh;">
                 <fa-icon [icon]="faCalendarCheck"></fa-icon>
                 <span>
-                    Du {{tournament.startDate | date:'dd/MM/yyyy à HH\'h\'mm'}} <br>au {{tournament.endDate | date:'dd/MM/yyyy à HH\'h\'mm'}}
+                    Du {{tournament?.startDate | date:'dd/MM/yyyy à HH\'h\'mm'}} <br>au {{tournament?.endDate | date:'dd/MM/yyyy à HH\'h\'mm'}}
                 </span>
             </p>
             <p class="infos mb-5">
                 <fa-icon [icon]="faMapMarkerAlt"></fa-icon>
                 <span>
-                    {{tournament.address}}<br>{{tournament.postalCode}} {{tournament.city}}
+                    {{tournament?.address}}<br>{{tournament?.postalCode}} {{tournament?.city}}
                 </span>
             </p>
-            <div class="description" [innerHtml]="tournament.description"></div>
+            <div class="description" [innerHtml]="tournament?.description"></div>
         </div>
         <div class="col-md-10 register-right">
-            <h3 class="register-heading">Votre inscription</h3>
-            <div class="row register-form">
-                <h5>Renseignez vos données personnelles</h5>
-                <hr class="mb-4 mt-0">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Votre numéro de licence *" value="" />
+            <form [formGroup]="addForm" (ngSubmit)="submitForm()">
+                <h3 class="register-heading">Votre inscription</h3>
+                <div class="row register-form">
+                    <h5>Renseignez vos données personnelles</h5>
+                    <hr class="mb-4 mt-0">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <input type="text" [className]="
+                            (addForm.invalid && (addForm.get('licenceNumber')?.dirty || addForm.get('licenceNumber')?.touched) && addForm.get('licenceNumber')?.errors) ? 
+                            'form-control is-invalid' : (addForm.invalid && (addForm.get('licenceNumber')?.dirty || addForm.get('licenceNumber')?.touched)) ? 'form-control is-valid' : 'form-control'" id="licenceNumber" name="licenceNumber" formControlName="licenceNumber" placeholder="Numéro de licence *" autocomplete="off" required>
+                            <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
+                                <div *ngIf="addForm.get('licenceNumber')?.errors?.required">
+                                    Le numéro de licence est obligatoire.
+                                </div>
+                                <div *ngIf="addForm.get('licenceNumber')?.errors?.minlength">
+                                    Le numéro de licence doit comporter 2 lettres au minimum.
+                                </div>
+                            </div>
+                        </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" [className]="
+                            (addForm.invalid && (addForm.get('firstName')?.dirty || addForm.get('firstName')?.touched) && addForm.get('firstName')?.errors) ? 
+                            'form-control is-invalid' : (addForm.invalid && (addForm.get('firstName')?.dirty || addForm.get('firstName')?.touched)) ? 'form-control is-valid' : 'form-control'" id="firstName" name="firstName" formControlName="firstName" placeholder="Prénom *" autocomplete="off" required>
+                            <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
+                                <div *ngIf="addForm.get('firstName')?.errors?.required">
+                                    Le prénom est obligatoire.
+                                </div>
+                                <div *ngIf="addForm.get('firstName')?.errors?.minlength">
+                                    Le prénom doit comporter 2 lettres au minimum.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" [className]="
+                            (addForm.invalid && (addForm.get('lastName')?.dirty || addForm.get('lastName')?.touched) && addForm.get('lastName')?.errors) ? 
+                            'form-control is-invalid' : (addForm.invalid && (addForm.get('lastName')?.dirty || addForm.get('lastName')?.touched)) ? 'form-control is-valid' : 'form-control'" id="lastName" name="lastName" formControlName="lastName" placeholder="Nom *" autocomplete="off" required>
+                            <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
+                                <div *ngIf="addForm.get('lastName')?.errors?.required">
+                                    Le nom est obligatoire.
+                                </div>
+                                <div *ngIf="addForm.get('lastName')?.errors?.minlength">
+                                    Le nom doit comporter 1 lettres au minimum.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="text" [className]="
+                            (addForm.invalid && (addForm.get('email')?.dirty || addForm.get('email')?.touched) && addForm.get('email')?.errors) ? 
+                            'form-control is-invalid' : (addForm.invalid && (addForm.get('email')?.dirty || addForm.get('email')?.touched)) ? 'form-control is-valid' : 'form-control'" id="email" name="email" formControlName="email" placeholder="Email *" autocomplete="off" required>
+                            <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
+                                <div *ngIf="addForm.get('email')?.errors?.required">
+                                    L'adresse email est obligatoire.
+                                </div>
+                                <div *ngIf="addForm.get('email')?.errors?.minlength">
+                                    L'adresse email doit comporter 2 lettres au minimum.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="maxl">
+                                <label class="radio inline"> 
+                                    <input type="radio" name="gender" value="m" checked>
+                                    <span>Homme</span> 
+                                </label>
+                                <label class="radio inline"> 
+                                    <input type="radio" name="gender" value="f">
+                                    <span>Femme</span> 
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <h5 class="mt-5">Sélectionnez les tableaux auxquels vous souhaitez vous inscrire</h5>
+                    <hr class="mb-4 mt-0">
+                    <div class="table-responsive">
+                        <table class="table border-0">
+                            <thead>
+                                <th style="min-width: 100px;">Tableau</th>
+                                <th style="min-width: 123px;">Points minimum</th>
+                                <th style="min-width: 130px;">Points maximum</th>
+                                <th style="min-width: 70px;">Prix</th>
+                                <th>Information</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let pool of pools">
+                                    <td><input type="checkbox" class="mr-2">{{pool.name}}</td>
+                                    <td>{{pool.minPoints}}</td>
+                                    <td>{{pool.maxPoints}}</td>
+                                    <td>{{pool.price}} €</td>
+                                    <td [innerHtml]="pool.description"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h5 class="mt-5">Montant total à régler</h5>
+                    <hr class="mb-4 mt-0">
+                    <h5><strong>{{payableAmount}} €</strong></h5>
                 </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Prénom *" value="" />
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Nom *" value="" />
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <input type="email" class="form-control" placeholder="Email *" value="" />
-                    </div>
-                    <div class="form-group">
-                        <div class="maxl">
-                            <label class="radio inline"> 
-                                <input type="radio" name="gender" value="m" checked>
-                                <span>Homme</span> 
-                            </label>
-                            <label class="radio inline"> 
-                                <input type="radio" name="gender" value="f">
-                                <span>Femme</span> 
-                            </label>
+
+                <div class="form-group">
+                    <input type="submit" class="btn btnRegister mb-4" [disabled]="!addForm.valid || selectedPools.length < 1" value="S'inscrire"/>
+                    <div *ngIf="(addForm.invalid || selectedPools.length < 1) && (addForm.dirty || addForm.touched)" class="invalid-feedback">
+                        <div *ngIf="!addForm.valid">
+                            Merci de bien vouloir remplir tous les champs obligatoires.
+                        </div>
+                        <div *ngIf="selectedPools.length < 1">
+                            Veuillez sélectionner au moins 1 tableau pour vous inscrire.
                         </div>
                     </div>
                 </div>
-                <h5 class="mt-5">Sélectionnez les tableaux auxquels vous souhaitez vous inscrire</h5>
-                <hr class="mb-4 mt-0">
-                <div class="table-responsive">
-                    <table class="table border-0">
-                        <thead>
-                            <th style="min-width: 100px;">Tableau</th>
-                            <th style="min-width: 123px;">Points minimum</th>
-                            <th style="min-width: 130px;">Points maximum</th>
-                            <th style="min-width: 70px;">Prix</th>
-                            <th>Information</th>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td><input type="checkbox" class="mr-2">A</td>
-                                <td>500</td>
-                                <td>1000</td>
-                                <td>5.0 €</td>
-                                <td>liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="mr-2">B</td>
-                                <td>500</td>
-                                <td>1000</td>
-                                <td>5.0 €</td>
-                                <td>liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd </td>
-                            </tr>
-                            <tr>
-                                <td><input type="checkbox" class="mr-2">C</td>
-                                <td>500</td>
-                                <td>1000</td>
-                                <td>5.0 €</td>
-                                <td>liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd liore mpi spsadasjd </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
 
-                <h5 class="mt-5">Montant total à régler</h5>
-                <hr class="mb-4 mt-0">
-                <h5><strong>11,0 €</strong></h5>
-            </div>
-
-
-            <input type="submit" class="btnRegister mb-4"  value="S'inscrire"/>
+            </form>
         </div>
     </div>
 

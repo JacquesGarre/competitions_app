@@ -30,8 +30,6 @@ const routes: Routes = [
     { path: 'login', component: LoginComponent },
     { path: 'register', component: RegisterComponent },
     { path: 'profile', component: ProfileComponent },
-    { path: 'club/:slug', component: ClubComponent },
-    { path: 'club/:slug/registration/:uri', component: RegistrationComponent },
     { 
         path: 'user', 
         component: BoardUserComponent,
@@ -92,7 +90,9 @@ const routes: Routes = [
             }
         ]
 
-    }
+    },
+    { path: ':slug', component: ClubComponent },
+    { path: ':slug/registration/:uri', component: RegistrationComponent },
 ];
 
 @NgModule({

@@ -116,6 +116,7 @@ h5 {
 
 .table td {
     border-top: 1px solid #dee2e6;
+    vertical-align: middle;
 }
 
 .register .nav-tabs .nav-link {
