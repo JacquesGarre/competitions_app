@@ -20,19 +20,24 @@
             <div class="description" [innerHtml]="tournament?.description"></div>
         </div>
         <div class="col-md-10 register-right">
-            <form [formGroup]="addForm" (ngSubmit)="submitForm()">
+            <form [formGroup]="addForm" (ngSubmit)="submitForm()" *ngIf="!registrationComplete">
                 <h3 class="register-heading">Votre inscription</h3>
                 <div class="row register-form">
                     <h5>Renseignez vos données personnelles</h5>
                     <hr class="mb-4 mt-0">
                     <div class="col-md-12">
                         <div class="form-group">
-                            <input type="text" [className]="
+                            <input type="text" 
+                            (change)="fetchPlayerInfos()"
+                            [className]="
                             (addForm.invalid && (addForm.get('licenceNumber')?.dirty || addForm.get('licenceNumber')?.touched) && addForm.get('licenceNumber')?.errors) ? 
                             'form-control is-invalid' : (addForm.invalid && (addForm.get('licenceNumber')?.dirty || addForm.get('licenceNumber')?.touched)) ? 'form-control is-valid' : 'form-control'" id="licenceNumber" name="licenceNumber" formControlName="licenceNumber" placeholder="Numéro de licence *" autocomplete="off" required>
                             <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
                                 <div *ngIf="addForm.get('licenceNumber')?.errors?.required">
                                     Le numéro de licence est obligatoire.
+                                </div>
+                                <div *ngIf="addForm.get('licenceNumber')?.errors?.exist">
+                                    Ce numéro de licence n'existe pas.
                                 </div>
                                 <div *ngIf="addForm.get('licenceNumber')?.errors?.minlength">
                                     Le numéro de licence doit comporter 2 lettres au minimum.
@@ -70,7 +75,9 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
-                            <input type="text" [className]="
+                            <input 
+                            (change)="testEmail()"
+                            type="text" [className]="
                             (addForm.invalid && (addForm.get('email')?.dirty || addForm.get('email')?.touched) && addForm.get('email')?.errors) ? 
                             'form-control is-invalid' : (addForm.invalid && (addForm.get('email')?.dirty || addForm.get('email')?.touched)) ? 'form-control is-valid' : 'form-control'" id="email" name="email" formControlName="email" placeholder="Email *" autocomplete="off" required>
                             <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
@@ -80,16 +87,30 @@
                                 <div *ngIf="addForm.get('email')?.errors?.minlength">
                                     L'adresse email doit comporter 2 lettres au minimum.
                                 </div>
+                                <div *ngIf="addForm.get('email')?.errors?.invalid">
+                                    Cette adresse email n'est pas valide.
+                                </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="maxl">
                                 <label class="radio inline"> 
-                                    <input type="radio" name="gender" value="m" checked>
+                                    <input 
+                                    (change)="changeGenre('m')"
+                                    type="radio" 
+                                    name="genre" 
+                                    value="m" 
+                                    id="genre-m"
+                                    checked>
                                     <span>Homme</span> 
                                 </label>
                                 <label class="radio inline"> 
-                                    <input type="radio" name="gender" value="f">
+                                    <input 
+                                    (change)="changeGenre('f')"
+                                    type="radio"
+                                    name="genre" 
+                                    id="genre-f"
+                                    value="f">
                                     <span>Femme</span> 
                                 </label>
                             </div>
@@ -108,7 +129,13 @@
                             </thead>
                             <tbody>
                                 <tr *ngFor="let pool of pools">
-                                    <td><input type="checkbox" class="mr-2">{{pool.name}}</td>
+                                    <td><input 
+                                        type="checkbox" 
+                                        name="{{pool.id}}"
+                                        id="{{pool.id}}"
+                                        class="mr-2"
+                                        (change)="checkPool(pool, $any($event.target).checked)"
+                                        >{{pool.name}}</td>
                                     <td>{{pool.minPoints}}</td>
                                     <td>{{pool.maxPoints}}</td>
                                     <td>{{pool.price}} €</td>
@@ -116,6 +143,9 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <div class="text-danger" *ngIf="addForm.get('selectedPools')?.errors?.invalid">
+                            Votre nombre de points ne vous permet pas de vous inscrire à ces tableaux. (Vous avez {{addForm.value.points}} points)
+                        </div>
                     </div>
 
                     <h5 class="mt-5">Montant total à régler</h5>
@@ -124,18 +154,40 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" class="btn btnRegister mb-4" [disabled]="!addForm.valid || selectedPools.length < 1" value="S'inscrire"/>
-                    <div *ngIf="(addForm.invalid || selectedPools.length < 1) && (addForm.dirty || addForm.touched)" class="invalid-feedback">
-                        <div *ngIf="!addForm.valid">
+                    <div class="text-center mb-2" *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" > <!-- *ngIf="!addForm.valid && (addForm.dirty || addForm.touched)"  -->
+                        <div class="text-danger" *ngIf="addForm.invalid"> <!--  *ngIf="!addForm.valid" -->
                             Merci de bien vouloir remplir tous les champs obligatoires.
                         </div>
-                        <div *ngIf="selectedPools.length < 1">
+                        <div class="text-danger" *ngIf="addForm.value.selectedPools.length < 1">
                             Veuillez sélectionner au moins 1 tableau pour vous inscrire.
                         </div>
                     </div>
+                    <input type="submit" class="btn btnRegister mb-4" value="S'inscrire" [disabled]="addForm.invalid || addForm.get('selectedPools')?.errors?.invalid"/>
                 </div>
 
             </form>
+
+            <div *ngIf="registrationComplete" class="container  mt-5 mb-5">
+                <h3 class="text-dark-gray mt-5 pt-5">Votre inscription a bien été prise en compte {{addForm.value.firstName}}!</h3>
+
+                <h5 class="mt-5 mb-4">Informations importantes</h5>
+                <p class="text-dark-gray pl-4">
+                    Rendez-vous le <strong class="text-dark-gray">{{tournament?.startDate | date:'dd/MM/yyyy à HH\'h\'mm'}}</strong> pour le début du tournoi, à l'adresse suivante : 
+                </p>
+                <p class="text-dark-gray pl-4">
+                    <strong class="text-dark-gray">{{tournament?.address}}<br>{{tournament?.postalCode}} {{tournament?.city}}</strong>
+                </p>
+
+                <h5 class="mt-5 mb-4">Détail de votre inscription</h5>
+                <ul>
+                    <li *ngFor="let pool of addForm.value.selectedPools" class="text-dark-gray">
+                        Tableau {{pool.name}} : {{pool.price}} €
+                    </li>
+                </ul>
+                <h5 class="mt-5 mb-4">Montant total à régler</h5>
+                <h5 class="text-dark-gray pl-4"><strong class="text-dark-gray">{{addForm.value.payableAmount}} €</strong></h5>
+            </div>
+
         </div>
     </div>
 

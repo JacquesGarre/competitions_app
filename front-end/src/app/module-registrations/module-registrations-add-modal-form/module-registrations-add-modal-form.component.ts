@@ -282,9 +282,7 @@ export class ModuleRegistrationsAddModalFormComponent {
 
 
     public submitForm() {
-        
         this.calculatePayableAmount();
-        console.log(this.addForm.value);
         this.activeModal.close(this.addForm.value);
     }
 

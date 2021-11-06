@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { OrganizationService } from '../module-organizations/organization.service';
 import { TournamentService } from '../module-tournaments/tournament.service';
+import { UserService } from '../module-users/user.service';
+import { RegistrationService } from '../module-registrations/registration.service';
 
 import {
     faCalendarCheck,
@@ -9,6 +11,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { PoolService } from '../module-pools/pool.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FFTTService } from '../_services/fftt.service';
 
 @Component({
     selector: 'app-registration',
@@ -22,13 +25,17 @@ export class RegistrationComponent implements OnInit {
     pools: any;
     addForm: any;
     payableAmount: any = 0.0;
-    selectedPools: [] = [];
+    selectedPools: any = [];
     registrationID: any;
     licenceNumber: any;
     genre: any;
     email: any;
     firstName: any;
     lastName:any;
+    points: any;
+    club:any;
+    fetching = false;
+    registrationComplete = false;
 
 
     faCalendarCheck = faCalendarCheck;
@@ -40,6 +47,9 @@ export class RegistrationComponent implements OnInit {
         public tournamentService: TournamentService,
         public poolService: PoolService,
         private formBuilder: FormBuilder,
+        public userService: UserService,
+        public service: RegistrationService,
+        public ffttService: FFTTService
     ) {
 
         const slug = this.route.snapshot.paramMap.get('slug');
@@ -89,9 +99,7 @@ export class RegistrationComponent implements OnInit {
             ),
             tournament: new FormControl(
                 this.tournament,
-                [
-                    Validators.required
-                ]
+                []
             ),
             selectedPools: new FormControl(
                 this.selectedPools,
@@ -110,9 +118,16 @@ export class RegistrationComponent implements OnInit {
             genre: new FormControl(
                 this.genre, 
                 []
+            ),
+            points: new FormControl(
+                this.points, 
+                []
+            ),
+            club: new FormControl(
+                this.club, 
+                []
             )
         });
-
 
     }
 
@@ -120,8 +135,14 @@ export class RegistrationComponent implements OnInit {
 
     }
 
-    calculatePayableAmount(){
-        this.addForm.value.selectedPools;
+    checkPool(pool:string, isChecked: boolean){
+        if(isChecked) {
+            this.selectedPools.push(pool);
+        } else {
+            let index = this.selectedPools.indexOf(pool);
+            this.selectedPools.splice(index,1);
+        }
+        this.addForm.controls.selectedPools.setValue(this.selectedPools);
         let payableAmount = 0;
         this.addForm.value.selectedPools.map((selectedPool: any) => {
             const pool = this.pools.filter((el: any) => {
@@ -131,10 +152,107 @@ export class RegistrationComponent implements OnInit {
         })
         this.payableAmount = payableAmount.toString();
         this.addForm.controls.payableAmount.setValue(this.payableAmount);
+
+        // Test if is allowed on this pool
+        this.selectedPools.map((pool: any) => {
+            if(pool.minPoints > parseInt(this.addForm.value.points) || pool.maxPoints < parseInt(this.addForm.value.points)){
+                this.addForm.get('selectedPools').errors = {};
+                this.addForm.get('selectedPools').errors.invalid = true;
+                console.log('NOT ALLOWED')
+            }
+        })
+
+
+    }
+
+    changeGenre(value: any){
+        this.addForm.controls.genre.setValue(value);
+    }
+
+    testEmail(){
+        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if(re.test(String(this.addForm.value.email).toLowerCase())){
+            this.addForm.get('email').errors = false;
+        } else {
+            this.addForm.get('email').errors = {};
+            this.addForm.get('email').errors.invalid = true;
+        }
+    }
+
+    fetchPlayerInfos(){
+        let that = this;
+        that.ffttService.getPlayerInfosByLicence(that.addForm.value.licenceNumber)
+        .always(function (response) {
+            that.fetching = true;
+        })
+        .done(function (response) {
+            let data = that.ffttService.xml2json(response);
+            if(data.liste.licence){
+                that.addForm.get('licenceNumber').errors = false;
+                that.addForm.controls.firstName.setValue(data.liste.licence.prenom);
+                that.addForm.controls.lastName.setValue(data.liste.licence.nom);
+                that.addForm.controls.points.setValue(data.liste.licence.point);
+                that.addForm.controls.club.setValue(data.liste.licence.nomclub);
+                let genre = data.liste.licence.sexe.toLowerCase();
+                that.addForm.controls.genre.setValue(genre);
+                let genreRadio = document.getElementById("genre-"+genre) as HTMLInputElement;
+                genreRadio!.checked = true;
+            } else {
+                that.addForm.get('licenceNumber').errors = {};
+                that.addForm.get('licenceNumber').errors.exist = true;
+            }
+            that.fetching = false;
+        });
     }
 
     submitForm(){
-        alert('submit');
+        this.addForm.controls.tournament.setValue(this.tournament);
+        let values = this.addForm.value;
+
+        let user: any = {
+            email: values.email,
+            firstName: values.firstName,
+            lastName: values.lastName,
+            password: Math.random().toString(36).slice(-8),
+            licenceNumber: values.licenceNumber,
+            points: values.points,
+            genre: values.genre,
+            club: values.club,
+        }
+
+        // test by licence number if user exists already or not
+
+        // if user exist, update infos
+
+            // test if registration exists
+
+                // if registration exist update registration
+
+
+                // else create  registration
+
+
+        // else create user
+        this.userService.createUser(user).subscribe(data => {
+            let registration: any = {
+                tournament: 'api/tournaments/' + values.tournament.id,
+                pools: values.selectedPools.map((pool:any) => {
+                    return 'api/pools/' + pool.id
+                }),
+                user: 'api/users/' + data.id,
+                payableAmount: parseFloat(values.payableAmount),
+                paidAmount: parseFloat('0'),
+                presence: false,
+                available: false,
+                creator: 'api/users/1'
+            }
+            // create registration
+            this.service.createRegistration(registration).subscribe(data => {
+                this.registrationComplete = true;
+                alert('registration complete!')
+            })
+        })
+
     }
 
 
