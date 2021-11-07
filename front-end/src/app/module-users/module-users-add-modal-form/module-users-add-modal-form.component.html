@@ -1,6 +1,6 @@
 <div class="modal-header bg-dark rounded-0">
     <h5 class="modal-title text-light">
-        <fa-icon [icon]="faUser" class="mr-2"></fa-icon>New user</h5>
+        <fa-icon [icon]="faUser" class="mr-2"></fa-icon>Nouvel utilisateur</h5>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -9,31 +9,31 @@
     <form [formGroup]="addForm" (ngSubmit)="submitForm()">
         <div class="modal-boy">
             <div class="container">
-                <label for="name">First name</label>
+                <label for="name">Prénom</label>
                 <div class="input-group mb-4">
                     <input type="text" [className]="
                             (addForm.invalid && (addForm.get('firstName')?.dirty || addForm.get('firstName')?.touched) && addForm.get('firstName')?.errors) ? 
                             'form-control is-invalid' : (addForm.invalid && (addForm.get('firstName')?.dirty || addForm.get('firstName')?.touched)) ? 'form-control is-valid' : 'form-control'" id="firstName" name="firstName" formControlName="firstName" autocomplete="off">
                     <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
                         <div *ngIf="addForm.get('firstName')?.errors?.required">
-                            First name is required.
+                            Prénom obligatoire
                         </div>
                         <div *ngIf="addForm.get('firstName')?.errors?.minlength">
-                            First name must be at least 4 characters long.
+                            Prénom doit contenir au moins 4 caractères
                         </div>
                     </div>
                 </div>
-                <label for="name">Last name</label>
+                <label for="name">Nom</label>
                 <div class="input-group mb-4">
                     <input type="text" [className]="
                             (addForm.invalid && (addForm.get('lastName')?.dirty || addForm.get('lastName')?.touched) && addForm.get('lastName')?.errors) ? 
                             'form-control is-invalid' : (addForm.invalid && (addForm.get('lastName')?.dirty || addForm.get('lastName')?.touched)) ? 'form-control is-valid' : 'form-control'" id="lastName" name="lastName" formControlName="lastName" autocomplete="off">
                     <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
                         <div *ngIf="addForm.get('lastName')?.errors?.required">
-                            Last name is required.
+                            Nom obligatoire
                         </div>
                         <div *ngIf="addForm.get('lastName')?.errors?.minlength">
-                            Last name must be at least 4 characters long.
+                            Nom doit contenir au moins 4 caractères
                         </div>
                     </div>
                 </div>
@@ -44,32 +44,32 @@
                             'form-control is-invalid' : (addForm.invalid && (addForm.get('email')?.dirty || addForm.get('email')?.touched)) ? 'form-control is-valid' : 'form-control'" id="email" name="email" formControlName="email" autocomplete="off">
                     <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
                         <div *ngIf="addForm.get('email')?.errors?.required">
-                            Email is required.
+                            Email obligatoire
                         </div>
                         <div *ngIf="addForm.get('email')?.errors?.minlength">
-                            Email must be at least 4 characters long.
+                            Email doit contenir au moins 4 caractères
                         </div>
                     </div>
                 </div>
-                <label for="name">Password</label>
+                <label for="name">Mot de passe</label>
                 <div class="input-group mb-4">
                     <input type="text" [className]="
                             (addForm.invalid && (addForm.get('password')?.dirty || addForm.get('password')?.touched) && addForm.get('password')?.errors) ? 
                             'form-control is-invalid' : (addForm.invalid && (addForm.get('password')?.dirty || addForm.get('password')?.touched)) ? 'form-control is-valid' : 'form-control'" id="password" name="password" formControlName="password" autocomplete="off">
                     <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
                         <div *ngIf="addForm.get('password')?.errors?.required">
-                            Password is required.
+                            Mot de passe obligatoire
                         </div>
                         <div *ngIf="addForm.get('password')?.errors?.minlength">
-                            Password must be at least 4 characters long.
+                            Mot de passe doit contenir au moins 4 caractères
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-outline-success" [disabled]="!addForm.valid" (click)="activeModal.close('save')">Save</button>
-            <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss()">Cancel</button>
+            <button class="btn btn-outline-success" [disabled]="!addForm.valid" (click)="activeModal.close('save')">Enregistrer</button>
+            <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss()">Annuler</button>
         </div>
     </form>
 </div>

@@ -3,10 +3,10 @@
         <div class="card-header bg-dark text-light border-gray border-0 rounded-0 ">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-10">
-                    <h6 class="mb-0"><fa-icon [icon]="faClipboardList" class="mr-2"></fa-icon>Registrations</h6>
+                    <h6 class="mb-0"><fa-icon [icon]="faClipboardList" class="mr-2"></fa-icon>Inscriptions</h6>
                 </div>
                 <div class="col-md-2">
-                    <a class="btn btn-dark-gray btn-sm float-right" (click)=createRegistration()><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add registration</a>
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=createRegistration()><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Ajouter une inscription</a>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
             ></ngx-ui-loader>
             <!-- End of Loader -->
 
-            <p class="w-100 text-center pt-3" *ngIf="!registrations.length"><i>No registrations found.</i></p>
+            <p class="w-100 text-center pt-3" *ngIf="!registrations.length"><i>Aucune inscription trouvée</i></p>
 
             <!--This is your master form-->
             <form [formGroup]="registrationForm" *ngIf="registrations.length">
@@ -31,16 +31,16 @@
                     <thead class="text-light border-top-0 border-right-0 border-left-0">
                         <tr>
                             <th scope="col" class="text-center border-gray">Actions</th>
-                            <th scope="col" class="border-gray" *ngIf="parentModule !== 'users'">User</th>
-                            <th scope="col" class="border-gray">Tournament</th>
-                            <th scope="col" class="border-gray">Pools</th>
-                            <th scope="col" class="border-gray">Payable amount</th>
-                            <th scope="col" class="border-gray">Paid amount</th>
-                            <th scope="col" class="border-gray">Jersey number</th>
-                            <th scope="col" class="border-gray">Present</th>
-                            <th scope="col" class="border-gray">Available</th>
-                            <th scope="col" class="border-gray">Created at</th>
-                            <th scope="col" class="border-gray">Updated at</th>
+                            <th scope="col" class="border-gray" *ngIf="parentModule !== 'users'">Utilisateur</th>
+                            <th scope="col" class="border-gray">Tournoi</th>
+                            <th scope="col" class="border-gray">Tableaux</th>
+                            <th scope="col" class="border-gray">À régler</th>
+                            <th scope="col" class="border-gray">Réglé</th>
+                            <th scope="col" class="border-gray">Dossard</th>
+                            <th scope="col" class="border-gray">Présent</th>
+                            <th scope="col" class="border-gray">Disponible</th>
+                            <th scope="col" class="border-gray">Crée le</th>
+                            <th scope="col" class="border-gray">Mis à jour le</th>
                         </tr>
                     </thead>
                     <tbody>

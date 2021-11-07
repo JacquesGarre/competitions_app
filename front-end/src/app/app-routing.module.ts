@@ -92,7 +92,7 @@ const routes: Routes = [
 
     },
     { path: ':slug', component: ClubComponent },
-    { path: ':slug/registration/:uri', component: RegistrationComponent },
+    { path: ':slug/inscription/:uri', component: RegistrationComponent },
 ];
 
 @NgModule({

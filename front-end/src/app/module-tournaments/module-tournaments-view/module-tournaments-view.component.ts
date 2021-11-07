@@ -90,7 +90,7 @@ export class ModuleTournamentsViewComponent implements OnInit {
                         const organization = this.organizations.filter((org: any) => {
                             return org.id == this.tournament.organization.replace('/api/organizations/','');
                         })[0];
-                        this.formURL = "/"+organization.subdomain+"/registration/"+this.tournament.uri;
+                        this.formURL = "/"+organization.subdomain+"/inscription/"+this.tournament.uri;
                     })
                 } else {
                     this.organizationService.getOrganizationsByUser(this.currentUser.id).subscribe((data: any) => {
@@ -98,7 +98,7 @@ export class ModuleTournamentsViewComponent implements OnInit {
                         const organization = this.organizations.filter((org: any) => {
                             return org.id == this.tournament.organization.replace('/api/organizations/','');
                         })[0];
-                        this.formURL = "/"+organization.subdomain+"/registration/"+this.tournament.uri;
+                        this.formURL = "/"+organization.subdomain+"/inscription/"+this.tournament.uri;
                     })
                 }
                 this.userService.getUsers().subscribe((data: any) => {

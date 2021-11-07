@@ -1,6 +1,6 @@
 <div class="modal-header bg-dark rounded-0">
     <h5 class="modal-title text-light">
-        <fa-icon [icon]="faGem" class="mr-2"></fa-icon>Add organization</h5>
+        <fa-icon [icon]="faGem" class="mr-2"></fa-icon>Ajouter une organisation</h5>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -8,19 +8,19 @@
 <div class="modal-body text-light  bg-dark-gray rounded-0">
     <form [formGroup]="addForm" (ngSubmit)="submitForm()">
         <div class="modal-boy">
-            <label for="organizationId">Organization</label>
+            <label for="organizationId">Organisation</label>
             <div class="input-group mb-4">
                 <select class="browser-default custom-select" name="organizationId"  id="organizationId" formControlName="organizationId">
                     <option *ngFor="let organization of organizations" [value]="organization.id">{{organization.name}}</option>
                   </select>
                 <div *ngIf="addForm.get('organizationId')?.errors?.required">
-                    Organization is required.
+                    Organisation obligatoire
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-outline-success" [disabled]="!addForm.valid" (click)="activeModal.close('save')">Add</button>
-            <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss()">Cancel</button>
+            <button class="btn btn-outline-success" [disabled]="!addForm.valid" (click)="activeModal.close('save')">Ajouter</button>
+            <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss()">Annuler</button>
         </div>
     </form>
 </div>

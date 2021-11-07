@@ -5,7 +5,7 @@
 
 <h5 class="mb-4 pr-4">
     <fa-icon [icon]="faUser" class="mr-2"></fa-icon>
-    <a routerLink="/admin/users" class="text-light">Users</a> <fa-icon [icon]="faChevronRight" class="ml-2" style="font-size: 16px;"></fa-icon> {{user.firstName}} {{user.lastName}}
+    <a routerLink="/admin/users" class="text-light">Utilisateurs</a> <fa-icon [icon]="faChevronRight" class="ml-2" style="font-size: 16px;"></fa-icon> {{user.firstName}} {{user.lastName}}
 </h5>
 
 <div class="col-md-12 text-gray">
@@ -13,10 +13,10 @@
         <div class="card-header bg-dark text-light border-gray border-top-0 border-left-0 border-right-0 rounded-0 ">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-11">
-                    <h6 class="mb-0"><fa-icon [icon]="faInfoCircle" class="mr-2"></fa-icon>Personal details</h6>
+                    <h6 class="mb-0"><fa-icon [icon]="faInfoCircle" class="mr-2"></fa-icon>Données personnelles</h6>
                 </div>
                 <div class="col-md-1">
-                    <a class="btn btn-dark-gray btn-sm float-right" (click)=toggleForm() *ngIf=isReadonly><fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Edit</a>
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=toggleForm() *ngIf=isReadonly><fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Éditer</a>
                 </div>
             </div>
         </div> 
@@ -25,23 +25,23 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label for="firstName" class="col-sm-3 col-form-label">First name</label>
+                            <label for="firstName" class="col-sm-3 col-form-label">Prénom</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control bg-gray pl-2" name="firstName" [(ngModel)]="form.firstName" required
                                 #firstName="ngModel" [readonly]="isReadonly"/>
                             </div>
                             <div class="alert alert-danger" role="alert" *ngIf="firstName.errors && f.submitted">
-                                First name is required!
+                                Prénom obligatoire
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="lastName" class="col-sm-3 col-form-label">Last name</label>
+                            <label for="lastName" class="col-sm-3 col-form-label">Nom</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control bg-gray pl-2" name="lastName" [(ngModel)]="form.lastName" required
                                 #lastName="ngModel" [readonly]="isReadonly"/>
                             </div>
                             <div class="alert alert-danger" role="alert" *ngIf="lastName.errors && f.submitted">
-                                Last name is required!
+                                Nom obligatoire
                             </div>
                         </div>
                         <div class="form-group row">
@@ -64,17 +64,17 @@
                                 #email="ngModel" [readonly]="isReadonly"/>
                             </div>
                             <div class="alert alert-danger" role="alert" *ngIf="email.errors && f.submitted">
-                                Email is required!
+                                Email obligatoire
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="password" class="col-sm-3 col-form-label">Password</label>
+                            <label for="password" class="col-sm-3 col-form-label">Mot de passe</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control bg-gray pl-2" name="password" [(ngModel)]="form.password" required
                                 #password="ngModel" [readonly]="isReadonly"/>
                             </div>
                             <div class="alert alert-danger" role="alert" *ngIf="password.errors && f.submitted">
-                                Password is required!
+                                Mot de passe obligatoire
                             </div>
                         </div>
                     </div>
@@ -82,9 +82,9 @@
                 <div class="row mt-2" *ngIf=!isReadonly>
                     <div class="col-md-12 text-right">
                         <button class="btn  btn-outline-success mr-2" *ngIf=!isReadonly (click)=onSubmit()>
-                            Save
+                            Enregistrer
                         </button>
-                        <a class="btn btn-outline-danger" *ngIf=!isReadonly (click)="toggleForm(); resetForm()">Cancel</a>
+                        <a class="btn btn-outline-danger" *ngIf=!isReadonly (click)="toggleForm(); resetForm()">Annuler</a>
                     </div>
                 </div>
             </form>
@@ -97,10 +97,10 @@
         <div class="card-header bg-dark text-light border-gray border-top-0 border-left-0 border-right-0 rounded-0 ">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-11">
-                    <h6 class="mb-0"><fa-icon [icon]="faTableTennis" class="mr-2"></fa-icon>Player details</h6>
+                    <h6 class="mb-0"><fa-icon [icon]="faTableTennis" class="mr-2"></fa-icon>Données FFTT</h6>
                 </div>
                 <div class="col-md-1">
-                    <a class="btn btn-dark-gray btn-sm float-right" (click)=toggleForm() *ngIf=isReadonly><fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Edit</a>
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=toggleForm() *ngIf=isReadonly><fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Éditer</a>
                 </div>
             </div>
         </div> 
@@ -109,7 +109,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label for="licenceNumber" class="col-sm-3 col-form-label">Licence number</label>
+                            <label for="licenceNumber" class="col-sm-3 col-form-label">Licence</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control bg-gray pl-2" name="licenceNumber" [(ngModel)]="form.licenceNumber"
                                 #licenceNumber="ngModel" [readonly]="isReadonly"/>
@@ -136,9 +136,9 @@
                 <div class="row mt-2" *ngIf=!isReadonly>
                     <div class="col-md-12 text-right">
                         <button class="btn  btn-outline-success mr-2" *ngIf=!isReadonly (click)=onSubmit()>
-                            Save
+                            Enregistrer
                         </button>
-                        <a class="btn btn-outline-danger" *ngIf=!isReadonly (click)="toggleForm(); resetForm()">Cancel</a>
+                        <a class="btn btn-outline-danger" *ngIf=!isReadonly (click)="toggleForm(); resetForm()">Annuler</a>
                     </div>
                 </div>
             </form>

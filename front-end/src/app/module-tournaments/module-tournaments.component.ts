@@ -128,9 +128,9 @@ export class ModuleTournamentsComponent implements OnInit {
     // Delete tournament
     deleteTournament(tournament: any) {
         const modalRef = this.modalService.open(ModalConfirmComponent, { centered: true });
-        modalRef.componentInstance.title = 'Deleting a tournament';
-        modalRef.componentInstance.content = 'Are you sure you want to delete <i>' + tournament.name + '</i> ?';
-        modalRef.componentInstance.confirmBtn = 'Confirm';
+        modalRef.componentInstance.title = 'Suppresion d\'un tournoi';
+        modalRef.componentInstance.content = 'Êtes-vous sûr de vouloir supprimer le tournoi <i>' + tournament.name + '</i> ?';
+        modalRef.componentInstance.confirmBtn = 'Confirmer';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
                 this.ngxLoader.startLoader('task-loader');

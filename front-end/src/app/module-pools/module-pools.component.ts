@@ -136,9 +136,9 @@ export class ModulePoolsComponent implements OnInit {
     // Delete pool
     deletePool(pool: any) {
         const modalRef = this.modalService.open(ModalConfirmComponent, { centered: true });
-        modalRef.componentInstance.title = 'Deleting a pool';
-        modalRef.componentInstance.content = 'Are you sure you want to delete <i>' + pool.name + '</i> ?';
-        modalRef.componentInstance.confirmBtn = 'Confirm';
+        modalRef.componentInstance.title = 'Suppression d\'un tableau';
+        modalRef.componentInstance.content = 'Êtes-vous sûr de vouloir supprimer le tableau <i>' + pool.name + '</i> ?';
+        modalRef.componentInstance.confirmBtn = 'Confirmer';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
                 this.ngxLoader.startLoader('task-loader');

@@ -112,9 +112,9 @@ export class ModuleUsersComponent implements OnInit {
     // Delete user
     deleteUser(user: any) {
         const modalRef = this.modalService.open(ModalConfirmComponent, { centered: true });
-        modalRef.componentInstance.title = 'Deleting a user';
-        modalRef.componentInstance.content = 'Are you sure you want to delete <i>' + user.firstName + ' ' + user.lastName + '</i> ?';
-        modalRef.componentInstance.confirmBtn = 'Confirm';
+        modalRef.componentInstance.title = 'Suppression d\'un utilisateur';
+        modalRef.componentInstance.content = 'Êtes-vous sûr de vouloir supprimer <i>' + user.firstName + ' ' + user.lastName + '</i> ?';
+        modalRef.componentInstance.confirmBtn = 'Confirmer';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
                 this.ngxLoader.startLoader('task-loader');

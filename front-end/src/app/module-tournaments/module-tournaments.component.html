@@ -4,7 +4,7 @@
 
 <h5 class="mb-4 pr-4">
     <fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>
-    Tournaments
+    Tournois
     <a [routerLink]="" class="p-0 text-secondary float-right" (click)=createTournament()>
         <fa-icon [icon]="faPlus" class="mr-2"></fa-icon>
     </a>
@@ -17,13 +17,13 @@
         <thead class="bg-dark text-light border-top-0 border-right-0 border-left-0">
             <tr>
                 <th scope="col" class="text-center border-gray">Actions</th>
-                <th scope="col" class="border-gray">Name</th>
-                <th scope="col" class="border-gray">Organization</th>
-                <th scope="col" class="border-gray">Start Date</th>
-                <th scope="col" class="border-gray">End Date</th>
-                <th scope="col" class="border-gray">Registration Form</th>
-                <th scope="col" class="border-gray">Created at</th>
-                <th scope="col" class="border-gray">Updated at</th>
+                <th scope="col" class="border-gray">Nom</th>
+                <th scope="col" class="border-gray">Organisation</th>
+                <th scope="col" class="border-gray">Date de début</th>
+                <th scope="col" class="border-gray">Date de fin</th>
+                <th scope="col" class="border-gray">Formulaire d'inscription</th>
+                <th scope="col" class="border-gray">Crée le</th>
+                <th scope="col" class="border-gray">Mis à jour le</th>
             </tr>
         </thead>
         <tbody>
@@ -54,7 +54,7 @@
                         <input class="form-control pl-0" type="text" [value]="tournament.endDate | date:'dd/MM/yyyy HH:mm'" readonly/>
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="tournament.registrationFormOpen == 1 ? 'Open' : 'Closed'"  readonly/>
+                        <input class="form-control pl-0" type="text" [value]="tournament.registrationFormOpen == 1 ? 'Ouvert' : 'Fermé'"  readonly/>
                     </td>
                     <td class="text-light">
                         <input class="form-control pl-0" type="text" [value]="tournament.createdAt | date:'dd/MM/yyyy HH:mm'" readonly/>

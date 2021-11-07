@@ -2,7 +2,7 @@
 <app-navbar></app-navbar>
 <!-- End of Navbar -->
 <!-- <a href="/register" class="nav-link" routerLink="/register" *ngIf="!isLoggedIn && false">Sign Up</a> -->
-<a href="/login" class="nav-link float-right text-light" routerLink="/login" *ngIf="!isLoggedIn">Login</a>
+<a href="/login" class="nav-link float-right text-light" routerLink="/login" *ngIf="!isLoggedIn">Se connecter</a>
 <!-- <a class="nav-link" href (click)="logout()" *ngIf="isLoggedIn">Logout</a> -->
 
 <!-- <a class="nav-link" href="/admin" routerLink="/admin" *ngIf="showAdminBoard || showModeratorBoard">
@@ -23,7 +23,7 @@
 <!-- End of Loader -->
 
 
-<h1 class="text-center">Bienvenue sur Competizone</h1>
+<h1 class="text-center mt-5">Bienvenue sur Competizone</h1>
 
 <div class="container-fluid">
     <h3 class="text-light">Les tournois</h3>
@@ -39,7 +39,7 @@
                         débute le {{tournament.startDate  | date:'dd/MM/yyyy à HH:mm' }}<br>
                         fini le {{tournament.endDate  | date:'dd/MM/yyyy à HH:mm'}}
                     </p>
-                    <a href="/{{tournament.organization.subdomain}}/registration/{{tournament.uri}}" class="btn  btn-dark-gray btn-sm" *ngIf="tournament.registrationFormOpen">S'inscrire</a>
+                    <a href="/{{tournament.organization.subdomain}}/inscription/{{tournament.uri}}" class="btn  btn-dark-gray btn-sm" *ngIf="tournament.registrationFormOpen">S'inscrire</a>
                 </div>
             </div>
         </div>

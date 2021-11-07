@@ -3,10 +3,10 @@
         <div class="card-header bg-dark text-light border-gray border-0 rounded-0 ">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-10">
-                    <h6 class="mb-0"><fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>Tournaments</h6>
+                    <h6 class="mb-0"><fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>Tournois</h6>
                 </div>
                 <div class="col-md-2">
-                    <a class="btn btn-dark-gray btn-sm float-right" (click)=linkTournament()><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add tournament</a>
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=linkTournament()><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Ajouter un tournoi</a>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
             ></ngx-ui-loader>
             <!-- End of Loader -->
 
-            <p class="w-100 text-center pt-3" *ngIf="!tournaments.length"><i>No tournaments found.</i></p>
+            <p class="w-100 text-center pt-3" *ngIf="!tournaments.length"><i>Aucun tournoi trouvé</i></p>
 
             <!--This is your master form-->
             <form [formGroup]="tournamentForm" *ngIf="tournaments.length">
@@ -31,10 +31,10 @@
                     <thead class="text-light border-0">
                         <tr>
                             <th scope="col" class="text-center border-gray">Actions</th>
-                            <th scope="col" class="border-gray">Name</th>
-                            <th scope="col" class="border-gray">Subdomain</th>
-                            <th scope="col" class="border-gray">Created At</th>
-                            <th scope="col" class="border-gray">Updated At</th>
+                            <th scope="col" class="border-gray">Nom</th>
+                            <th scope="col" class="border-gray">Sous-domaine</th>
+                            <th scope="col" class="border-gray">Crée le</th>
+                            <th scope="col" class="border-gray">Mis à jour le</th>
                         </tr>
                     </thead>
                     <tbody>

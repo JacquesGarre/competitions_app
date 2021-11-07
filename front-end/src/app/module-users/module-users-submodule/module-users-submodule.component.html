@@ -6,7 +6,7 @@
                     <h6 class="mb-0"><fa-icon [icon]="faUser" class="mr-2"></fa-icon>{{title}}</h6>
                 </div>
                 <div class="col-md-1">
-                    <a class="btn btn-dark-gray btn-sm float-right" (click)=linkUser() *ngIf="parentModule !== 'registrations'"><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add user</a>
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=linkUser() *ngIf="parentModule !== 'registrations'"><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Ajouter un utilisateur</a>
                 </div>
             </div>
         </div>
@@ -24,7 +24,7 @@
             <!-- Loader -->
             <!-- <ngx-ui-loader [loaderId]="'users-submodule-loader'" [hasProgressBar]="false"></ngx-ui-loader> -->
             <!-- End of Loader -->
-            <p class="w-100 text-center pt-3" *ngIf="!users.length"><i>No users found.</i></p>
+            <p class="w-100 text-center pt-3" *ngIf="!users.length"><i>Aucun utilisateur trouvé</i></p>
             <!--This is your master form-->
             <form [formGroup]="userForm" *ngIf="users.length">
 
@@ -33,12 +33,12 @@
                         <tr>
                             <th scope="col" class="text-center border-gray">Actions</th>
                             <th scope="col" class="border-gray">Email</th>
-                            <th scope="col" class="border-gray">First Name</th>
-                            <th scope="col" class="border-gray">Last Name</th>
+                            <th scope="col" class="border-gray">Prénom</th>
+                            <th scope="col" class="border-gray">Nom</th>
                             <th scope="col" class="border-gray">Licence</th>
                             <th scope="col" class="border-gray">Points</th>
-                            <th scope="col" class="border-gray">Created At</th>
-                            <th scope="col" class="border-gray">Updated At</th>
+                            <th scope="col" class="border-gray">Créé le</th>
+                            <th scope="col" class="border-gray">Mis à jour le</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -1,6 +1,6 @@
 <div class="modal-header bg-dark rounded-0">
     <h5 class="modal-title text-light">
-        <fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>New tournament</h5>
+        <fa-icon [icon]="faSitemap" class="mr-2"></fa-icon>Nouveau tournoi</h5>
     <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss()">
         <span aria-hidden="true" class="text-light text-hover-orange">&times;</span>
     </button>
@@ -9,27 +9,27 @@
     <form [formGroup]="addForm" (ngSubmit)="submitForm()">
         <div class="modal-boy">
             <div class="container">
-                <label for="name">Name</label>
+                <label for="name">Nom</label>
                 <div class="input-group mb-4">
                     <input type="text" [className]="
                             (addForm.invalid && (addForm.get('name')?.dirty || addForm.get('name')?.touched) && addForm.get('name')?.errors) ? 
                             'form-control is-invalid' : (addForm.invalid && (addForm.get('name')?.dirty || addForm.get('name')?.touched)) ? 'form-control is-valid' : 'form-control'" id="name" name="name" formControlName="name" autocomplete="off">
                     <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
                         <div *ngIf="addForm.get('name')?.errors?.required">
-                            Name is required.
+                            Nom obligatoire
                         </div>
                         <div *ngIf="addForm.get('name')?.errors?.minlength">
-                            Name must be at least 4 characters long.
+                            Nom doit contenir au moins 4 caractères
                         </div>
                     </div>
                 </div>
-                <label for="organization">Organization</label>
+                <label for="organization">Organisation</label>
                 <div class="input-group mb-4">
                     <select class="browser-default custom-select" name="organization"  id="organization" formControlName="organization">
                         <option *ngFor="let organization of organizations" [value]="organization.id">{{organization.name}}</option>
                     </select>
                 </div>
-                <label for="startDate">Start date</label>
+                <label for="startDate">Date de début</label>
                 <div class="input-group mb-4">
                     <input type="text" [owlDateTime]="startDate" [owlDateTimeTrigger]="startDate" placeholder="Date Time" [className]="
                             (addForm.invalid && (addForm.get('startDate')?.dirty || addForm.get('startDate')?.touched) && addForm.get('startDate')?.errors) ? 
@@ -37,12 +37,12 @@
                     <owl-date-time #startDate ></owl-date-time>
                     <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
                         <div *ngIf="addForm.get('startDate')?.errors?.required">
-                            Start date is required.
+                            Date de début obligatoire
                         </div>
                     </div>
                     
                 </div>
-                <label for="endDate">End date</label>
+                <label for="endDate">Date de fin</label>
                 <div class="input-group mb-4">
                     <input type="text"  [owlDateTime]="endDate" [owlDateTimeTrigger]="endDate" placeholder="Date Time"  [className]="
                             (addForm.invalid && (addForm.get('endDate')?.dirty || addForm.get('endDate')?.touched) && addForm.get('endDate')?.errors) ? 
@@ -50,7 +50,7 @@
                     <owl-date-time #endDate ></owl-date-time>
                     <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
                         <div *ngIf="addForm.get('endDate')?.errors?.required">
-                            End date is required.
+                            Date de fin obligatoire
                         </div>
                     </div>
                 </div>
@@ -61,18 +61,18 @@
                             'form-control is-invalid' : (addForm.invalid && (addForm.get('uri')?.dirty || addForm.get('uri')?.touched)) ? 'form-control is-valid' : 'form-control'" id="uri" name="uri" formControlName="uri" autocomplete="off">
                     <div *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" class="invalid-feedback">
                         <div *ngIf="addForm.get('uri')?.errors?.required">
-                            Uri is required.
+                            Uri obligatoire
                         </div>
                         <div *ngIf="addForm.get('uri')?.errors?.minlength">
-                            Uri must be at least 4 characters long.
+                            Uri doit contenir au moins 4 caractères
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-outline-success" [disabled]="!addForm.valid" (click)="activeModal.close('save')">Save</button>
-            <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss()">Cancel</button>
+            <button class="btn btn-outline-success" [disabled]="!addForm.valid" (click)="activeModal.close('save')">Enregistrer</button>
+            <button type="button" class="btn btn-outline-dark" (click)="activeModal.dismiss()">Annuler</button>
         </div>
     </form>
 </div>

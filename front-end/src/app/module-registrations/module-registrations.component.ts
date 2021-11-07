@@ -218,9 +218,9 @@ export class ModuleRegistrationsComponent implements OnInit {
     // Delete registration
     deleteRegistration(registration: any) {
         const modalRef = this.modalService.open(ModalConfirmComponent, { centered: true });
-        modalRef.componentInstance.title = 'Deleting a registration';
-        modalRef.componentInstance.content = 'Are you sure you want to delete this registration ?';
-        modalRef.componentInstance.confirmBtn = 'Confirm';
+        modalRef.componentInstance.title = 'Suppression d\'une inscription';
+        modalRef.componentInstance.content = 'Êtes-vous sûr de vouloir supprimer cette inscription ?';
+        modalRef.componentInstance.confirmBtn = 'Confirmer';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
                 this.ngxLoader.startLoader('task-loader');

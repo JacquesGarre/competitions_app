@@ -102,9 +102,9 @@ export class ModuleOrganizationsComponent implements OnInit {
     // Delete organization
     deleteOrganization(organization: any) {
         const modalRef = this.modalService.open(ModalConfirmComponent, { centered: true });
-        modalRef.componentInstance.title = 'Deleting an organization';
-        modalRef.componentInstance.content = 'Are you sure you want to delete <i>' + organization.name + '</i> ?';
-        modalRef.componentInstance.confirmBtn = 'Confirm';
+        modalRef.componentInstance.title = 'Suppression d\'une organisation';
+        modalRef.componentInstance.content = 'Êtes-vous sûr de vouloir supprimer <i>' + organization.name + '</i> ?';
+        modalRef.componentInstance.confirmBtn = 'Confirmer';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
                 this.ngxLoader.startLoader('task-loader');

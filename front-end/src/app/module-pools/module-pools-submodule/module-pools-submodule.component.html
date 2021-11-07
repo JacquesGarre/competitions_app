@@ -3,10 +3,10 @@
         <div class="card-header bg-dark text-light border-gray border-0 rounded-0 ">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-10">
-                    <h6 class="mb-0"><fa-icon [icon]="faObjectUngroup" class="mr-2"></fa-icon>Pools</h6>
+                    <h6 class="mb-0"><fa-icon [icon]="faObjectUngroup" class="mr-2"></fa-icon>Tableaux</h6>
                 </div>
                 <div class="col-md-2">
-                    <a class="btn btn-dark-gray btn-sm float-right" (click)=createPool() *ngIf="parentModule !== 'registrations'"><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add pool</a>
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=createPool() *ngIf="parentModule !== 'registrations'"><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Ajouter un tableau</a>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
             ></ngx-ui-loader>
             <!-- End of Loader -->
 
-            <p class="w-100 text-center pt-3" *ngIf="!pools.length"><i>No pools found.</i></p>
+            <p class="w-100 text-center pt-3" *ngIf="!pools.length"><i>Aucun tableau trouvé</i></p>
 
             <!--This is your master form-->
             <form [formGroup]="poolForm" *ngIf="pools.length">
@@ -31,12 +31,12 @@
                     <thead class="text-light border-0">
                         <tr>
                             <th scope="col" class="text-center border-gray">Actions</th>
-                            <th scope="col" class="border-gray">Name</th>
-                            <th scope="col" class="border-gray">Min points</th>
-                            <th scope="col" class="border-gray">Max points</th>
-                            <th scope="col" class="border-gray">Price</th>
-                            <th scope="col" class="border-gray">Start Date</th>
-                            <th scope="col" class="border-gray">End Date</th>
+                            <th scope="col" class="border-gray">Nom</th>
+                            <th scope="col" class="border-gray">Points min</th>
+                            <th scope="col" class="border-gray">Points max</th>
+                            <th scope="col" class="border-gray">Prix</th>
+                            <th scope="col" class="border-gray">Date de début</th>
+                            <th scope="col" class="border-gray">Date de fin</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -4,7 +4,7 @@
 
 <h5 class="mb-4 pr-4">
     <fa-icon [icon]="faObjectUngroup" class="mr-2"></fa-icon>
-    <a routerLink="/admin/pools" class="text-light">Pools</a>
+    <a routerLink="/admin/pools" class="text-light">Tableaux</a>
     <fa-icon [icon]="faChevronRight" class="ml-2" style="font-size: 16px;"></fa-icon> {{pool.name}}
 </h5>
 
@@ -16,13 +16,13 @@
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-md-11">
                         <h6 class="mb-0">
-                            <fa-icon [icon]="faInfoCircle" class="mr-2"></fa-icon>Details
+                            <fa-icon [icon]="faInfoCircle" class="mr-2"></fa-icon>Détails
                         </h6>
                     </div>
                     <div class="col-md-1">
                         <a class="btn btn-dark-gray btn-sm float-right" (click)=toggleForm()
                             *ngIf=isReadonly>
-                            <fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Edit
+                            <fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Éditer
                         </a>
                     </div>
                 </div>
@@ -32,18 +32,18 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label for="name" class="col-sm-3 col-form-label">Name</label>
+                            <label for="name" class="col-sm-3 col-form-label">Nom</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control bg-gray pl-2" name="name"
                                     [(ngModel)]="form.name" required #name="ngModel"
                                     [readonly]="isReadonly" />
                             </div>
                             <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
-                                Name is required!
+                                Nom obligatoire
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="tournament" class="col-sm-3 col-form-label">Tournament</label>
+                            <label for="tournament" class="col-sm-3 col-form-label">Tournoi</label>
                             <div class="col-sm-9">
                                 <select class="browser-default custom-select bg-gray text-light"
                                     name="tournament" id="tournament" [(ngModel)]="form.tournament"
@@ -56,56 +56,56 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="minPoints" class="col-sm-3 col-form-label">Minimum points</label>
+                            <label for="minPoints" class="col-sm-3 col-form-label">Points minimum</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control bg-gray pl-2" name="minPoints"
                                     [(ngModel)]="form.minPoints" #minPoints="ngModel"
                                     [readonly]="isReadonly" />
                             </div>
                             <div class="alert alert-danger" role="alert" *ngIf="minPoints.errors && f.submitted">
-                                Minimum points is required!
+                                Points minimum obligatoire
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="maxPoints" class="col-sm-3 col-form-label">Maximum points</label>
+                            <label for="maxPoints" class="col-sm-3 col-form-label">Points maximum</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control bg-gray pl-2" name="maxPoints"
                                     [(ngModel)]="form.maxPoints" #maxPoints="ngModel"
                                     [readonly]="isReadonly" />
                             </div>
                             <div class="alert alert-danger" role="alert" *ngIf="maxPoints.errors && f.submitted">
-                                Maximum points is required!
+                                Points maximum obligatoire
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="price" class="col-sm-3 col-form-label">Price</label>
+                            <label for="price" class="col-sm-3 col-form-label">Prix</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control bg-gray pl-2" name="price"
                                     [(ngModel)]="form.price" #price="ngModel"
                                     [readonly]="isReadonly" />
                             </div>
                             <div class="alert alert-danger" role="alert" *ngIf="price.errors && f.submitted">
-                                Price is required!
+                                Prix obligatoire
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label for="createdAt" class="col-sm-3 col-form-label">Created at</label>
+                            <label for="createdAt" class="col-sm-3 col-form-label">Créé le</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control bg-gray pl-2" name="createdAt"
                                     [value]="form.createdAt | date:'dd/MM/yyyy HH:mm'" required readonly />
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="updatedAt" class="col-sm-3 col-form-label">Updated at</label>
+                            <label for="updatedAt" class="col-sm-3 col-form-label">Mis à jour le</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control bg-gray pl-2" name="updatedAt"
                                     [value]="form.updatedAt | date:'dd/MM/yyyy HH:mm'" required readonly />
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="startDate" class="col-sm-3 col-form-label">Start date</label>
+                            <label for="startDate" class="col-sm-3 col-form-label">Date de début</label>
                             <div class="col-sm-9">
                                 <input class="form-control bg-gray pl-2" [(ngModel)]="startDate"
                                     [ngModelOptions]="{standalone: true}"
@@ -115,7 +115,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="endDate" class="col-sm-3 col-form-label">End date</label>
+                            <label for="endDate" class="col-sm-3 col-form-label">Date de fin</label>
                             <div class="col-sm-9">
                                 <input class="form-control bg-gray pl-2" [(ngModel)]="endDate"
                                     [ngModelOptions]="{standalone: true}"
@@ -129,10 +129,10 @@
                 <div class="row mt-2" *ngIf=!isReadonly>
                     <div class="col-md-12 text-right">
                         <button class="btn btn-outline-success mr-2" *ngIf=!isReadonly (click)=onSubmit()>
-                            Save
+                            Enregistrer
                         </button>
                         <a class="btn btn-outline-danger" *ngIf=!isReadonly
-                            (click)="toggleForm(); resetForm()">Cancel</a>
+                            (click)="toggleForm(); resetForm()">Annuler</a>
                     </div>
                 </div>
             </div>
@@ -146,13 +146,13 @@
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-md-11">
                         <h6 class="mb-0">
-                            <fa-icon [icon]="faAlignLeft" class="mr-2"></fa-icon>Information
+                            <fa-icon [icon]="faAlignLeft" class="mr-2"></fa-icon>Informations
                         </h6>
                     </div>
                     <div class="col-md-1">
                         <a class="btn btn-dark-gray btn-sm float-right" (click)=toggleForm()
                             *ngIf=isReadonly>
-                            <fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Edit
+                            <fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Éditer
                         </a>
                     </div>
                 </div>
@@ -163,7 +163,7 @@
                         <div class="col-md-12">
                             <div class="form-group row">
                                 <quill-view
-                                    [content]="form.description !== undefined ? form.description : '<i>No information filled</i>'"
+                                    [content]="form.description !== undefined ? form.description : '<i>Vide</i>'"
                                     format="html" theme="snow" *ngIf="isReadonly"></quill-view>
                                 <div class="col-sm-12">
                                     <quill-editor [(ngModel)]="form.description" name="description"
@@ -176,10 +176,10 @@
                         <div class="col-md-12 text-right">
                             <button class="btn btn-outline-success mr-2" *ngIf=!isReadonly
                                 (click)=onSubmit()>
-                                Save
+                                Enregistrer
                             </button>
                             <a class="btn btn-outline-danger" *ngIf=!isReadonly
-                                (click)="toggleForm(); resetForm()">Cancel</a>
+                                (click)="toggleForm(); resetForm()">Annuler</a>
                         </div>
                     </div>
                 </form>

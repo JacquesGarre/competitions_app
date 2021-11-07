@@ -24,7 +24,7 @@
                 <!-- ADMIN -->
                 <a class="dropdown-item" href="/admin/profile" routerLink="/admin/profile" *ngIf="showAdminBoard || showModeratorBoard">
                     <fa-icon [icon]="faUser" class="mr-2 text-gray-400"></fa-icon>
-                    Profile
+                    Profil
                 </a>
                 <a class="dropdown-item" href="/admin" routerLink="/admin" *ngIf="showAdminBoard || showModeratorBoard">
                     <fa-icon [icon]="faCog" class="mr-2 text-gray-400"></fa-icon>
@@ -34,22 +34,22 @@
                 <!-- USER -->
                 <a class="dropdown-item" href="/user/profile" routerLink="/user/profile" *ngIf="showUserBoard && !showModeratorBoard && !showAdminBoard">
                     <fa-icon [icon]="faUser" class="mr-2 text-gray-400"></fa-icon>
-                    Profile
+                    Profil
                 </a>
                 <a class="dropdown-item" href="/user" routerLink="/user"  *ngIf="(showUserBoard || showModeratorBoard) && !showAdminBoard">
                     <fa-icon [icon]="faCog" class="mr-2 text-gray-400"></fa-icon>
-                    My Account
+                    Mon espace
                 </a>
 
 
                 <a class="dropdown-item" href="/" routerLink="/">
                     <fa-icon [icon]="faHome" class="mr-2 text-gray-400"></fa-icon>
-                    Home
+                    Accueil
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href (click)="logout()">
                     <fa-icon [icon]="faSignOutAlt" class="mr-2 text-gray-400"></fa-icon>
-                    Logout
+                    Se déconnecter
                 </a>
             </div>
         </li>

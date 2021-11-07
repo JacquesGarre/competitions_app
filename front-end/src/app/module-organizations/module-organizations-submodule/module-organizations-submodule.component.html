@@ -3,10 +3,10 @@
         <div class="card-header bg-dark text-light border-gray border-0 rounded-0 ">
             <div class="row d-flex justify-content-center align-items-center h-100">
                 <div class="col-md-10">
-                    <h6 class="mb-0"><fa-icon [icon]="faGem" class="mr-2"></fa-icon>Organizations</h6>
+                    <h6 class="mb-0"><fa-icon [icon]="faGem" class="mr-2"></fa-icon>Organisations</h6>
                 </div>
                 <div class="col-md-2">
-                    <a class="btn btn-dark-gray btn-sm float-right" (click)=linkOrganization()><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Add organization</a>
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=linkOrganization()><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Ajouter une organisation</a>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
             ></ngx-ui-loader>
             <!-- End of Loader -->
 
-            <p class="w-100 text-center pt-3" *ngIf="!organizations.length"><i>No organizations found.</i></p>
+            <p class="w-100 text-center pt-3" *ngIf="!organizations.length"><i>Aucune organisation trouvée</i></p>
 
             <!--This is your master form-->
             <form [formGroup]="organizationForm" *ngIf="organizations.length">
@@ -31,10 +31,10 @@
                     <thead class="text-light border-0">
                         <tr>
                             <th scope="col" class="text-center border-gray">Actions</th>
-                            <th scope="col" class="border-gray">Name</th>
-                            <th scope="col" class="border-gray">Subdomain</th>
-                            <th scope="col" class="border-gray">Created At</th>
-                            <th scope="col" class="border-gray">Updated At</th>
+                            <th scope="col" class="border-gray">Nom</th>
+                            <th scope="col" class="border-gray">Sous-domaine</th>
+                            <th scope="col" class="border-gray">Créée le</th>
+                            <th scope="col" class="border-gray">Mise à jour le</th>
                         </tr>
                     </thead>
                     <tbody>

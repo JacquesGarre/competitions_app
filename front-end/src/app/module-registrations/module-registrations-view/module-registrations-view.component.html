@@ -4,7 +4,7 @@
 
 <h5 class="mb-4 pr-4">
     <fa-icon [icon]="faClipboardList" class="mr-2"></fa-icon>
-    <a routerLink="/admin/registrations" class="text-light">Registrations</a>
+    <a routerLink="/admin/registrations" class="text-light">Inscriptions</a>
     <fa-icon [icon]="faChevronRight" class="ml-2" style="font-size: 16px;"></fa-icon> {{title}}
 </h5>
 
@@ -16,13 +16,13 @@
                 <div class="row d-flex justify-content-center align-items-center h-100">
                     <div class="col-md-11">
                         <h6 class="mb-0">
-                            <fa-icon [icon]="faInfoCircle" class="mr-2"></fa-icon>Details
+                            <fa-icon [icon]="faInfoCircle" class="mr-2"></fa-icon>Détails
                         </h6>
                     </div>
                     <div class="col-md-1">
                         <a class="btn btn-dark-gray btn-sm float-right" (click)=toggleForm()
                             *ngIf=isReadonly>
-                            <fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Edit
+                            <fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Éditer
                         </a>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label for="tournament" class="col-sm-3 col-form-label">Tournament</label>
+                            <label for="tournament" class="col-sm-3 col-form-label">Tournoi</label>
                             <div class="col-sm-9">
                                 <select class="browser-default custom-select bg-gray text-light"
                                     name="tournament" id="tournament" [(ngModel)]="form.tournament"
@@ -45,7 +45,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="user" class="col-sm-3 col-form-label">User</label>
+                            <label for="user" class="col-sm-3 col-form-label">Utilisateur</label>
                             <div class="col-sm-9">
                                 <select class="browser-default custom-select bg-gray text-light"
                                     name="user" id="user" [(ngModel)]="form.user"
@@ -58,7 +58,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="jerseyNumber" class="col-sm-3 col-form-label">Jersey number</label>
+                            <label for="jerseyNumber" class="col-sm-3 col-form-label">Dossard</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control bg-gray pl-2" name="jerseyNumber"
                                     [(ngModel)]="form.jerseyNumber" required #jerseyNumber="ngModel"
@@ -66,14 +66,14 @@
                             </div>
                             <div class="alert alert-danger" role="alert"
                                 *ngIf="jerseyNumber.errors && f.submitted">
-                                Jersey number is required!
+                                Dossard obligatoire
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="pools" class="col-sm-3 col-form-label">Pools</label>
+                            <label for="pools" class="col-sm-3 col-form-label">Tableaux</label>
                             <div class="col-sm-9">
                                 <ng-multiselect-dropdown
-                                    [placeholder]="'Pools'"
+                                    [placeholder]="'Tableaux'"
                                     [settings]="dropdownSettings"
                                     [data]="pools"
                                     [(ngModel)]="form.pools"
@@ -87,7 +87,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="payableAmount" class="col-sm-3 col-form-label">Payable amount</label>
+                            <label for="payableAmount" class="col-sm-3 col-form-label">Montant à régler</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control bg-gray pl-2" name="payableAmount"
                                     [(ngModel)]="form.payableAmount" required #payableAmount="ngModel"
@@ -95,11 +95,11 @@
                             </div>
                             <div class="alert alert-danger" role="alert"
                                 *ngIf="payableAmount.errors && f.submitted">
-                                Payable amount is required!
+                                Montant à régler obligatoire
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="paidAmount" class="col-sm-3 col-form-label">Paid amount</label>
+                            <label for="paidAmount" class="col-sm-3 col-form-label">Montant réglé</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control bg-gray pl-2" name="paidAmount"
                                     [(ngModel)]="form.paidAmount" required #paidAmount="ngModel"
@@ -107,28 +107,28 @@
                             </div>
                             <div class="alert alert-danger" role="alert"
                                 *ngIf="paidAmount.errors && f.submitted">
-                                Paid amount is required!
+                                Montant réglé obligatoire
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="presence" class="col-sm-3 col-form-label">Present</label>
+                            <label for="presence" class="col-sm-3 col-form-label">Présent</label>
                             <div class="col-sm-9">
                                 <select class="browser-default custom-select bg-gray text-light"
                                     name="presence" id="presence" [(ngModel)]="form.presence"
                                     #presence="ngModel" [disabled]="isReadonly">
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="1">Oui</option>
+                                    <option value="0">Non</option>
                                 </select>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="available" class="col-sm-3 col-form-label">Available</label>
+                            <label for="available" class="col-sm-3 col-form-label">Disponible</label>
                             <div class="col-sm-9">
                                 <select class="browser-default custom-select bg-gray text-light"
                                     name="available" id="available" [(ngModel)]="form.available"
                                     #available="ngModel" [disabled]="isReadonly">
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="1">Oui</option>
+                                    <option value="0">Non</option>
                                 </select>
                             </div>
                         </div>
@@ -136,14 +136,14 @@
                     </div>
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label for="createdAt" class="col-sm-3 col-form-label">Created at</label>
+                            <label for="createdAt" class="col-sm-3 col-form-label">Créé le</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control bg-gray pl-2" name="createdAt"
                                     [value]="form.createdAt | date:'dd/MM/yyyy HH:mm'" required readonly />
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="updatedAt" class="col-sm-3 col-form-label">Updated at</label>
+                            <label for="updatedAt" class="col-sm-3 col-form-label">Mis à jour le</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control bg-gray pl-2" name="updatedAt"
                                     [value]="form.updatedAt | date:'dd/MM/yyyy HH:mm'" required readonly />
@@ -154,10 +154,10 @@
                 <div class="row mt-2" *ngIf=!isReadonly>
                     <div class="col-md-12 text-right">
                         <button class="btn btn-outline-success mr-2" *ngIf=!isReadonly (click)=onSubmit()>
-                            Save
+                            Enregistrer
                         </button>
                         <a class="btn btn-outline-danger" *ngIf=!isReadonly
-                            (click)="toggleForm(); resetForm()">Cancel</a>
+                            (click)="toggleForm(); resetForm()">Annuler</a>
                     </div>
                 </div>
             </div>
@@ -167,7 +167,7 @@
 
 
 <!-- Sous module users -->
-<app-module-users-submodule [parentModule]="'registrations'" [parent]="registration" [title]="'User'"></app-module-users-submodule>
+<app-module-users-submodule [parentModule]="'registrations'" [parent]="registration" [title]="'Utilisateur'"></app-module-users-submodule>
 <!-- End::Sous module users -->
 
 

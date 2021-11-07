@@ -5,7 +5,7 @@
 
 <h5 class="mb-4 pr-4">
     <fa-icon [icon]="faGem" class="mr-2"></fa-icon>
-    <a routerLink="/admin/organizations" class="text-light">Organizations</a> <fa-icon [icon]="faChevronRight" class="ml-2" style="font-size: 16px;"></fa-icon> {{organization.name}}
+    <a routerLink="/admin/organizations" class="text-light">Organisations</a> <fa-icon [icon]="faChevronRight" class="ml-2" style="font-size: 16px;"></fa-icon> {{organization.name}}
 </h5>
 
 <div class="col-md-12 text-gray mb-5 p-0">
@@ -16,7 +16,7 @@
                     <h6 class="mb-0"><fa-icon [icon]="faInfoCircle" class="mr-2"></fa-icon>Details</h6>
                 </div>
                 <div class="col-md-1">
-                    <a class="btn btn-dark-gray btn-sm float-right" (click)=toggleForm() *ngIf=isReadonly><fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Edit</a>
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=toggleForm() *ngIf=isReadonly><fa-icon [icon]="faPencilAlt" class="mr-2"></fa-icon>Éditer</a>
                 </div>
             </div>
         </div> 
@@ -25,36 +25,36 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label for="name" class="col-sm-3 col-form-label">Name</label>
+                            <label for="name" class="col-sm-3 col-form-label">Nom</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control bg-gray pl-2" name="name" [(ngModel)]="form.name" required
                                 #name="ngModel" [readonly]="isReadonly"/>
                             </div>
                             <div class="alert alert-danger" role="alert" *ngIf="name.errors && f.submitted">
-                                Name is required!
+                                Nom obligatoire
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="subdomain" class="col-sm-3 col-form-label">Subdomain</label>
+                            <label for="subdomain" class="col-sm-3 col-form-label">Sous-domaine</label>
                             <div class="col-sm-9">
                                 <input type="text" class="form-control bg-gray pl-2" name="subdomain" [(ngModel)]="form.subdomain" required
                                 #subdomain="ngModel" [readonly]="isReadonly"/>
                             </div>
                             <div class="alert alert-danger" role="alert" *ngIf="subdomain.errors && f.submitted">
-                                Name is required!
+                                Sous-domaine obligatoire
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group row">
-                            <label for="createdAt" class="col-sm-3 col-form-label">Created at</label>
+                            <label for="createdAt" class="col-sm-3 col-form-label">Créée le </label>
                             <div class="col-sm-9">
                                 <input type="createdAt" class="form-control bg-gray pl-2" name="createdAt" [value]="form.createdAt | date:'dd/MM/yyyy HH:mm'" required
                                 readonly/>
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="updatedAt" class="col-sm-3 col-form-label">Updated at</label>
+                            <label for="updatedAt" class="col-sm-3 col-form-label">Mise à jour le</label>
                             <div class="col-sm-9">
                                 <input type="updatedAt" class="form-control bg-gray pl-2" name="updatedAt" [value]="form.updatedAt | date:'dd/MM/yyyy HH:mm'" required
                                 readonly/>
@@ -65,9 +65,9 @@
                 <div class="row mt-2" *ngIf=!isReadonly>
                     <div class="col-md-12 text-right">
                         <button class="btn btn-outline-success mr-2" *ngIf=!isReadonly (click)=onSubmit()>
-                            Save
+                            Enregistrer
                         </button>
-                        <a class="btn btn-outline-danger" *ngIf=!isReadonly (click)="toggleForm(); resetForm()">Cancel</a>
+                        <a class="btn btn-outline-danger" *ngIf=!isReadonly (click)="toggleForm(); resetForm()">Annuler</a>
                     </div>
                 </div>
             </form>
@@ -76,5 +76,5 @@
 </div>
 
 <!-- Sous module users -->
-<app-module-users-submodule [parentModule]="'organizations'" [parent]="organization" [title]="'Users'"></app-module-users-submodule>
+<app-module-users-submodule [parentModule]="'organizations'" [parent]="organization" [title]="'Utilisateurs'"></app-module-users-submodule>
 <!-- End::Sous module users -->
