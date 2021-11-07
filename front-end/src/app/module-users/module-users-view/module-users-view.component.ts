@@ -95,6 +95,7 @@ export class ModuleUsersViewComponent implements OnInit {
     }
 
     onSubmit() {
+        this.ngxLoader.startLoader('task-loader');
         this.service.updateUser(this.user.id, {
             email: this.form.email,
             firstName: this.form.firstName,
@@ -107,6 +108,7 @@ export class ModuleUsersViewComponent implements OnInit {
         }).subscribe((data: any) => {
             this.user = data;
             this.form = data;
+            this.ngxLoader.stopLoader('task-loader');
         })
         this.toggleForm()
     }

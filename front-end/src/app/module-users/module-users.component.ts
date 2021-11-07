@@ -93,7 +93,7 @@ export class ModuleUsersComponent implements OnInit {
         const modalRef = this.modalService.open(ModuleUsersAddModalFormComponent, { centered: true });
         modalRef.result.then((result) => {
             if (result == 'save') {
-                this.ngxLoader.startLoader('page-loader');
+                this.ngxLoader.startLoader('task-loader');
                 let values = modalRef.componentInstance.addForm.value;
                 let user: any = {
                     email: values.email,
@@ -103,6 +103,7 @@ export class ModuleUsersComponent implements OnInit {
                 }
                 this.service.createUser(user).subscribe(() => {
                     this.initUsers();
+                    this.ngxLoader.stopLoader('task-loader');
                 })
             }
         });
@@ -116,8 +117,10 @@ export class ModuleUsersComponent implements OnInit {
         modalRef.componentInstance.confirmBtn = 'Confirm';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
+                this.ngxLoader.startLoader('task-loader');
                 this.service.deleteUser(user.id).subscribe(() => {
                     this.initUsers();
+                    this.ngxLoader.stopLoader('task-loader');
                 })
             }
         });

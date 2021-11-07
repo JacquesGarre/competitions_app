@@ -92,8 +92,11 @@ export class ModuleTournamentsComponent implements OnInit {
                                 })
                             )
                         })
+                    } else {
+                        this.tournaments = [];
                     }
                     this.ngxLoader.stopLoader('page-loader');
+                    this.ngxLoader.stopLoader('task-loader');
                 })
             })
         })
@@ -104,7 +107,7 @@ export class ModuleTournamentsComponent implements OnInit {
         const modalRef = this.modalService.open(ModuleTournamentsAddModalFormComponent, { centered: true });
         modalRef.result.then((result) => {
             if (result == 'save') {
-                this.ngxLoader.startLoader('page-loader');
+                this.ngxLoader.startLoader('task-loader');
                 let values = modalRef.componentInstance.addForm.value;
                 let tournament: any = {
                     name: values.name,
@@ -117,7 +120,6 @@ export class ModuleTournamentsComponent implements OnInit {
                 }
                 this.service.createTournament(tournament).subscribe(data => {
                     this.initTournaments();
-                    this.ngxLoader.stopLoader('page-loader');
                 })
             }
         });
@@ -131,6 +133,7 @@ export class ModuleTournamentsComponent implements OnInit {
         modalRef.componentInstance.confirmBtn = 'Confirm';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
+                this.ngxLoader.startLoader('task-loader');
                 this.service.deleteTournament(tournament.id).subscribe(data => {
                     this.initTournaments();
                 })

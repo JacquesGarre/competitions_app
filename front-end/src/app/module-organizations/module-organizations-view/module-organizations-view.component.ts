@@ -74,6 +74,7 @@ export class ModuleOrganizationsViewComponent implements OnInit {
     }
 
     onSubmit() {
+        this.ngxLoader.startLoader('task-loader');
         const name = this.form.name;
         this.service.updateOrganization(this.organization.id, {
             name: this.form.name,
@@ -81,6 +82,7 @@ export class ModuleOrganizationsViewComponent implements OnInit {
         }).subscribe((data: any) => {
             this.organization = data;
             this.form = data;
+            this.ngxLoader.stopLoader('task-loader');
         })
         this.toggleForm()
     }

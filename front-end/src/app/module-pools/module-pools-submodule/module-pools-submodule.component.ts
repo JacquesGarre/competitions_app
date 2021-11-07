@@ -64,6 +64,7 @@ export class ModulePoolsSubmoduleComponent implements OnChanges {
     }
 
     initPools() {
+        this.ngxLoader.startLoader('submodule-loader');
         // Pools as submodule in user
         if(this.parent.id && this.parentModule == 'tournaments'){
             this.service.getPoolsByTournament(this.parent.id).subscribe((data: any) => {
@@ -90,6 +91,7 @@ export class ModulePoolsSubmoduleComponent implements OnChanges {
                 } else {
                     this.pools = [];
                 }
+                this.ngxLoader.stopLoader('submodule-loader');
             })
         }
 
@@ -119,6 +121,7 @@ export class ModulePoolsSubmoduleComponent implements OnChanges {
                 } else {
                     this.pools = [];
                 }
+                this.ngxLoader.stopLoader('submodule-loader');
             })
         }
     }
@@ -128,7 +131,7 @@ export class ModulePoolsSubmoduleComponent implements OnChanges {
         const modalRef = this.modalService.open(ModulePoolsLinkModalFormComponent, { centered: true });
         modalRef.result.then((result) => {
             if (result == 'save') {
-                this.ngxLoader.startLoader('page-loader');
+                this.ngxLoader.startLoader('task-loader');
                 let values = modalRef.componentInstance.addForm.value;
                 let pool: any = {
                     name: values.name,
@@ -141,7 +144,7 @@ export class ModulePoolsSubmoduleComponent implements OnChanges {
                 }
                 this.service.createPool(pool).subscribe(data => {
                     this.initPools();
-                    this.ngxLoader.stopLoader('page-loader');
+                    this.ngxLoader.stopLoader('task-loader');
                 })
             }
         });
@@ -157,11 +160,13 @@ export class ModulePoolsSubmoduleComponent implements OnChanges {
                 modalRef.componentInstance.confirmBtn = 'Confirm';
                 modalRef.result.then((result) => {
                     if (result == 'confirm') {
+                        this.ngxLoader.startLoader('submodule-loader');
                         const index: number = pool.users.indexOf('/api/users/'+this.parent.id);
                         if (index !== -1) {
                             pool.users.splice(index, 1);
                             this.service.updatePool(pool.id, pool).subscribe((data: any) => {
                                 this.initPools();
+                                this.ngxLoader.stopLoader('submodule-loader');
                             })
                         }                
                     }
@@ -179,8 +184,10 @@ export class ModulePoolsSubmoduleComponent implements OnChanges {
         modalRef.componentInstance.confirmBtn = 'Confirm';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
+                this.ngxLoader.startLoader('submodule-loader');
                 this.service.deletePool(pool.id).subscribe(data => {
                     this.initPools();
+                    this.ngxLoader.stopLoader('submodule-loader');
                 })
             }
         });

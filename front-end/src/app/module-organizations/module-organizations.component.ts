@@ -73,6 +73,8 @@ export class ModuleOrganizationsComponent implements OnInit {
                         )
                     )
                 })
+            } else {
+                this.organizations = [];
             }
             this.ngxLoader.stopLoader('page-loader');
         })
@@ -83,7 +85,7 @@ export class ModuleOrganizationsComponent implements OnInit {
         const modalRef = this.modalService.open(ModuleOrganizationsAddModalFormComponent, { centered: true });
         modalRef.result.then((result) => {
             if (result == 'save') {
-                this.ngxLoader.startLoader('page-loader');
+                this.ngxLoader.startLoader('task-loader');
                 let values = modalRef.componentInstance.addForm.value;
                 let organization: any = {
                     name: values.name,
@@ -91,6 +93,7 @@ export class ModuleOrganizationsComponent implements OnInit {
                 }
                 this.service.createOrganization(organization).subscribe(data => {
                     this.initOrganizations();
+                    this.ngxLoader.stopLoader('task-loader');
                 })
             }
         });
@@ -104,8 +107,10 @@ export class ModuleOrganizationsComponent implements OnInit {
         modalRef.componentInstance.confirmBtn = 'Confirm';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
+                this.ngxLoader.startLoader('task-loader');
                 this.service.deleteOrganization(organization.id).subscribe(data => {
                     this.initOrganizations();
+                    this.ngxLoader.stopLoader('task-loader');
                 })
             }
         });

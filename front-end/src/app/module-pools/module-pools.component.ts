@@ -100,8 +100,11 @@ export class ModulePoolsComponent implements OnInit {
                                 })
                             )
                         })
+                    } else {
+                        this.pools = [];
                     }
                     this.ngxLoader.stopLoader('page-loader');
+                    this.ngxLoader.stopLoader('task-loader');
                 })
             })
         })
@@ -112,7 +115,7 @@ export class ModulePoolsComponent implements OnInit {
         const modalRef = this.modalService.open(ModulePoolsAddModalFormComponent, { centered: true });
         modalRef.result.then((result) => {
             if (result == 'save') {
-                this.ngxLoader.startLoader('page-loader');
+                this.ngxLoader.startLoader('task-loader');
                 let values = modalRef.componentInstance.addForm.value;
                 let pool: any = {
                     name: values.name,
@@ -125,7 +128,6 @@ export class ModulePoolsComponent implements OnInit {
                 }
                 this.service.createPool(pool).subscribe(data => {
                     this.initPools();
-                    this.ngxLoader.stopLoader('page-loader');
                 })
             }
         });
@@ -139,6 +141,7 @@ export class ModulePoolsComponent implements OnInit {
         modalRef.componentInstance.confirmBtn = 'Confirm';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
+                this.ngxLoader.startLoader('task-loader');
                 this.service.deletePool(pool.id).subscribe(data => {
                     this.initPools();
                 })

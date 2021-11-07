@@ -62,6 +62,7 @@ export class ModuleOrganizationsSubmoduleComponent implements OnChanges {
     }
 
     initOrganizations() {
+        this.ngxLoader.startLoader('submodule-loader');
         // Organizations as submodule in user
         if(this.parent.id && this.parentModule == 'users'){
             this.service.getOrganizationsByUser(this.parent.id).subscribe((data: any) => {
@@ -84,6 +85,7 @@ export class ModuleOrganizationsSubmoduleComponent implements OnChanges {
                 } else {
                     this.organizations = [];
                 }
+                this.ngxLoader.stopLoader('submodule-loader');
             })
         }
     }
@@ -94,6 +96,7 @@ export class ModuleOrganizationsSubmoduleComponent implements OnChanges {
         modalRef.componentInstance.parentOrganizationIDS = this.parent.organizations.map((url: any) => {return url.replace('/api/organizations/', '')})
         modalRef.result.then((result) => {
             if (result == 'save') {
+                this.ngxLoader.startLoader('submodule-loader');
                 let values = modalRef.componentInstance.addForm.value;
                 switch(this.parentModule){
                     case 'users':
@@ -122,11 +125,13 @@ export class ModuleOrganizationsSubmoduleComponent implements OnChanges {
                 modalRef.componentInstance.confirmBtn = 'Confirm';
                 modalRef.result.then((result) => {
                     if (result == 'confirm') {
+                        this.ngxLoader.startLoader('submodule-loader');
                         const index: number = organization.users.indexOf('/api/users/'+this.parent.id);
                         if (index !== -1) {
                             organization.users.splice(index, 1);
                             this.service.updateOrganization(organization.id, organization).subscribe((data: any) => {
                                 this.initOrganizations();
+                                this.ngxLoader.stopLoader('submodule-loader');
                             })
                         }                
                     }
@@ -144,8 +149,10 @@ export class ModuleOrganizationsSubmoduleComponent implements OnChanges {
         modalRef.componentInstance.confirmBtn = 'Confirm';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
+                this.ngxLoader.startLoader('submodule-loader');
                 this.service.deleteOrganization(organization.id).subscribe(data => {
                     this.initOrganizations();
+                    this.ngxLoader.stopLoader('submodule-loader');
                 })
             }
         });

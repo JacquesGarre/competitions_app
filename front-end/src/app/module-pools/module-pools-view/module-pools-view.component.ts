@@ -116,6 +116,7 @@ export class ModulePoolsViewComponent implements OnInit {
     }
 
     onSubmit() {
+        this.ngxLoader.startLoader('task-loader');
         const updatedPool = {
             name: this.form.name,
             tournament: this.form.tournament,
@@ -129,6 +130,7 @@ export class ModulePoolsViewComponent implements OnInit {
         this.service.updatePool(this.pool.id, updatedPool).subscribe((data: any) => {
             this.pool = data;
             this.form = data;
+            this.ngxLoader.stopLoader('task-loader');
         })
         this.toggleForm()
     }

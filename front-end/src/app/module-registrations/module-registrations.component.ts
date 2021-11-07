@@ -135,6 +135,7 @@ export class ModuleRegistrationsComponent implements OnInit {
                     })
                 )
             })
+            this.ngxLoader.stopLoader('task-loader');
             this.ngxLoader.stopLoader('page-loader');
         });
     }
@@ -144,7 +145,7 @@ export class ModuleRegistrationsComponent implements OnInit {
         const modalRef = this.modalService.open(ModuleRegistrationsAddModalFormComponent, { centered: true });
         modalRef.result.then((result) => {
             if (result == 'save') {
-                this.ngxLoader.startLoader('page-loader');
+                this.ngxLoader.startLoader('task-loader');
                 let values = modalRef.componentInstance.addForm.value;
 
 
@@ -177,7 +178,6 @@ export class ModuleRegistrationsComponent implements OnInit {
 
                         this.service.createRegistration(registration).subscribe(data => {
                             this.initRegistrations();
-                            this.ngxLoader.stopLoader('page-loader');
                         })
                         
                     })
@@ -201,13 +201,11 @@ export class ModuleRegistrationsComponent implements OnInit {
                     if(values.registrationID !== ""){
                         this.service.updateRegistration(values.registrationID, registration).subscribe(data => {
                             this.initRegistrations();
-                            this.ngxLoader.stopLoader('page-loader');
                         })
                     // else we create it
                     } else {
                         this.service.createRegistration(registration).subscribe(data => {
                             this.initRegistrations();
-                            this.ngxLoader.stopLoader('page-loader');
                         })
                     }
 
@@ -225,6 +223,7 @@ export class ModuleRegistrationsComponent implements OnInit {
         modalRef.componentInstance.confirmBtn = 'Confirm';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
+                this.ngxLoader.startLoader('task-loader');
                 this.service.deleteRegistration(registration.id).subscribe(data => {
                     this.initRegistrations();
                 })

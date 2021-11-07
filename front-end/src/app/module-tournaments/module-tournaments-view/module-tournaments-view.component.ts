@@ -125,6 +125,7 @@ export class ModuleTournamentsViewComponent implements OnInit {
     }
 
     onSubmit() {
+        this.ngxLoader.startLoader('task-loader');
         const updatedTournament = {
             name: this.form.name,
             organization: this.form.organization,
@@ -141,6 +142,7 @@ export class ModuleTournamentsViewComponent implements OnInit {
         this.service.updateTournament(this.tournament.id, updatedTournament).subscribe((data: any) => {
             this.tournament = data;
             this.form = data;
+            this.ngxLoader.stopLoader('task-loader');
         })
         this.toggleForm()
     }

@@ -62,6 +62,7 @@ export class ModuleTournamentsSubmoduleComponent implements OnChanges {
     }
 
     initTournaments() {
+        this.ngxLoader.startLoader('submodule-loader');
         // Tournaments as submodule in user
         if(this.parent.id && this.parentModule == 'users'){
             this.service.getTournamentsByUser(this.parent.id).subscribe((data: any) => {
@@ -84,6 +85,7 @@ export class ModuleTournamentsSubmoduleComponent implements OnChanges {
                 } else {
                     this.tournaments = [];
                 }
+                this.ngxLoader.stopLoader('submodule-loader');
             })
         }
     }
@@ -94,6 +96,7 @@ export class ModuleTournamentsSubmoduleComponent implements OnChanges {
         modalRef.componentInstance.parentTournamentIDS = this.parent.tournaments.map((url: any) => {return url.replace('/api/tournaments/', '')})
         modalRef.result.then((result) => {
             if (result == 'save') {
+                this.ngxLoader.startLoader('submodule-loader');
                 let values = modalRef.componentInstance.addForm.value;
                 switch(this.parentModule){
                     case 'users':
@@ -103,6 +106,7 @@ export class ModuleTournamentsSubmoduleComponent implements OnChanges {
                                 tournament.users.push('/api/users/'+this.parent.id);
                                 this.service.updateTournament(tournament.id, tournament).subscribe((data: any) => {
                                     this.initTournaments();
+                                    this.ngxLoader.stopLoader('submodule-loader');
                                 })
                             }
                         })
@@ -122,11 +126,13 @@ export class ModuleTournamentsSubmoduleComponent implements OnChanges {
                 modalRef.componentInstance.confirmBtn = 'Confirm';
                 modalRef.result.then((result) => {
                     if (result == 'confirm') {
+                        this.ngxLoader.startLoader('submodule-loader');
                         const index: number = tournament.users.indexOf('/api/users/'+this.parent.id);
                         if (index !== -1) {
                             tournament.users.splice(index, 1);
                             this.service.updateTournament(tournament.id, tournament).subscribe((data: any) => {
                                 this.initTournaments();
+                                this.ngxLoader.stopLoader('submodule-loader');
                             })
                         }                
                     }
@@ -144,8 +150,10 @@ export class ModuleTournamentsSubmoduleComponent implements OnChanges {
         modalRef.componentInstance.confirmBtn = 'Confirm';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
+                this.ngxLoader.startLoader('submodule-loader');
                 this.service.deleteTournament(tournament.id).subscribe(data => {
                     this.initTournaments();
+                    this.ngxLoader.stopLoader('submodule-loader');
                 })
             }
         });

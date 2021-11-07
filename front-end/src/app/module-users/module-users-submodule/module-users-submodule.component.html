@@ -13,6 +13,15 @@
         <div class="card-body text-light p-0">
 
             <!-- Loader -->
+            <ngx-ui-loader 
+            [loaderId]="'submodule-loader'" 
+            [fgsColor]="'rgba(255,255,255,0)'" 
+            [pbColor]="'#ff7518'"
+            [fgsType]="'three-bounce'"
+            [overlayColor]="'rgba(40, 40, 40, 1)'"
+            ></ngx-ui-loader>
+            <!-- End of Loader -->
+            <!-- Loader -->
             <!-- <ngx-ui-loader [loaderId]="'users-submodule-loader'" [hasProgressBar]="false"></ngx-ui-loader> -->
             <!-- End of Loader -->
             <p class="w-100 text-center pt-3" *ngIf="!users.length"><i>No users found.</i></p>

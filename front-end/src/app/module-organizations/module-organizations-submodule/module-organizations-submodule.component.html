@@ -12,6 +12,16 @@
         </div>
         <div class="card-body text-light p-0">
 
+            <!-- Loader -->
+            <ngx-ui-loader 
+            [loaderId]="'submodule-loader'" 
+            [fgsColor]="'rgba(255,255,255,0)'" 
+            [pbColor]="'#ff7518'"
+            [fgsType]="'three-bounce'"
+            [overlayColor]="'rgba(40, 40, 40, 1)'"
+            ></ngx-ui-loader>
+            <!-- End of Loader -->
+
             <p class="w-100 text-center pt-3" *ngIf="!organizations.length"><i>No organizations found.</i></p>
 
             <!--This is your master form-->

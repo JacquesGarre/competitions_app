@@ -64,6 +64,7 @@ export class ModuleUsersSubmoduleComponent implements OnChanges {
     }
 
     initUsers() {
+        this.ngxLoader.startLoader('submodule-loader');
         // Users as submodule in organization
         if(this.parent.id && this.parentModule == 'organizations'){
             this.service.getUsersByOrganization(this.parent.id).subscribe((data: any) => {
@@ -88,6 +89,7 @@ export class ModuleUsersSubmoduleComponent implements OnChanges {
                 } else {
                     this.users = [];
                 }
+                this.ngxLoader.stopLoader('submodule-loader');
             })
         }
 
@@ -114,7 +116,7 @@ export class ModuleUsersSubmoduleComponent implements OnChanges {
                         })
                     )
                 })
-
+                this.ngxLoader.stopLoader('submodule-loader');
             })
         }
 
@@ -126,6 +128,7 @@ export class ModuleUsersSubmoduleComponent implements OnChanges {
         modalRef.componentInstance.parentUserIDS = this.parent.users.map((url: any) => {return url.replace('/api/users/', '')})
         modalRef.result.then((result) => {
             if (result == 'save') {
+                this.ngxLoader.startLoader('submodule-loader');
                 let values = modalRef.componentInstance.addForm.value;
                 switch(this.parentModule){
                     case 'organizations':
@@ -154,6 +157,7 @@ export class ModuleUsersSubmoduleComponent implements OnChanges {
                     modalRef.componentInstance.confirmBtn = 'Confirm';
                     modalRef.result.then((result) => {
                         if (result == 'confirm') {
+                            this.ngxLoader.startLoader('submodule-loader');
                             const index: number = this.parent.users.indexOf('/api/users/'+user.id);
                             if (index !== -1) {
                                 this.parent.users.splice(index, 1);
@@ -176,6 +180,7 @@ export class ModuleUsersSubmoduleComponent implements OnChanges {
         modalRef.componentInstance.confirmBtn = 'Confirm';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
+                this.ngxLoader.startLoader('submodule-loader');
                 this.service.deleteUser(user.id).subscribe(() => {
                     this.initUsers();
                 })

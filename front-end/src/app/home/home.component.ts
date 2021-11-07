@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
             this.username = user.username;
         }
 
-        this.ngxLoader.startLoader('page-loader');
+        this.ngxLoader.startLoader('homepage-loader');
         let tournaments = this.http.get<Tournament>(Env.API_URL + 'tournaments.json')
         let organizations = this.http.get<Organization>(Env.API_URL + 'organizations.json')
         forkJoin([
@@ -63,7 +63,7 @@ export class HomeComponent implements OnInit {
                 })[0]
                 tournament.organization = orga;
             })
-            this.ngxLoader.stopLoader('page-loader');
+            this.ngxLoader.stopLoader('homepage-loader');
 
         })
     }

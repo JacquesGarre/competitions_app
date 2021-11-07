@@ -83,6 +83,8 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
 
     initRegistrations() {
 
+        this.ngxLoader.startLoader('submodule-loader-registrations');
+
         // Registrations as submodule in user
         if(this.parent.id && this.parentModule == 'users'){
             this.initAsUsersSubmodule();
@@ -150,6 +152,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                     })
                 )
             })
+            this.ngxLoader.stopLoader('submodule-loader-registrations');
             this.ngxLoader.stopLoader('page-loader');
         });
     }
@@ -205,6 +208,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                     })
                 )
             })
+            this.ngxLoader.stopLoader('submodule-loader-registrations');
             this.ngxLoader.stopLoader('page-loader');
         });
     }
@@ -259,6 +263,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                     })
                 )
             })
+            this.ngxLoader.stopLoader('submodule-loader-registrations');
             this.ngxLoader.stopLoader('page-loader');
         });
     }
@@ -271,7 +276,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
             modalRef.componentInstance.user = this.parent.id;
             modalRef.result.then((result) => {
                 if (result == 'save') {
-                    this.ngxLoader.startLoader('page-loader');
+                    this.ngxLoader.startLoader('task-loader');
                     let values = modalRef.componentInstance.addForm.value;                    
                     let registration: any = {
                         tournament: 'api/tournaments/'+values.tournament,
@@ -287,7 +292,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                     }
                     this.service.createRegistration(registration).subscribe(data => {
                         this.initRegistrations();
-                        this.ngxLoader.stopLoader('page-loader');
+                        this.ngxLoader.stopLoader('task-loader');
                     })
                 }
             });
@@ -305,7 +310,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
 
             modalRef.result.then((result) => {
                 if (result == 'save') {
-                    this.ngxLoader.startLoader('page-loader');
+                    this.ngxLoader.startLoader('task-loader');
                     let values = modalRef.componentInstance.addForm.value;
     
                     if(values.creationMode == 'newUser'){
@@ -323,7 +328,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                         this.userService.createUser(user).subscribe(data => {
     
                             let registration: any = {
-                                tournament: values.tournament.id,
+                                tournament: 'api/tournaments/' + values.tournament,
                                 pools: values.selectedPools.map((pool:any) => {
                                     return 'api/pools/' + pool.id
                                 }),
@@ -337,7 +342,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
     
                             this.service.createRegistration(registration).subscribe(data => {
                                 this.initRegistrations();
-                                this.ngxLoader.stopLoader('page-loader');
+                                this.ngxLoader.stopLoader('task-loader');
                             })
                             
                         })
@@ -345,7 +350,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                     } else {
     
                         let registration: any = {
-                            tournament: values.tournament.id,
+                            tournament: 'api/tournaments/' + values.tournament,
                             pools: values.selectedPools.map((pool:any) => {
                                 return 'api/pools/' + pool.id
                             }),
@@ -361,13 +366,13 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                         if(values.registrationID !== ""){
                             this.service.updateRegistration(values.registrationID, registration).subscribe(data => {
                                 this.initRegistrations();
-                                this.ngxLoader.stopLoader('page-loader');
+                                this.ngxLoader.stopLoader('task-loader');
                             })
                         // else we create it
                         } else {
                             this.service.createRegistration(registration).subscribe(data => {
                                 this.initRegistrations();
-                                this.ngxLoader.stopLoader('page-loader');
+                                this.ngxLoader.stopLoader('task-loader');
                             })
                         }
     
@@ -385,7 +390,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
             modalRef.componentInstance.tournament = this.parent.id;
             modalRef.result.then((result) => {
                 if (result == 'save') {
-                    this.ngxLoader.startLoader('page-loader');
+                    this.ngxLoader.startLoader('task-loader');
                     let values = modalRef.componentInstance.addForm.value;
     
                     if(values.creationMode == 'newUser'){
@@ -417,7 +422,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
     
                             this.service.createRegistration(registration).subscribe(data => {
                                 this.initRegistrations();
-                                this.ngxLoader.stopLoader('page-loader');
+                                this.ngxLoader.stopLoader('task-loader');
                             })
                             
                         })
@@ -441,13 +446,13 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                         if(values.registrationID !== ""){
                             this.service.updateRegistration(values.registrationID, registration).subscribe(data => {
                                 this.initRegistrations();
-                                this.ngxLoader.stopLoader('page-loader');
+                                this.ngxLoader.stopLoader('task-loader');
                             })
                         // else we create it
                         } else {
                             this.service.createRegistration(registration).subscribe(data => {
                                 this.initRegistrations();
-                                this.ngxLoader.stopLoader('page-loader');
+                                this.ngxLoader.stopLoader('task-loader');
                             })
                         }
     
@@ -462,10 +467,11 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
     deleteRegistration(registration: any) {
         const modalRef = this.modalService.open(ModalConfirmComponent, { centered: true });
         modalRef.componentInstance.title = 'Deleting a registration';
-        modalRef.componentInstance.content = 'Are you sure you want to delete this registration for <i>' + this.parent.firstName + ' ' + this.parent.lastName + '</i>?';
+        modalRef.componentInstance.content = 'Are you sure you want to delete this registration?';
         modalRef.componentInstance.confirmBtn = 'Confirm';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
+                this.ngxLoader.startLoader('task-loader');
                 this.service.deleteRegistration(registration.id).subscribe(data => {
                     this.initRegistrations();
                 })

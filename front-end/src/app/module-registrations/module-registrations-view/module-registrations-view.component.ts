@@ -184,6 +184,7 @@ export class ModuleRegistrationsViewComponent implements OnInit {
     }
 
     onSubmit() {
+        this.ngxLoader.startLoader('task-loader');
         const updatedRegistration = {
             tournament: this.form.tournament,
             user: this.form.user,
@@ -213,6 +214,7 @@ export class ModuleRegistrationsViewComponent implements OnInit {
                 return this.form.user.replace('/api/users/','') == user.id.toString()
             })[0];
             this.title = user.firstName + ' ' + user.lastName
+            this.ngxLoader.stopLoader('task-loader');
         })
         this.toggleForm()
     }

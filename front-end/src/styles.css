@@ -10842,3 +10842,44 @@ table tbody tr>td:first-of-type {
 .multiselect-dropdown .disabled .selected-item a {
     display:none !important;
 }
+
+
+ngx-ui-loader[ng-reflect-loader-id="submodule-loader"] {
+    z-index: 99994!important;
+}
+
+ngx-ui-loader[ng-reflect-loader-id="submodule-loader"] .ngx-position-absolute.ngx-overlay {
+    z-index: 99994!important;
+}
+
+ngx-ui-loader[ng-reflect-loader-id="submodule-loader"] .ngx-position-absolute.ngx-progress-bar {
+    z-index: 99995!important;
+}
+
+ngx-ui-loader[ng-reflect-loader-id="task-loader"] {
+    z-index: 99996!important;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+}
+
+ngx-ui-loader[ng-reflect-loader-id="task-loader"] .ngx-position-absolute.ngx-overlay {
+    z-index: 99996!important;
+}
+
+ngx-ui-loader[ng-reflect-loader-id="task-loader"] .ngx-position-absolute.ngx-progress-bar {
+    z-index: 99997!important;
+}
+
+
+ngx-ui-loader[ng-reflect-loader-id="page-loader"] {
+    z-index: 99999!important;
+}
+
+ngx-ui-loader[ng-reflect-loader-id="page-loader"] .ngx-position-absolute.ngx-overlay {
+    z-index: 99999!important;
+}
+
+ngx-ui-loader[ng-reflect-loader-id="page-loader"] .ngx-position-absolute.ngx-progress-bar {
+    z-index: 100000!important;
+}
