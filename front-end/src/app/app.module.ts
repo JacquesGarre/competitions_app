@@ -140,7 +140,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         ModuleRegistrationsViewComponent,
         
         ClubComponent,
-                  RegistrationComponent,
+        RegistrationComponent,
 
     ],  
     imports: [

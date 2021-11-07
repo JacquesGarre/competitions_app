@@ -4,6 +4,14 @@ import { OrganizationService } from '../module-organizations/organization.servic
 import { TournamentService } from '../module-tournaments/tournament.service';
 import { UserService } from '../module-users/user.service';
 import { RegistrationService } from '../module-registrations/registration.service';
+import { NgxUiLoaderService,
+    NgxUiLoaderModule,
+    NgxUiLoaderConfig,
+    NgxUiLoaderHttpModule,
+    NgxUiLoaderRouterModule, 
+    SPINNER,
+    POSITION,
+    PB_DIRECTION } from 'ngx-ui-loader';
 
 import {
     faCalendarCheck,
@@ -16,7 +24,7 @@ import { FFTTService } from '../_services/fftt.service';
 @Component({
     selector: 'app-registration',
     templateUrl: './registration.component.html',
-    styleUrls: ['./registration.component.css']
+    styleUrls: ['./registration.component.css'],
 })
 export class RegistrationComponent implements OnInit {
 
@@ -49,8 +57,12 @@ export class RegistrationComponent implements OnInit {
         private formBuilder: FormBuilder,
         public userService: UserService,
         public service: RegistrationService,
+        private ngxModule: NgxUiLoaderModule,
+        private ngxLoader: NgxUiLoaderService,
         public ffttService: FFTTService
     ) {
+
+        this.ngxLoader.startLoader('page-loader-registration');
 
         const slug = this.route.snapshot.paramMap.get('slug');
         const uri = this.route.snapshot.paramMap.get('uri');
@@ -66,6 +78,7 @@ export class RegistrationComponent implements OnInit {
                             if(data.length){
                                 this.pools = data;
                             }
+                            this.ngxLoader.stopLoader('page-loader-registration');
                         })
                     }
                 })
@@ -200,12 +213,13 @@ export class RegistrationComponent implements OnInit {
                 // test by licence if user exists already or not
                 that.userService.getUserByLicence(that.addForm.value.licenceNumber).subscribe(data => {
                     // test if registration exists
-                    if(data){
-                        that.service.getRegistrationsByTournamentAndUser(that.tournament.id, data.id).subscribe(data => {
+                    let response: any = data;
+                    if(response.length){
+                        that.service.getRegistrationsByTournamentAndUser(that.tournament.id, response[0].id).subscribe(data => {
                             if(data){
                                 that.addForm.get('licenceNumber').errors = {};
                                 that.addForm.get('licenceNumber').errors.alreadyRegistered = true;
-                                that.addForm.invalid = true;
+                                //that.addForm.invalid = true;
                             }
                         })
                     }
@@ -220,6 +234,10 @@ export class RegistrationComponent implements OnInit {
     }
 
     submitForm(){
+
+
+        this.ngxLoader.startLoader('page-loader-registration');
+
         this.addForm.controls.tournament.setValue(this.tournament);
         let values = this.addForm.value;
 
@@ -250,6 +268,7 @@ export class RegistrationComponent implements OnInit {
             // create registration
             this.service.createRegistration(registration).subscribe(data => {
                 this.registrationComplete = true;
+                this.ngxLoader.stopLoader('page-loader-registration');
             })
         })
 
