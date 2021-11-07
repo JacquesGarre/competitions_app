@@ -65,9 +65,15 @@ export class UserService {
         .pipe(retry(1), catchError(this.handleError))
     }  
 
+    
+    getUserByLicence(licenceNumber: any): Observable<User> {
+        return this.http.get<User>(Env.API_URL + 'users.json?licenceNumber='+licenceNumber)
+        .pipe(retry(1), catchError(this.handleError))
+    }  
+
     // Update
-    updateUser(id: any, organization: any): Observable<User> {
-        return this.http.put<User>(Env.API_URL + 'users/' + id + '.json', JSON.stringify(organization), this.httpOptions)
+    updateUser(id: any, user: any): Observable<User> {
+        return this.http.put<User>(Env.API_URL + 'users/' + id + '.json', JSON.stringify(user), this.httpOptions)
         .pipe(retry(1), catchError(this.handleError))
     }
 

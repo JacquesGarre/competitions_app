@@ -158,7 +158,6 @@ export class RegistrationComponent implements OnInit {
             if(pool.minPoints > parseInt(this.addForm.value.points) || pool.maxPoints < parseInt(this.addForm.value.points)){
                 this.addForm.get('selectedPools').errors = {};
                 this.addForm.get('selectedPools').errors.invalid = true;
-                console.log('NOT ALLOWED')
             }
         })
 
@@ -197,6 +196,21 @@ export class RegistrationComponent implements OnInit {
                 that.addForm.controls.genre.setValue(genre);
                 let genreRadio = document.getElementById("genre-"+genre) as HTMLInputElement;
                 genreRadio!.checked = true;
+
+                // test by licence if user exists already or not
+                that.userService.getUserByLicence(that.addForm.value.licenceNumber).subscribe(data => {
+                    // test if registration exists
+                    if(data){
+                        that.service.getRegistrationsByTournamentAndUser(that.tournament.id, data.id).subscribe(data => {
+                            if(data){
+                                that.addForm.get('licenceNumber').errors = {};
+                                that.addForm.get('licenceNumber').errors.alreadyRegistered = true;
+                                that.addForm.invalid = true;
+                            }
+                        })
+                    }
+                })
+
             } else {
                 that.addForm.get('licenceNumber').errors = {};
                 that.addForm.get('licenceNumber').errors.exist = true;
@@ -220,19 +234,6 @@ export class RegistrationComponent implements OnInit {
             club: values.club,
         }
 
-        // test by licence number if user exists already or not
-
-        // if user exist, update infos
-
-            // test if registration exists
-
-                // if registration exist update registration
-
-
-                // else create  registration
-
-
-        // else create user
         this.userService.createUser(user).subscribe(data => {
             let registration: any = {
                 tournament: 'api/tournaments/' + values.tournament.id,
@@ -249,7 +250,6 @@ export class RegistrationComponent implements OnInit {
             // create registration
             this.service.createRegistration(registration).subscribe(data => {
                 this.registrationComplete = true;
-                alert('registration complete!')
             })
         })
 

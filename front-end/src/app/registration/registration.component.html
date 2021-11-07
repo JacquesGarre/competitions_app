@@ -42,6 +42,9 @@
                                 <div *ngIf="addForm.get('licenceNumber')?.errors?.minlength">
                                     Le numéro de licence doit comporter 2 lettres au minimum.
                                 </div>
+                                <div *ngIf="addForm.get('licenceNumber')?.errors?.alreadyRegistered">
+                                    Vous êtes déjà inscrit. Pour toute modification de votre inscription, merci de nous contacter.
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -154,15 +157,18 @@
                 </div>
 
                 <div class="form-group">
-                    <div class="text-center mb-2" *ngIf="addForm.invalid && (addForm.dirty || addForm.touched)" > <!-- *ngIf="!addForm.valid && (addForm.dirty || addForm.touched)"  -->
+                    <div class="text-center mb-2" *ngIf="addForm.get('licenceNumber')?.errors?.alreadyRegistered || (addForm.invalid && (addForm.dirty || addForm.touched))" > <!-- *ngIf="!addForm.valid && (addForm.dirty || addForm.touched)"  -->
                         <div class="text-danger" *ngIf="addForm.invalid"> <!--  *ngIf="!addForm.valid" -->
                             Merci de bien vouloir remplir tous les champs obligatoires.
+                        </div>
+                        <div class="text-danger" *ngIf="addForm.get('licenceNumber')?.errors?.alreadyRegistered">
+                            Vous êtes déjà inscrit. Pour toute modification de votre inscription, merci de nous contacter.
                         </div>
                         <div class="text-danger" *ngIf="addForm.value.selectedPools.length < 1">
                             Veuillez sélectionner au moins 1 tableau pour vous inscrire.
                         </div>
                     </div>
-                    <input type="submit" class="btn btnRegister mb-4" value="S'inscrire" [disabled]="addForm.invalid || addForm.get('selectedPools')?.errors?.invalid"/>
+                    <input type="submit" class="btn btnRegister mb-4" value="S'inscrire" [disabled]="addForm.invalid || addForm.get('licenceNumber')?.errors?.alreadyRegistered || addForm.get('selectedPools')?.errors?.invalid"/>
                 </div>
 
             </form>
