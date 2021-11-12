@@ -85,59 +85,70 @@ export class ModuleRegistrationsComponent implements OnInit {
         this.initRegistrations();
     }
 
+
     initRegistrations(){
-        let user = this.token.getUser();
-        let pools = this.http.get<Pool>(Env.API_URL + 'pools.json')
-        let users = this.http.get<User>(Env.API_URL + 'users.json')
-        let tournaments = this.http.get<Tournament>(Env.API_URL + 'tournaments.json')
-        let registrations = this.http.get<Registration>(Env.API_URL + 'registrations.json');
-        forkJoin([
-            pools,
-            users,
-            tournaments,
-            registrations
-        ]).subscribe(results => {
-            this.pools = results[0];
-            this.users = results[1];
-            this.currentUser = this.users.filter((el: any) => {
-                return el.email === user.email
-            })[0];
-            this.tournaments = results[2];
-            this.registrations = results[3];
-            this.registrationForm = this.formBuilder.group({
-                registrationDetails: this.formBuilder.array(
-                    this.registrations.map((x: any) => {
-                        var tournament: any = this.tournaments.filter((tournament: any) => {
-                            return tournament.id.toString() === x.tournament.replace('/api/tournaments/','')
-                        })[0]?.name
-                        var user: any = this.users.filter((user: any) => {
-                            return user.id.toString() === x.user.replace('/api/users/','')
-                        })[0];
-                        user = user.firstName + ' ' + user.lastName;
-                        var pools: any = this.pools.filter((pool: any) => {
-                            return x.pools.includes('/api/pools/'+pool.id.toString())
-                        });
-                        var poolsTxt: any = pools.map((pool: any) => {
-                            return pool.name;
-                        }).join(", ")
-                        return this.formBuilder.group({
-                            id: [x.id, [Validators.required, Validators.minLength(2)]],
-                            user: [user, [Validators.required, Validators.minLength(2)]],
-                            tournament: [tournament, [Validators.required, Validators.minLength(2)]],
-                            payableAmount: [x.payableAmount, [Validators.required, Validators.minLength(2)]],
-                            paidAmount: [x.paidAmount, [Validators.required, Validators.minLength(2)]],
-                            jerseyNumber: [x.jerseyNumber, [Validators.required, Validators.minLength(2)]],
-                            pools: [poolsTxt],
-                            createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
-                            updatedAt: x.updatedAt,
-                            isReadonly: true
-                        })
-                    })
-                )
+
+        this.service.getRegistrations().subscribe((data: any) => {
+            this.registrations = data;
+
+            // tournament ids
+            let tournamentIDS = this.registrations.map((reg: any) => {
+                return 'id[]=' + reg.tournament.replace('/api/tournaments/','');
+            }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
+
+            // user ids
+            let userIDS = this.registrations.map((reg: any) => {
+                let userID = reg.user.replace('/api/users/','');
+                return 'id[]=' + userID;
+            }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
+
+            // pools ids
+            let poolIDS: any = [];
+            this.registrations.map((reg: any) => {
+                reg.pools.map((pool:any) => {
+                    poolIDS.push('id[]=' + pool.replace('/api/pools/',''));
+                });
             })
-            this.ngxLoader.stopLoader('task-loader');
-            this.ngxLoader.stopLoader('page-loader');
-        });
+            poolIDS = poolIDS.filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
+
+            // get linked entities 
+            let tournaments = this.http.get<Tournament>(Env.API_URL + 'tournaments.json?'+tournamentIDS)
+            let pools = this.http.get<Pool>(Env.API_URL + 'pools.json?'+poolIDS)
+            let users = this.http.get<User>(Env.API_URL + 'users.json?'+userIDS)
+            forkJoin([
+                pools,
+                users,
+                tournaments
+            ]).subscribe(results => {
+                this.pools = results[0];
+                this.users = results[1];
+                this.tournaments = results[2];
+
+                this.registrations.map((registration: any) => {
+                    var tournament: any = this.tournaments.filter((tournament: any) => {
+                        return tournament.id.toString() == registration.tournament.replace('/api/tournaments/','')
+                    })[0]?.name
+                    var user: any = this.users.filter((user: any) => {
+                        return user.id.toString() == registration.user.replace('/api/users/','')
+                    })[0];
+                    var pools: any = this.pools.filter((pool: any) => {
+                        return registration.pools.includes('/api/pools/'+pool.id.toString())
+                    });
+                    var poolsTxt: any = pools.map((pool: any) => {
+                        return pool.name;
+                    }).join(", ")
+
+                    registration.user = user.firstName + ' ' + user.lastName
+                    registration.licenceNumber = user.licenceNumber;
+                    registration.pools = poolsTxt;
+                    registration.tournament = tournament;
+
+                })
+                this.ngxLoader.stopLoader('task-loader');
+                this.ngxLoader.stopLoader('page-loader');
+            });
+        })
+    
     }
 
     // Create registration

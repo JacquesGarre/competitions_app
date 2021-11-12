@@ -130,7 +130,6 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                         var user: any = this.users.filter((user: any) => {
                             return user.id.toString() === x.user.replace('/api/users/','')
                         })[0];
-                        user = user.firstName + ' ' + user.lastName;
                         var pools: any = this.pools.filter((pool: any) => {
                             return x.pools.includes('/api/pools/'+pool.id.toString())
                         });
@@ -139,7 +138,8 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                         }).join(", ")
                         return this.formBuilder.group({
                             id: [x.id, [Validators.required, Validators.minLength(2)]],
-                            user: [user, [Validators.required, Validators.minLength(2)]],
+                            user: [user.firstName + ' ' + user.lastName, [Validators.required, Validators.minLength(2)]],
+                            licenceNumber: [user.licenceNumber, [Validators.required, Validators.minLength(2)]],
                             tournament: [tournament, [Validators.required, Validators.minLength(2)]],
                             payableAmount: [x.payableAmount, [Validators.required, Validators.minLength(2)]],
                             paidAmount: [x.paidAmount, [Validators.required, Validators.minLength(2)]],
@@ -186,7 +186,6 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                         var user: any = this.users.filter((user: any) => {
                             return user.id.toString() === x.user.replace('/api/users/','')
                         })[0];
-                        user = user.firstName + ' ' + user.lastName;
                         var pools: any = this.pools.filter((pool: any) => {
                             return x.pools.includes('/api/pools/'+pool.id.toString())
                         });
@@ -195,7 +194,8 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                         }).join(", ")
                         return this.formBuilder.group({
                             id: [x.id, [Validators.required, Validators.minLength(2)]],
-                            user: [user, [Validators.required, Validators.minLength(2)]],
+                            user: [user.firstName + ' ' + user.lastName, [Validators.required, Validators.minLength(2)]],
+                            licenceNumber: [user.licenceNumber, [Validators.required, Validators.minLength(2)]],
                             tournament: [tournament, [Validators.required, Validators.minLength(2)]],
                             payableAmount: [x.payableAmount, [Validators.required, Validators.minLength(2)]],
                             paidAmount: [x.paidAmount, [Validators.required, Validators.minLength(2)]],
@@ -241,7 +241,6 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                         var user: any = this.users.filter((user: any) => {
                             return user.id.toString() === x.user.replace('/api/users/','')
                         })[0];
-                        user = user.firstName + ' ' + user.lastName;
                         var pools: any = this.pools.filter((pool: any) => {
                             return x.pools.includes('/api/pools/'+pool.id.toString())
                         });
@@ -250,7 +249,8 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                         }).join(", ")
                         return this.formBuilder.group({
                             id: [x.id, [Validators.required, Validators.minLength(2)]],
-                            user: [user, [Validators.required, Validators.minLength(2)]],
+                            user: [user.firstName + ' ' + user.lastName, [Validators.required, Validators.minLength(2)]],
+                            licenceNumber: [user.licenceNumber, [Validators.required, Validators.minLength(2)]],
                             tournament: [tournament, [Validators.required, Validators.minLength(2)]],
                             payableAmount: [x.payableAmount, [Validators.required, Validators.minLength(2)]],
                             paidAmount: [x.paidAmount, [Validators.required, Validators.minLength(2)]],

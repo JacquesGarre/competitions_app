@@ -13,7 +13,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource
- * @ApiFilter(SearchFilter::class, properties={"uri": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"id":"exact","uri": "exact"})
  * @ORM\Entity(repositoryClass=TournamentRepository::class)
  */
 class Tournament

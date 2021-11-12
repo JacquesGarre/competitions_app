@@ -32,6 +32,7 @@
                         <tr>
                             <th scope="col" class="text-center border-gray">Actions</th>
                             <th scope="col" class="border-gray" *ngIf="parentModule !== 'users'">Utilisateur</th>
+                            <th scope="col" class="border-gray" *ngIf="parentModule !== 'users'">Licence</th>
                             <th scope="col" class="border-gray">Tournoi</th>
                             <th scope="col" class="border-gray">Tableaux</th>
                             <th scope="col" class="border-gray">À régler</th>
@@ -59,6 +60,9 @@
                                 </td>
                                 <td class="text-light" *ngIf="parentModule !== 'users'">
                                     <input class="form-control pl-0" type="text" formControlName="user" readonly/>
+                                </td>
+                                <td class="text-light" *ngIf="parentModule !== 'users'">
+                                    <input class="form-control pl-0" type="text" formControlName="licenceNumber" readonly/>
                                 </td>
                                 <td class="text-light">
                                     <input class="form-control pl-0" type="text" formControlName="tournament"  readonly/>

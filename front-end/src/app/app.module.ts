@@ -62,6 +62,7 @@ import { ModuleRegistrationsLinkModalFormComponent } from './module-registration
 import { ModuleRegistrationsViewComponent } from './module-registrations/module-registrations-view/module-registrations-view.component';
 
 import { OwlDateTimeModule, OwlNativeDateTimeModule, OWL_DATE_TIME_LOCALE } from 'ng-pick-datetime';
+import { AgGridModule } from 'ag-grid-angular';
 import { QuillModule } from 'ngx-quill';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { ClubComponent } from './club/club.component';
@@ -160,7 +161,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         OwlDateTimeModule, 
         OwlNativeDateTimeModule,
         QuillModule.forRoot(),
-        NgMultiSelectDropDownModule.forRoot()
+        NgMultiSelectDropDownModule.forRoot(),
+        AgGridModule.withComponents([]),
     ],
     providers: [
         authInterceptorProviders,
