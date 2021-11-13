@@ -17,23 +17,90 @@
     <table class="table table-hover table-striped shadow border-left-danger">
         <thead class="bg-dark text-light border-top-0 border-right-0 border-left-0">
             <tr>
-                <th scope="col" class="text-center border-gray">Actions</th>
-                <th scope="col" class="border-gray">Utilisateur</th>
-                <th scope="col" class="border-gray">Licence</th>
-                <th scope="col" class="border-gray">Tournoi</th>
-                <th scope="col" class="border-gray">Tableaux</th>
-                <th scope="col" class="border-gray">À régler</th>
-                <th scope="col" class="border-gray">Réglé</th>
-                <th scope="col" class="border-gray">Dossard</th>
-                <th scope="col" class="border-gray">Présent</th>
-                <th scope="col" class="border-gray">Disponible</th>
-                <th scope="col" class="border-gray">Créé le</th>
-                <th scope="col" class="border-gray">Mis à jour le</th>
+                <th scope="col" class="text-center border-0">Actions</th>
+                <th scope="col" class="border-0">Utilisateur</th>
+                <th scope="col" class="border-0">Licence</th>
+                <th scope="col" class="border-0">Tournoi</th>
+                <th scope="col" class="border-0">Tableaux</th>
+                <th scope="col" class="border-0">À régler</th>
+                <th scope="col" class="border-0">Réglé</th>
+                <th scope="col" class="border-0">Dossard</th>
+                <th scope="col" class="border-0">Présent</th>
+                <th scope="col" class="border-0">Disponible</th>
+                <th scope="col" class="border-0">Créé le</th>
+                <th scope="col" class="border-0">Mis à jour le</th>
+            </tr>
+            <tr>
+                <th scope="col" class="text-center border-gray border-top-0">
+                    <a class="btn text-light text-hover-orange" (click)=ngOnInit() title="Réinitialiser les filtres">
+                        <fa-icon [icon]="faTimes" class="mr-2"></fa-icon>
+                    </a>
+                    <a class="btn text-light text-hover-orange" (click)=filter()  title="Filtrer">
+                        <fa-icon [icon]="faSearch" class="mr-2"></fa-icon>
+                    </a>
+                </th>
+                <th scope="col" class="border-gray border-top-0">
+                    <!-- <input class="form-control pl-0 text-dark" id="userFilter" type="text" name="userFilter"/> -->
+                </th>
+                <th scope="col" class="border-gray border-top-0">
+                    <input class="form-control pl-1 bg-dark-gray text-light border-orange" type="text" id="licenceNumberFilter" name="licenceNumberFilter"/>
+                </th>
+                <th scope="col" class="border-gray border-top-0">
+                    <select class="browser-default custom-select bg-dark-gray text-light border-orange" style="min-width: 70px;height: 35px;"
+                        id="tournamentFilter" name="tournamentFilter">
+                        <option value=""></option>
+                        <option *ngFor="let tournament of tournaments"
+                            [value]="'/api/tournaments/' + tournament.id" [selected]="'/api/tournaments/' + tournament.id == tournamentFilter">
+                            {{tournament.name}}
+                        </option>
+                    </select>
+                </th>
+                <th scope="col" class="border-gray border-top-0">
+                    <select class="browser-default custom-select bg-dark-gray text-light border-orange" style="min-width: 70px;height: 35px;"
+                        id="poolsFilter" name="poolsFilter">
+                        <option value=""></option>
+                        <option *ngFor="let pool of pools"
+                            [value]="'/api/pools/' + pool.id" [selected]="'/api/pools/' + pool.id == poolsFilter">
+                            {{pool.name}} <i>({{pool.tournament.name}})</i>
+                        </option>
+                    </select>
+                </th>
+                <th scope="col" class="border-gray border-top-0">
+                    <!-- <input class="form-control pl-0 text-dark" type="text" id="payableAmountFilter" name="payableAmountFilter"/> -->
+                </th>
+                <th scope="col" class="border-gray border-top-0">
+                    <!-- <input class="form-control pl-0 text-dark" type="text" id="paidAmountFilter" name="paidAmountFilter"/> -->
+                </th>
+                <th scope="col" class="border-gray border-top-0">
+                    <input class="form-control pl-1 bg-dark-gray text-light border-orange" type="text" id="jerseyNumberFilter" name="jerseyNumberFilter"/>
+                </th>
+                <th scope="col" class="border-gray border-top-0">
+                    <select class="browser-default custom-select bg-dark-gray text-light border-orange" style="min-width: 70px;height: 35px;"
+                        id="presenceFilter" name="presenceFilter">
+                        <option value=""></option>
+                        <option value="1">Oui</option>
+                        <option value="0">Non</option>
+                    </select>
+                </th>
+                <th scope="col" class="border-gray border-top-0">
+                    <select class="browser-default custom-select bg-dark-gray text-light border-orange" style="min-width: 70px;height: 35px;"
+                    id="availableFilter" name="availableFilter">
+                        <option value=""></option>
+                        <option value="1">Oui</option>
+                        <option value="0">Non</option>
+                    </select>
+                </th>
+                <th scope="col" class="border-gray border-top-0">
+                    <!-- <input class="form-control pl-0 text-dark" type="text" id="poolsFilter" name="poolsFilter"/> -->
+                </th>
+                <th scope="col" class="border-gray border-top-0">
+                    <!-- <input class="form-control pl-0 text-dark" type="text" id="poolsFilter" name="poolsFilter"/> -->
+                </th>
             </tr>
         </thead>
         <tbody>
             <ng-container formArrayName="registrationDetails" *ngFor="let registration of registrations; let i=index">
-                <tr  class="bg-dark-gray">
+                <tr class="bg-dark-gray">
                     <td class="text-center">
                         <a class="btn text-light text-hover-orange" (click)=showRegistration(registration)>
                             <fa-icon [icon]="faEye" class="mr-2"></fa-icon>
@@ -46,25 +113,27 @@
                         </a>
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="registration.user" readonly/>
+                        <input class="form-control pl-0" type="text" [value]="registration.user" readonly />
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="registration.licenceNumber" readonly/>
+                        <input class="form-control pl-0" type="text" [value]="registration.licenceNumber" readonly />
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="registration.tournament"  readonly/>
+                        <input class="form-control pl-0" type="text" [value]="registration.tournament" readonly />
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="registration.pools"  readonly/>
+                        <input class="form-control pl-0" type="text" [value]="registration.pools" readonly />
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="registration.payableAmount ? registration.payableAmount : 0" readonly/>
+                        <input class="form-control pl-0" type="text"
+                            [value]="registration.payableAmount ? registration.payableAmount : 0" readonly />
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="registration.paidAmount ? registration.paidAmount : 0" readonly/>
+                        <input class="form-control pl-0" type="text"
+                            [value]="registration.paidAmount ? registration.paidAmount : 0" readonly />
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="registration.jerseyNumber" readonly/>
+                        <input class="form-control pl-0" type="text" [value]="registration.jerseyNumber" readonly />
                     </td>
                     <td class="text-light pt-3">
                         <fa-icon [icon]="faCheck" class="text-success mt-2" *ngIf="registration.presence"></fa-icon>
@@ -76,14 +145,57 @@
                     </td>
 
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="registration.createdAt | date:'dd/MM/yyyy HH:mm'" readonly/>
+                        <input class="form-control pl-0" type="text"
+                            [value]="registration.createdAt | date:'dd/MM/yyyy HH:mm'" readonly />
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" [value]="(registration.updatedAt !== null) ? (registration.updatedAt | date: 'dd/MM/yyyy HH:mm') : ''" readonly/>
+                        <input class="form-control pl-0" type="text"
+                            [value]="(registration.updatedAt !== null) ? (registration.updatedAt | date: 'dd/MM/yyyy HH:mm') : ''"
+                            readonly />
                     </td>
                 </tr>
             </ng-container>
         </tbody>
     </table>
+
+    <nav aria-label="Page navigation example" *ngIf="!filteredPagination">
+        <ul class="pagination" style="justify-content: right;">
+            <li class="page-item" *ngIf="currentPage > 1">
+                <a class="bg-dark border-dark-gray rounded-0 text-white page-link" aria-label="Previous" (click)=goToPage(currentPage-1)>
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item" *ngFor="let i of pages">
+                <a class="bg-dark border-dark-gray rounded-0 text-white page-link {{i == currentPage ? 'active text-orange' : ''}}" (click)=goToPage(i)>{{i}}</a>
+            </li>
+            <li class="page-item" *ngIf="currentPage < pages.length">
+                <a class="bg-dark border-dark-gray rounded-0 text-white page-link" aria-label="Next" (click)=goToPage(currentPage+1)>
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <nav aria-label="Page navigation example" *ngIf="filteredPagination">
+        <ul class="pagination" style="justify-content: right;">
+            <li class="page-item" *ngIf="currentFilteredPage > 1">
+                <a class="bg-dark border-dark-gray rounded-0 text-white page-link" aria-label="Previous" (click)=goToFilteredPage(currentFilteredPage-1)>
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item" *ngFor="let i of filteredPages">
+                <a class="bg-dark border-dark-gray rounded-0 text-white page-link {{i == currentFilteredPage ? 'active text-orange' : ''}}" (click)=goToFilteredPage(i)>{{i}}</a>
+            </li>
+            <li class="page-item" *ngIf="currentFilteredPage < filteredPages.length">
+                <a class="bg-dark border-dark-gray rounded-0 text-white page-link" aria-label="Next" (click)=goToFilteredPage(currentFilteredPage+1)>
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <p class="float-right"><i>{{registrations.length}} sur {{totalItems}} inscriptions</i></p>
 
 </form>

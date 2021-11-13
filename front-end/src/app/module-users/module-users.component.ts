@@ -7,15 +7,16 @@ import { UserService } from './user.service';
 import { Organization } from '../module-organizations/organization';
 import { OrganizationService } from '../module-organizations/organization.service';
 import { Router } from '@angular/router';
+import { Env } from '../_globals/env';
 
-import { faUser, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faSitemap } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faSitemap, faSearch, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
 import { ModuleUsersAddModalFormComponent } from './module-users-add-modal-form/module-users-add-modal-form.component';
 
 import { Subject } from 'rxjs';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -26,6 +27,13 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class ModuleUsersComponent implements OnInit {
 
+    currentPage = 1;
+    currentFilteredPage = 1;
+    filteredPagination = false;
+    pages = Array.from({length: 3}, (_, i) => i + 1);
+    filteredPages = Array.from({length: 3}, (_, i) => i + 1);
+    totalItems = 0;
+
     faUser = faUser;
     faTrashAlt = faTrashAlt;
     faPencilAlt = faPencilAlt;
@@ -34,10 +42,18 @@ export class ModuleUsersComponent implements OnInit {
     faEye = faEye;
     faPlus = faPlus;
     faSitemap = faSitemap;
+    faSearch = faSearch;
+    faTimes = faTimes;
+
     users: any = [];
     userForm: any;
     allUserDetails: any;
     forms: any = [];
+
+    emailFilter: any = '';
+    firstNameFilter: any = '';
+    lastNameFilter: any = '';
+    licenceNumberFilter: any = '';
 
     constructor(
         public service: UserService,
@@ -54,36 +70,100 @@ export class ModuleUsersComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.filteredPagination = false;
+        this.emailFilter = (<HTMLInputElement>document.getElementById("emailFilter")).value = '';
+        this.firstNameFilter = (<HTMLInputElement>document.getElementById("firstNameFilter")).value = '';
+        this.lastNameFilter = (<HTMLInputElement>document.getElementById("lastNameFilter")).value = '';
+        this.licenceNumberFilter = (<HTMLInputElement>document.getElementById("licenceNumberFilter")).value = '';
         this.ngxLoader.startLoader('page-loader');
         this.initUsers();
     }
 
-    initUsers() {
-        this.service.getUsers().subscribe((data: any) => {
-            if (data.length) {
-                this.users = data;
-                this.userForm = this.formBuilder.group({
-                    userDetails: this.formBuilder.array(
-                        this.users.map((x: any) => {
-                            return this.formBuilder.group({
-                                id: [x.id, [Validators.required, Validators.minLength(2)]],
-                                email: [x.email, [Validators.required, Validators.minLength(2)]],
-                                firstName: [x.firstName, [Validators.required, Validators.minLength(2)]],
-                                lastName: [x.lastName, [Validators.required, Validators.minLength(2)]],
-                                roles: [x.roles],
-                                organizations: [x.organizations, [Validators.required, Validators.minLength(2)]],
-                                createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
-                                updatedAt: [x.updatedAt], 
-                                licenceNumber: [x.licenceNumber], 
-                                points: [x.points], 
-                                club: [x.club],
-                                genre: [x.genre],
-                                isReadonly: true
-                            })
+    goToFilteredPage(page: any): void {
+        this.ngxLoader.startLoader('page-loader');
+        this.currentFilteredPage = page;
+        this.filter(this.currentFilteredPage)
+    }
+
+    filter(page:any = this.currentFilteredPage) {
+        this.emailFilter = (<HTMLInputElement>document.getElementById("emailFilter")).value;
+        this.firstNameFilter = (<HTMLInputElement>document.getElementById("firstNameFilter")).value;
+        this.lastNameFilter = (<HTMLInputElement>document.getElementById("lastNameFilter")).value;
+        this.licenceNumberFilter = (<HTMLInputElement>document.getElementById("licenceNumberFilter")).value;
+
+        if(this.emailFilter.length < 1){
+            this.emailFilter = false;
+        }
+        if(this.firstNameFilter.length < 1){
+            this.firstNameFilter = false;
+        }
+        if(this.lastNameFilter.length < 1){
+            this.lastNameFilter = false;
+        }
+        if(this.licenceNumberFilter.length < 1){
+            this.licenceNumberFilter = false;
+        }
+
+        this.filteredPagination = true;
+        this.ngxLoader.startLoader('page-loader');
+        this.service.getFilteredUsers(this.currentFilteredPage, this.emailFilter, this.firstNameFilter, this.lastNameFilter, this.licenceNumberFilter).subscribe((data: any) => {
+            this.users = data['hydra:member'];
+            this.totalItems = data['hydra:totalItems'];
+            this.filteredPages = Array.from({length: Math.floor(this.totalItems / Env.ITEMS_PER_PAGE)+1 }, (_, i) => i + 1);
+
+            this.userForm = this.formBuilder.group({
+                userDetails: this.formBuilder.array(
+                    this.users.map((x: any) => {
+                        return this.formBuilder.group({
+                            id: [x.id, [Validators.required, Validators.minLength(2)]],
+                            email: [x.email, [Validators.required, Validators.minLength(2)]],
+                            firstName: [x.firstName, [Validators.required, Validators.minLength(2)]],
+                            lastName: [x.lastName, [Validators.required, Validators.minLength(2)]],
+                            roles: [x.roles],
+                            organizations: [x.organizations, [Validators.required, Validators.minLength(2)]],
+                            createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
+                            updatedAt: [x.updatedAt], 
+                            licenceNumber: [x.licenceNumber], 
+                            points: [x.points], 
+                            club: [x.club],
+                            genre: [x.genre],
+                            isReadonly: true
                         })
-                    )
-                })
-            }
+                    })
+                )
+            })
+            this.ngxLoader.stopLoader('page-loader');
+        })
+    }
+
+    initUsers() {
+        this.service.getUsers(this.currentPage).subscribe((data: any) => {
+
+            this.users = data['hydra:member'];
+            this.totalItems = data['hydra:totalItems'];
+            this.pages = Array.from({length: Math.round(this.totalItems / Env.ITEMS_PER_PAGE)+1 }, (_, i) => i + 1);
+
+            this.userForm = this.formBuilder.group({
+                userDetails: this.formBuilder.array(
+                    this.users.map((x: any) => {
+                        return this.formBuilder.group({
+                            id: [x.id, [Validators.required, Validators.minLength(2)]],
+                            email: [x.email, [Validators.required, Validators.minLength(2)]],
+                            firstName: [x.firstName, [Validators.required, Validators.minLength(2)]],
+                            lastName: [x.lastName, [Validators.required, Validators.minLength(2)]],
+                            roles: [x.roles],
+                            organizations: [x.organizations, [Validators.required, Validators.minLength(2)]],
+                            createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
+                            updatedAt: [x.updatedAt], 
+                            licenceNumber: [x.licenceNumber], 
+                            points: [x.points], 
+                            club: [x.club],
+                            genre: [x.genre],
+                            isReadonly: true
+                        })
+                    })
+                )
+            })
             this.ngxLoader.stopLoader('page-loader');
         })
     }
@@ -124,6 +204,12 @@ export class ModuleUsersComponent implements OnInit {
                 })
             }
         });
+    }
+
+    goToPage(page: any): void {
+        this.ngxLoader.startLoader('page-loader');
+        this.currentPage = page;
+        this.initUsers();
     }
 
     // Shows details

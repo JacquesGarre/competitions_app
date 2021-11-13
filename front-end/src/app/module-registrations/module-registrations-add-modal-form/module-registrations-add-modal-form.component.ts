@@ -150,13 +150,15 @@ export class ModuleRegistrationsAddModalFormComponent {
         this.dropdownSettings = {
             singleSelection: false,
             idField: 'id',
-            textField: 'name',
+            textField: 'displayTitle',
             selectAllText: 'Select All',
             enableCheckAll: false,
             unSelectAllText: 'Unselect All',
-            itemsShowLimit: 15,
+            itemsShowLimit: 30,
             allowSearchFilter: true
         };
+
+        this.addForm.controls.creationMode.setValue('newUser');
 
     }
 
@@ -216,6 +218,9 @@ export class ModuleRegistrationsAddModalFormComponent {
             this.tournament = this.addForm.value.tournament;
             this.poolService.getPoolsByTournament(this.addForm.value.tournament).subscribe((data: any) => {
                 this.pools = data;
+                this.pools.map((pool: any) => {
+                    pool.displayTitle = pool.name + ' (de '+pool.minPoints+' à '+pool.maxPoints+' pts)';
+                })
             })
             this.userService.getUsers().subscribe((data: any) => {
                 this.users = data;
@@ -225,6 +230,7 @@ export class ModuleRegistrationsAddModalFormComponent {
 
 
     userChanged(): void {
+
 
         if(this.addForm.value.creationMode == 'newUser'){
             this.addForm.controls.user.setValue("");

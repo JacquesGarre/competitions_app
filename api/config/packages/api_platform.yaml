@@ -10,3 +10,6 @@ api_platform:
         versions: [3]
     # formats:
     #     json:     ['application/json']
+    collection:
+        pagination:
+          items_per_page: 15

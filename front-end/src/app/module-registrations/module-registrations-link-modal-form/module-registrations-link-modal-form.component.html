@@ -26,7 +26,7 @@
                     </div>
                 </span>
 
-                <span *ngIf="(addForm.value.tournament !== null && parentModule !== 'users') || parentModule == 'pools' ">
+                <!-- <span *ngIf="(addForm.value.tournament !== null && parentModule !== 'users') || parentModule == 'pools' ">
                     <label for="user">Utilisateur</label>
                     <div class="input-group mb-4">
                         <select 
@@ -36,8 +36,8 @@
                             formControlName="creationMode"
                             (change)="userChanged()"
                             required>
-                            <option value="existingUser" ngSelected>Existant</option>
-                            <option value="newUser">Nouvel utilisateur</option>
+                            <option value="existingUser" >Existant</option>
+                            <option value="newUser" ngSelected>Nouvel utilisateur</option>
                         </select>
                     </div>
                     <div class="input-group mb-4" *ngIf="addForm.value.creationMode == 'existingUser'">
@@ -49,7 +49,7 @@
                         </select>
                     </div>
 
-                </span>
+                </span> -->
 
                 <input type="hidden" id="registrationID" name="registrationID" formControlName="registrationID" autocomplete="off">
 

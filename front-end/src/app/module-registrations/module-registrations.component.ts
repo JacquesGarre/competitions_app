@@ -14,7 +14,7 @@ import { Pool } from '../module-pools/pool';
 
 import { Env } from '../_globals/env';
 
-import { faUser, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faSitemap, faGem, faObjectUngroup, faClipboardList,faCheck,faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faSitemap, faGem, faObjectUngroup, faClipboardList,faCheck,faTimes, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ModalConfirmComponent } from '../modal-confirm/modal-confirm.component';
@@ -50,6 +50,21 @@ export class ModuleRegistrationsComponent implements OnInit {
     faClipboardList = faClipboardList;
     faCheck = faCheck;
     faTimes = faTimes;
+    faSearch = faSearch;
+
+    currentPage = 1;
+    currentFilteredPage = 1;
+    filteredPagination = false;
+    pages = Array.from({length: 3}, (_, i) => i + 1);
+    filteredPages = Array.from({length: 3}, (_, i) => i + 1);
+    totalItems = 0;
+
+    licenceNumberFilter:any = '';
+    tournamentFilter: any = '';
+    poolsFilter: any = '';
+    jerseyNumberFilter : any = '';
+    presenceFilter:any = '';
+    availableFilter:any = '';
 
     registrations: any = [];
     tournaments: any = [];
@@ -81,15 +96,220 @@ export class ModuleRegistrationsComponent implements OnInit {
 
     ngOnInit(): void {
         this.ngxLoader.startLoader('page-loader');
+        this.filteredPagination = false;
+        this.licenceNumberFilter = (<HTMLInputElement>document.getElementById("licenceNumberFilter")).value = '';
+        this.tournamentFilter = (<HTMLInputElement>document.getElementById("tournamentFilter")).value = '';
+        this.poolsFilter = (<HTMLInputElement>document.getElementById("poolsFilter")).value = '';
+        this.jerseyNumberFilter = (<HTMLInputElement>document.getElementById("jerseyNumberFilter")).value = '';
+        this.presenceFilter = (<HTMLInputElement>document.getElementById("presenceFilter")).value = '';
+        this.availableFilter = (<HTMLInputElement>document.getElementById("availableFilter")).value = '';
         this.currentUser = this.token.getUser();
         this.initRegistrations();
+    }
+
+    goToFilteredPage(page: any): void {
+        this.ngxLoader.startLoader('page-loader');
+        this.currentFilteredPage = page;
+        this.filter(this.currentFilteredPage)
+    }
+
+    goToPage(page: any): void {
+        this.ngxLoader.startLoader('page-loader');
+        this.currentPage = page;
+        this.initRegistrations();
+    }
+
+    filter(page:any = this.currentFilteredPage) {
+        this.licenceNumberFilter = (<HTMLInputElement>document.getElementById("licenceNumberFilter")).value;
+        this.tournamentFilter = (<HTMLInputElement>document.getElementById("tournamentFilter")).value;
+        this.poolsFilter = (<HTMLInputElement>document.getElementById("poolsFilter")).value;
+        this.jerseyNumberFilter = (<HTMLInputElement>document.getElementById("jerseyNumberFilter")).value;
+        this.presenceFilter = (<HTMLInputElement>document.getElementById("presenceFilter")).value;
+        this.availableFilter = (<HTMLInputElement>document.getElementById("availableFilter")).value;
+
+        if(this.licenceNumberFilter.length < 1){
+            this.licenceNumberFilter = false;
+        }
+        if(this.tournamentFilter.length < 1){
+            this.tournamentFilter = false;
+        }
+        if(this.poolsFilter.length < 1){
+            this.poolsFilter = false;
+        }
+        if(this.jerseyNumberFilter.length < 1){
+            this.jerseyNumberFilter = false;
+        }
+        if(this.presenceFilter.length < 1){
+            this.presenceFilter = false;
+        }
+        if(this.availableFilter.length < 1){
+            this.availableFilter = false;
+        }
+
+        this.filteredPagination = true;
+        this.ngxLoader.startLoader('page-loader');
+
+        let usersFilter:any = [];
+        if(this.licenceNumberFilter){
+            
+            this.userService.getUserByLicence(this.licenceNumberFilter).subscribe((users: any) => {
+                users.map((user:any) => {
+                    usersFilter.push('/api/users/'+user.id);
+                })
+                this.service.getFilteredRegistrations(this.currentFilteredPage, usersFilter, this.jerseyNumberFilter, this.tournamentFilter, this.poolsFilter, this.presenceFilter, this.availableFilter).subscribe((data: any) => {
+                    this.registrations = data['hydra:member'];
+                    this.totalItems = data['hydra:totalItems'];
+                    this.filteredPages = Array.from({length: Math.round(this.totalItems / Env.ITEMS_PER_PAGE)+1 }, (_, i) => i + 1);
+                    
+        
+                    // tournament ids
+                    let tournamentIDS = this.registrations.map((reg: any) => {
+                        return 'id[]=' + reg.tournament.replace('/api/tournaments/','');
+                    }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
+        
+                    // user ids
+                    let userIDS = this.registrations.map((reg: any) => {
+                        let userID = reg.user.replace('/api/users/','');
+                        return 'id[]=' + userID;
+                    }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
+        
+                    // pools ids
+                    let poolIDS: any = [];
+                    this.registrations.map((reg: any) => {
+                        reg.pools.map((pool:any) => {
+                            poolIDS.push('id[]=' + pool.replace('/api/pools/',''));
+                        });
+                    })
+                    poolIDS = poolIDS.filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
+        
+                    // get linked entities 
+                    let tournaments = this.http.get<Tournament>(Env.API_URL + 'tournaments.json')
+                    let pools = this.http.get<Pool>(Env.API_URL + 'pools.json')
+                    let users = this.http.get<User>(Env.API_URL + 'users.json?'+userIDS)
+                    forkJoin([
+                        pools,
+                        users,
+                        tournaments
+                    ]).subscribe(results => {
+                        this.pools = results[0];
+                        this.users = results[1];
+                        this.tournaments = results[2];
+        
+                        this.pools.map((pool: any) => {
+                            pool.tournament = this.tournaments.filter((tournament: any) => {
+                                return tournament.id == pool.tournament.replace('/api/tournaments/','')
+                            })[0];
+                        });
+        
+                        this.registrations.map((registration: any) => {
+                            var tournament: any = this.tournaments.filter((tournament: any) => {
+                                return tournament.id.toString() == registration.tournament.replace('/api/tournaments/','')
+                            })[0]?.name
+                            var user: any = this.users.filter((user: any) => {
+                                return user.id.toString() == registration.user.replace('/api/users/','')
+                            })[0];
+                            var pools: any = this.pools.filter((pool: any) => {
+                                return registration.pools.includes('/api/pools/'+pool.id.toString())
+                            });
+                            var poolsTxt: any = pools.map((pool: any) => {
+                                return pool.name;
+                            }).join(", ")
+        
+                            registration.user = user.firstName + ' ' + user.lastName
+                            registration.licenceNumber = user.licenceNumber;
+                            registration.pools = poolsTxt;
+                            registration.tournament = tournament;
+        
+                        })
+                        this.ngxLoader.stopLoader('task-loader');
+                        this.ngxLoader.stopLoader('page-loader');
+                    });
+                })
+            })
+        } else {
+            this.service.getFilteredRegistrations(this.currentFilteredPage, usersFilter, this.jerseyNumberFilter, this.tournamentFilter, this.poolsFilter, this.presenceFilter, this.availableFilter).subscribe((data: any) => {
+                this.registrations = data['hydra:member'];
+                this.totalItems = data['hydra:totalItems'];
+                this.filteredPages = Array.from({length: Math.round(this.totalItems / Env.ITEMS_PER_PAGE)+1 }, (_, i) => i + 1);
+                
+    
+                // tournament ids
+                let tournamentIDS = this.registrations.map((reg: any) => {
+                    return 'id[]=' + reg.tournament.replace('/api/tournaments/','');
+                }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
+    
+                // user ids
+                let userIDS = this.registrations.map((reg: any) => {
+                    let userID = reg.user.replace('/api/users/','');
+                    return 'id[]=' + userID;
+                }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
+    
+                // pools ids
+                let poolIDS: any = [];
+                this.registrations.map((reg: any) => {
+                    reg.pools.map((pool:any) => {
+                        poolIDS.push('id[]=' + pool.replace('/api/pools/',''));
+                    });
+                })
+                poolIDS = poolIDS.filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
+    
+                // get linked entities 
+                let tournaments = this.http.get<Tournament>(Env.API_URL + 'tournaments.json')
+                let pools = this.http.get<Pool>(Env.API_URL + 'pools.json')
+                let users = this.http.get<User>(Env.API_URL + 'users.json?'+userIDS)
+                forkJoin([
+                    pools,
+                    users,
+                    tournaments
+                ]).subscribe(results => {
+                    this.pools = results[0];
+                    this.users = results[1];
+                    this.tournaments = results[2];
+    
+                    this.pools.map((pool: any) => {
+                        pool.tournament = this.tournaments.filter((tournament: any) => {
+                            return tournament.id == pool.tournament.replace('/api/tournaments/','')
+                        })[0];
+                    });
+    
+                    this.registrations.map((registration: any) => {
+                        var tournament: any = this.tournaments.filter((tournament: any) => {
+                            return tournament.id.toString() == registration.tournament.replace('/api/tournaments/','')
+                        })[0]?.name
+                        var user: any = this.users.filter((user: any) => {
+                            return user.id.toString() == registration.user.replace('/api/users/','')
+                        })[0];
+                        var pools: any = this.pools.filter((pool: any) => {
+                            return registration.pools.includes('/api/pools/'+pool.id.toString())
+                        });
+                        var poolsTxt: any = pools.map((pool: any) => {
+                            return pool.name;
+                        }).join(", ")
+    
+                        registration.user = user.firstName + ' ' + user.lastName
+                        registration.licenceNumber = user.licenceNumber;
+                        registration.pools = poolsTxt;
+                        registration.tournament = tournament;
+    
+                    })
+                    this.ngxLoader.stopLoader('task-loader');
+                    this.ngxLoader.stopLoader('page-loader');
+                });
+            })
+        }
+
+
     }
 
 
     initRegistrations(){
 
-        this.service.getRegistrations().subscribe((data: any) => {
-            this.registrations = data;
+        this.service.getRegistrations(this.currentPage).subscribe((data: any) => {
+
+            this.registrations = data['hydra:member'];
+            this.totalItems = data['hydra:totalItems'];
+            this.pages = Array.from({length: Math.round(this.totalItems / Env.ITEMS_PER_PAGE)+1 }, (_, i) => i + 1);
+            
 
             // tournament ids
             let tournamentIDS = this.registrations.map((reg: any) => {
@@ -112,8 +332,8 @@ export class ModuleRegistrationsComponent implements OnInit {
             poolIDS = poolIDS.filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
 
             // get linked entities 
-            let tournaments = this.http.get<Tournament>(Env.API_URL + 'tournaments.json?'+tournamentIDS)
-            let pools = this.http.get<Pool>(Env.API_URL + 'pools.json?'+poolIDS)
+            let tournaments = this.http.get<Tournament>(Env.API_URL + 'tournaments.json')
+            let pools = this.http.get<Pool>(Env.API_URL + 'pools.json')
             let users = this.http.get<User>(Env.API_URL + 'users.json?'+userIDS)
             forkJoin([
                 pools,
@@ -123,6 +343,12 @@ export class ModuleRegistrationsComponent implements OnInit {
                 this.pools = results[0];
                 this.users = results[1];
                 this.tournaments = results[2];
+
+                this.pools.map((pool: any) => {
+                    pool.tournament = this.tournaments.filter((tournament: any) => {
+                        return tournament.id == pool.tournament.replace('/api/tournaments/','')
+                    })[0];
+                });
 
                 this.registrations.map((registration: any) => {
                     var tournament: any = this.tournaments.filter((tournament: any) => {

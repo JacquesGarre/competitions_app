@@ -15,7 +15,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource()
- * @ApiFilter(SearchFilter::class, properties={"id":"exact", "email": "exact", "licenceNumber": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"id":"exact", "email": "partial", "firstName": "partial", "lastName": "partial", "licenceNumber": "partial"})
  * @ORM\Entity(repositoryClass=UserRepository::class)
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface

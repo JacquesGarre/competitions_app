@@ -41,9 +41,48 @@ export class RegistrationService {
     }  
 
     // Read
-    getRegistrations(): Observable<Registration> {
-        return this.http.get<Registration>(Env.API_URL + 'registrations.json')
+    getRegistrations(page: any = false): Observable<Registration> {
+        let endpoint = Env.API_URL + 'registrations.jsonld';
+        if(page){
+            endpoint += '?page=' + page;
+        }
+        return this.http.get<Registration>(endpoint)
         .pipe(retry(1), catchError(this.handleError))
+    }
+
+    // Read
+    getFilteredRegistrations(page: any = false, users:any = false, jerseyNumber:any = false, tournament:any = false, pools:any = false, presence:any = false, available:any = false): Observable<Registration> {
+        let endpoint = Env.API_URL + 'registrations.jsonld';
+        let params: any = [];
+        if(page){
+            params.push('page=' + page);
+        }
+        if(jerseyNumber){
+            params.push('jerseyNumber='+jerseyNumber);
+        }
+        if(tournament){
+            params.push('tournament='+tournament);
+        }
+        if(pools){
+            params.push('pools='+pools);
+        }
+        if(presence){
+            params.push('presence='+presence);
+        }
+        if(available){
+            params.push('available='+available);
+        }
+        if(users){
+            users.map((user: any) => {
+                params.push('user[]='+user);
+            })
+        }
+        if(params.length){
+            endpoint += '?' + params.join('&');
+        }
+        return this.http.get<Registration>(endpoint)
+            .pipe(retry(1), catchError(this.handleError))
+        
     }
 
     // Read by id
@@ -53,14 +92,32 @@ export class RegistrationService {
     }  
 
     // Read by user id
-    getRegistrationsByUser(id: any): Observable<Registration> {
-        return this.http.get<Registration>(Env.API_URL + 'registrations.json?user=' + id)
+    getRegistrationsByUser(id: any, page:any = false): Observable<Registration> {
+        let endpoint = Env.API_URL + 'registrations.jsonld?user=' + id;
+        if(page){
+            endpoint += '&page=' + page;
+        }
+        return this.http.get<Registration>(endpoint)
         .pipe(retry(1), catchError(this.handleError))
     }  
 
     // Read by Tournament id
-    getRegistrationsByTournament(id: any): Observable<Registration> {
-        return this.http.get<Registration>(Env.API_URL + 'tournaments/' + id + '/registrations.json')
+    getRegistrationsByTournament(id: any, page:any = false): Observable<Registration> {
+        let endpoint = Env.API_URL + 'tournaments/' + id + '/registrations.jsonld';
+        if(page){
+            endpoint += '?page=' + page;
+        }
+        return this.http.get<Registration>(endpoint)
+        .pipe(retry(1), catchError(this.handleError))
+    }  
+
+    // Read by Pool id
+    getRegistrationsByPool(id: any, page:any = false): Observable<Registration> {
+        let endpoint = Env.API_URL + 'registrations.jsonld?pools='+id;
+        if(page){
+            endpoint += '&page=' + page;
+        }
+        return this.http.get<Registration>(endpoint)
         .pipe(retry(1), catchError(this.handleError))
     }  
 

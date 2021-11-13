@@ -13,17 +13,42 @@
 
 <!--This is your master form-->
 <form [formGroup]="userForm">
-
     <table class="table table-hover shadow  border-left-danger">
         <thead class="bg-dark text-light border-top-0 border-right-0 border-left-0">
             <tr>
-                <th scope="col" class="text-center border-gray">Actions</th>
-                <th scope="col" class="border-gray">Email</th>
-                <th scope="col" class="border-gray">Prénom</th>
-                <th scope="col" class="border-gray">Nom</th>
-                <th scope="col" class="border-gray">Roles</th>
-                <th scope="col" class="border-gray">Crée le</th>
-                <th scope="col" class="border-gray">Mise à jour le</th>
+                <th scope="col" class="text-center border-0">Actions</th>
+                <th scope="col" class="border-0">Email</th>
+                <th scope="col" class="border-0">Prénom</th>
+                <th scope="col" class="border-0">Nom</th>
+                <th scope="col" class="border-0">Licence</th>
+                <th scope="col" class="border-0">Roles</th>
+                <th scope="col" class="border-0">Crée le</th>
+                <th scope="col" class="border-0">Mise à jour le</th>
+            </tr>
+            <tr>
+                <th scope="col" class="text-center border-gray border-top-0">
+                    <a class="btn text-light text-hover-orange" (click)=ngOnInit() title="Réinitialiser les filtres">
+                        <fa-icon [icon]="faTimes" class="mr-2"></fa-icon>
+                    </a>
+                    <a class="btn text-light text-hover-orange" (click)=filter()  title="Filtrer">
+                        <fa-icon [icon]="faSearch" class="mr-2"></fa-icon>
+                    </a>
+                </th>
+                <th scope="col" class="border-gray border-top-0">
+                    <input class="form-control pl-0 text-dark" id="emailFilter" type="text" name="emailFilter"/>
+                </th>
+                <th scope="col" class="border-gray border-top-0">
+                    <input class="form-control pl-0 text-dark" type="text" id="firstNameFilter" name="firstNameFilter"/>
+                </th>
+                <th scope="col" class="border-gray border-top-0">
+                    <input class="form-control pl-0 text-dark" type="text" id="lastNameFilter" name="lastNameFilter"/>
+                </th>
+                <th scope="col" class="border-gray border-top-0">
+                    <input class="form-control pl-0 text-dark" type="text" id="licenceNumberFilter" name="licenceNumberFilter"/>
+                </th>
+                <th scope="col" class="border-gray border-top-0"></th>
+                <th scope="col" class="border-gray border-top-0"></th>
+                <th scope="col" class="border-gray border-top-0"></th>
             </tr>
         </thead>
         <tbody>
@@ -50,6 +75,9 @@
                         <input class="form-control pl-0" type="text" formControlName="lastName" readonly/>
                     </td>
                     <td class="text-light">
+                        <input class="form-control pl-0" type="text" formControlName="licenceNumber" readonly/>
+                    </td>
+                    <td class="text-light">
                         <input class="form-control pl-0" type="text" formControlName="roles" readonly/>
                     </td>
                     <td class="text-light">
@@ -63,4 +91,43 @@
         </tbody>
     </table>
 
+    <nav aria-label="Page navigation example" *ngIf="!filteredPagination">
+        <ul class="pagination" style="justify-content: right;">
+            <li class="page-item" *ngIf="currentPage > 1">
+                <a class="bg-dark border-dark-gray rounded-0 text-white page-link" aria-label="Previous" (click)=goToPage(currentPage-1)>
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item" *ngFor="let i of pages">
+                <a class="bg-dark border-dark-gray rounded-0 text-white page-link {{i == currentPage ? 'active text-orange' : ''}}" (click)=goToPage(i)>{{i}}</a>
+            </li>
+            <li class="page-item" *ngIf="currentPage < pages.length">
+                <a class="bg-dark border-dark-gray rounded-0 text-white page-link" aria-label="Next" (click)=goToPage(currentPage+1)>
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <nav aria-label="Page navigation example" *ngIf="filteredPagination">
+        <ul class="pagination" style="justify-content: right;">
+            <li class="page-item" *ngIf="currentFilteredPage > 1">
+                <a class="bg-dark border-dark-gray rounded-0 text-white page-link" aria-label="Previous" (click)=goToFilteredPage(currentFilteredPage-1)>
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                </a>
+            </li>
+            <li class="page-item" *ngFor="let i of filteredPages">
+                <a class="bg-dark border-dark-gray rounded-0 text-white page-link {{i == currentFilteredPage ? 'active text-orange' : ''}}" (click)=goToFilteredPage(i)>{{i}}</a>
+            </li>
+            <li class="page-item" *ngIf="currentFilteredPage < filteredPages.length">
+                <a class="bg-dark border-dark-gray rounded-0 text-white page-link" aria-label="Next" (click)=goToFilteredPage(currentFilteredPage+1)>
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <p class="float-right"><i>{{users.length}} sur {{totalItems}} utilisateurs</i></p>
 </form>

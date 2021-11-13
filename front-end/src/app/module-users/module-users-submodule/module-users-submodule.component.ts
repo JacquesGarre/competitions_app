@@ -8,6 +8,8 @@ import { Organization } from '../../module-organizations/organization';
 import { OrganizationService } from '../../module-organizations/organization.service';
 import { Router } from '@angular/router';
 
+import { Env } from '../../_globals/env';
+
 import { faUser, faTrashAlt, faPencilAlt, faPlus, faEye, faTrash, faPen, faSitemap, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
@@ -26,6 +28,10 @@ import { FormBuilder, Validators } from '@angular/forms';
     providers: [DatePipe]
 })
 export class ModuleUsersSubmoduleComponent implements OnChanges {
+
+    currentPage = 1;
+    pages = Array.from({length: 3}, (_, i) => i + 1);
+    totalItems = 0;
 
     faTimes = faTimes;
     faUser = faUser;
@@ -63,32 +69,41 @@ export class ModuleUsersSubmoduleComponent implements OnChanges {
         this.initUsers();
     }
 
+    goToPage(page: any): void {
+        this.ngxLoader.startLoader('page-loader');
+        this.currentPage = page;
+        this.initUsers();
+    }
+
     initUsers() {
         this.ngxLoader.startLoader('submodule-loader');
         // Users as submodule in organization
         if(this.parent.id && this.parentModule == 'organizations'){
-            this.service.getUsersByOrganization(this.parent.id).subscribe((data: any) => {
-                if (data.length) {
-                    this.users = data;
-                    this.userForm = this.formBuilder.group({
-                        userDetails: this.formBuilder.array(
-                            this.users.map((x: any) => {
-                                return this.formBuilder.group({
-                                    id: [x.id, [Validators.required, Validators.minLength(2)]],
-                                    email: [x.email, [Validators.required, Validators.minLength(2)]],
-                                    firstName: [x.firstName, [Validators.required, Validators.minLength(2)]],
-                                    lastName: [x.lastName, [Validators.required, Validators.minLength(2)]],
-                                    organizations: [x.organizations, [Validators.required, Validators.minLength(2)]],
-                                    createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
-                                    updatedAt: x.updatedAt, 
-                                    isReadonly: true
-                                })
+            this.service.getUsersByOrganization(this.parent.id, this.currentPage).subscribe((data: any) => {
+
+                this.users = data['hydra:member'];
+                this.totalItems = data['hydra:totalItems'];
+                this.pages = Array.from({length: Math.round(this.totalItems / Env.ITEMS_PER_PAGE)+1 }, (_, i) => i + 1);
+
+                this.userForm = this.formBuilder.group({
+                    userDetails: this.formBuilder.array(
+                        this.users.map((x: any) => {
+                            return this.formBuilder.group({
+                                id: [x.id, [Validators.required, Validators.minLength(2)]],
+                                email: [x.email, [Validators.required, Validators.minLength(2)]],
+                                firstName: [x.firstName, [Validators.required, Validators.minLength(2)]],
+                                lastName: [x.lastName, [Validators.required, Validators.minLength(2)]],
+                                licenceNumber: [x.licenceNumber, [Validators.required, Validators.minLength(2)]],
+                                points: [x.points, [Validators.required, Validators.minLength(2)]],
+                                organizations: [x.organizations, [Validators.required, Validators.minLength(2)]],
+                                createdAt: [x.createdAt, [Validators.required, Validators.minLength(2)]],
+                                updatedAt: x.updatedAt, 
+                                isReadonly: true
                             })
-                        )
-                    })
-                } else {
-                    this.users = [];
-                }
+                        })
+                    )
+                })
+
                 this.ngxLoader.stopLoader('submodule-loader');
             })
         }

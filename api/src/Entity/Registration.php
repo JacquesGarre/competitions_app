@@ -13,7 +13,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 
 /**
  * @ApiResource()
- * @ApiFilter(SearchFilter::class, properties={"id":"exact","user": "exact","pools": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"id":"exact","user": "exact","pools": "exact","jerseyNumber": "exact","tournament": "exact","presence": "exact","available": "exact"})
  * @ORM\Entity(repositoryClass=RegistrationRepository::class)
  */
 class Registration

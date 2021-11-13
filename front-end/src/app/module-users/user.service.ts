@@ -29,14 +29,22 @@ export class UserService {
     }  
 
     // Read
-    getUsers(): Observable<User> {
-        return this.http.get<User>(Env.API_URL + 'users.json')
+    getUsers(page:any = false): Observable<User> {
+        let endpoint = Env.API_URL + 'users.jsonld';
+        if(page){
+            endpoint += '?page='+page;
+        }
+        return this.http.get<User>(endpoint)
         .pipe(retry(1), catchError(this.handleError),)
     }
 
     // Read
-    getUsersByOrganization(id: any): Observable<User> {
-        return this.http.get<User>(Env.API_URL + 'organizations/'+ id +'/users.json')
+    getUsersByOrganization(id: any, page:any = false): Observable<User> {
+        let endpoint = Env.API_URL + 'organizations/'+ id +'/users.jsonld';
+        if(page){
+            endpoint += '?page='+page;
+        }
+        return this.http.get<User>(endpoint)
         .pipe(retry(1), catchError(this.handleError),)
     }
 
@@ -45,6 +53,33 @@ export class UserService {
         return this.http.get<User>(Env.API_URL + 'registrations/'+ id +'/user.json')
         .pipe(retry(1), catchError(this.handleError),)
     }
+
+    // Read
+    getFilteredUsers(page:any = false, email: any = false, firstName: any = false, lastName:any = false, licenceNumber:any = false): Observable<User> {
+        let endpoint = Env.API_URL + 'users.jsonld';
+        let params = [];
+        if(page){
+            params.push('page='+page);
+        }
+        if(email){
+            params.push('email='+email);
+        }
+        if(firstName){
+            params.push('firstName='+firstName);
+        }
+        if(lastName){
+            params.push('lastName='+lastName);
+        }
+        if(licenceNumber){
+            params.push('licenceNumber='+licenceNumber);
+        }
+        if(params.length){
+            endpoint += '?' + params.join('&');
+        }
+        return this.http.get<User>(endpoint)
+        .pipe(retry(1), catchError(this.handleError),)
+    }
+    
 
 
     // Read by id

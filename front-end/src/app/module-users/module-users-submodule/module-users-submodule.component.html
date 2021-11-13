@@ -6,7 +6,7 @@
                     <h6 class="mb-0"><fa-icon [icon]="faUser" class="mr-2"></fa-icon>{{title}}</h6>
                 </div>
                 <div class="col-md-1">
-                    <a class="btn btn-dark-gray btn-sm float-right" (click)=linkUser() *ngIf="parentModule !== 'registrations'"><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Ajouter un utilisateur</a>
+                    <a class="btn btn-dark-gray btn-sm float-right" (click)=linkUser() *ngIf="parentModule !== 'registrations' && parentModule !== 'organizations'"><fa-icon [icon]="faPlus" class="mr-2"></fa-icon>Ajouter un utilisateur</a>
                 </div>
             </div>
         </div>
@@ -86,6 +86,27 @@
                         </ng-container>
                     </tbody>
                 </table>
+
+                <nav aria-label="Page navigation example" class="pr-3" *ngIf="parentModule !== 'registrations'">
+                    <ul class="pagination" style="justify-content: right;">
+                        <li class="page-item" *ngIf="currentPage > 1">
+                            <a class="bg-dark border-dark-gray rounded-0 text-white page-link" aria-label="Previous" (click)=goToPage(currentPage-1)>
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <li class="page-item" *ngFor="let i of pages">
+                            <a class="bg-dark border-dark-gray rounded-0 text-white page-link {{i == currentPage ? 'active text-orange' : ''}}" (click)=goToPage(i)>{{i}}</a>
+                        </li>
+                        <li class="page-item" *ngIf="currentPage < pages.length">
+                            <a class="bg-dark border-dark-gray rounded-0 text-white page-link" aria-label="Next" (click)=goToPage(currentPage+1)>
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+                <p class="float-right pr-3" *ngIf="parentModule !== 'registrations'"><i>{{users.length}} sur {{totalItems}} utilisateurs</i></p>
 
             </form>
 

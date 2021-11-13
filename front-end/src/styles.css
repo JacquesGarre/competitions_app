@@ -10886,3 +10886,7 @@ ngx-ui-loader[ng-reflect-loader-id="page-loader"] .ngx-position-absolute.ngx-ove
 ngx-ui-loader[ng-reflect-loader-id="page-loader"] .ngx-position-absolute.ngx-progress-bar {
     z-index: 100000!important;
 }
+
+.page-item {
+    cursor: pointer;
+}

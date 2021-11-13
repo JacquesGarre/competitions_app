@@ -124,11 +124,8 @@ export class ModuleRegistrationsViewComponent implements OnInit {
                         this.tournaments = data;
                     })
                 }
-                this.userService.getUsers().subscribe((data: any) => {
-                    this.users = data;
-                    let user = this.users.filter((user: any) => {
-                        return this.form.user.replace('/api/users/','') == user.id.toString()
-                    })[0];
+                this.userService.getUser(this.form.user.replace('/api/users/','')).subscribe((data: any) => {
+                    let user = data;
                     this.title = user.firstName + ' ' + user.lastName
                     this.ngxLoader.stopLoader('page-loader');
                 })
@@ -141,7 +138,7 @@ export class ModuleRegistrationsViewComponent implements OnInit {
                     })[0];
                     return {
                         id: existingPool.id,
-                        name: existingPool.name.replace('/api/pools/','')                
+                        name: existingPool.name.replace('/api/pools/','')          
                     }
                 }) 
             })

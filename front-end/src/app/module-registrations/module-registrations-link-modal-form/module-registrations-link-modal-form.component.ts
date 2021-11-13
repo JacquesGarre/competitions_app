@@ -136,7 +136,7 @@ export class ModuleRegistrationsLinkModalFormComponent {
         });
 
         this.userService.getUsers().subscribe((data: any) => {
-            this.users = data;
+            this.users = data['hydra:member'];
         })
 
         this.userService.getCurrentUser().subscribe((data: any) => {
@@ -156,26 +156,52 @@ export class ModuleRegistrationsLinkModalFormComponent {
         this.dropdownSettings = {
             singleSelection: false,
             idField: 'id',
-            textField: 'name',
+            textField: 'displayTitle',
             selectAllText: 'Select All',
             enableCheckAll: false,
             unSelectAllText: 'Unselect All',
-            itemsShowLimit: 15,
+            itemsShowLimit: 30,
             allowSearchFilter: true
         };
+
+
+
+    }
+
+    ngOnInit(): void {
 
         if(this.parentModule == 'tournaments'){
             this.poolService.getPoolsByTournament(this.tournament).subscribe((data: any) => {
                 this.pools = data;
+                this.pools.map((pool:any) => {
+                    pool.displayTitle = pool.name + '(de '+pool.minPoints+' à '+pool.maxPoints+')';
+                })
             })
         }
 
         if(this.parentModule == 'pools'){
             this.poolService.getPoolsByTournament(this.parent.tournament.replace('/api/tournaments/','')).subscribe((data: any) => {
                 this.pools = data;
+                this.pools.map((pool:any) => {
+                    pool.displayTitle = pool.name + '(de '+pool.minPoints+' à '+pool.maxPoints+')';
+                })
+                this.addForm.controls.selectedPools.setValue([{
+                    id:this.parent.id,
+                    name:this.parent.name,
+                    displayTitle:this.parent.name + '(de '+this.parent.minPoints+' à '+this.parent.maxPoints+')'
+                }]);
+                this.calculatePayableAmount();
             })
-        }
 
+        }
+        
+        if(this.parentModule !== 'users'){
+            this.addForm.controls.creationMode.setValue('newUser');
+        } else {
+            this.addForm.controls.creationMode.setValue('existingUser');
+            this.addForm.controls.user.setValue(this.parent);
+            this.displayUserDetails = false;
+        }
     }
 
 
@@ -233,6 +259,9 @@ export class ModuleRegistrationsLinkModalFormComponent {
             this.tournament = this.addForm.value.tournament;
             this.poolService.getPoolsByTournament(this.addForm.value.tournament).subscribe((data: any) => {
                 this.pools = data;
+                this.pools.map((pool:any) => {
+                    pool.displayTitle = pool.name + '(de '+pool.minPoints+' à '+pool.maxPoints+')';
+                })
             })
         }
     }
