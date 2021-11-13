@@ -120,8 +120,8 @@ export class ModuleOrganizationsSubmoduleComponent implements OnChanges {
         switch(this.parentModule){
             case 'users':
                 const modalRef = this.modalService.open(ModalConfirmComponent, { centered: true });
-                modalRef.componentInstance.title = 'Removing user from organization';
-                modalRef.componentInstance.content = 'Are you sure you want to remove <i>' + this.parent.firstName + ' ' + this.parent.lastName + '</i> from <i>' + organization.name + '</i>?';
+                modalRef.componentInstance.title = 'Retirer un utilisateur d\'une organisation';
+                modalRef.componentInstance.content = 'Êtes-vous sûr de vouloir retirer <i>' + this.parent.firstName + ' ' + this.parent.lastName + '</i> de <i>' + organization.name + '</i>?';
                 modalRef.componentInstance.confirmBtn = 'Confirm';
                 modalRef.result.then((result) => {
                     if (result == 'confirm') {
@@ -144,9 +144,9 @@ export class ModuleOrganizationsSubmoduleComponent implements OnChanges {
     // Delete organization
     deleteOrganization(organization: any) {
         const modalRef = this.modalService.open(ModalConfirmComponent, { centered: true });
-        modalRef.componentInstance.title = 'Deleting an organization';
-        modalRef.componentInstance.content = 'Are you sure you want to delete <i>' + organization.name + '</i> ?';
-        modalRef.componentInstance.confirmBtn = 'Confirm';
+        modalRef.componentInstance.title = 'Suppression d\'une organisation';
+        modalRef.componentInstance.content = 'Êtes-vous sûr de vouloir supprimer <i>' + organization.name + '</i> ?';
+        modalRef.componentInstance.confirmBtn = 'Confirmer';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
                 this.ngxLoader.startLoader('submodule-loader');

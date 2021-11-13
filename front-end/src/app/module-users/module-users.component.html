@@ -35,16 +35,16 @@
                     </a>
                 </th>
                 <th scope="col" class="border-gray border-top-0">
-                    <input class="form-control pl-0 text-dark" id="emailFilter" type="text" name="emailFilter"/>
+                    <input class="form-control pl-0  bg-dark-gray text-light border-orange" id="emailFilter" type="text" name="emailFilter"/>
                 </th>
                 <th scope="col" class="border-gray border-top-0">
-                    <input class="form-control pl-0 text-dark" type="text" id="firstNameFilter" name="firstNameFilter"/>
+                    <input class="form-control pl-0  bg-dark-gray text-light border-orange" type="text" id="firstNameFilter" name="firstNameFilter"/>
                 </th>
                 <th scope="col" class="border-gray border-top-0">
-                    <input class="form-control pl-0 text-dark" type="text" id="lastNameFilter" name="lastNameFilter"/>
+                    <input class="form-control pl-0  bg-dark-gray text-light border-orange" type="text" id="lastNameFilter" name="lastNameFilter"/>
                 </th>
                 <th scope="col" class="border-gray border-top-0">
-                    <input class="form-control pl-0 text-dark" type="text" id="licenceNumberFilter" name="licenceNumberFilter"/>
+                    <input class="form-control pl-0  bg-dark-gray text-light border-orange" type="text" id="licenceNumberFilter" name="licenceNumberFilter"/>
                 </th>
                 <th scope="col" class="border-gray border-top-0"></th>
                 <th scope="col" class="border-gray border-top-0"></th>
@@ -61,7 +61,7 @@
                         <!-- <a class="btn text-light text-hover-orange">
                             <fa-icon [icon]="faPen" class="mr-2"></fa-icon>
                         </a> -->
-                        <a class="btn text-light text-hover-orange" (click)=deleteUser(user)>
+                        <a class="btn text-light text-hover-orange" (click)=deleteUser(user) *ngIf="!user.roles.includes('ROLE_ADMIN')">
                             <fa-icon [icon]="faTrash" class="mr-2"></fa-icon>
                         </a>
                     </td>
@@ -78,7 +78,11 @@
                         <input class="form-control pl-0" type="text" formControlName="licenceNumber" readonly/>
                     </td>
                     <td class="text-light">
-                        <input class="form-control pl-0" type="text" formControlName="roles" readonly/>
+                        <!-- <input class="form-control pl-0" type="text" formControlName="roles" readonly/> -->
+                        <span *ngFor="let role of user.roles" 
+                            [ngClass]="role === 'ROLE_ADMIN' ? 'badge mr-1 badge-primary' : (role === 'ROLE_MODERATOR' ? 'badge mr-1 badge-success' : 'badge mr-1 badge-danger')">
+                            {{role.replace('ROLE_', '') }}
+                        </span>
                     </td>
                     <td class="text-light">
                         <input class="form-control pl-0" type="text" [value]="user.createdAt | date:'dd/MM/yyyy HH:mm'" readonly/>

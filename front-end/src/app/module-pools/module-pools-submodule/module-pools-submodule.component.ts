@@ -155,9 +155,9 @@ export class ModulePoolsSubmoduleComponent implements OnChanges {
         switch(this.parentModule){
             case 'users':
                 const modalRef = this.modalService.open(ModalConfirmComponent, { centered: true });
-                modalRef.componentInstance.title = 'Removing user from pool';
-                modalRef.componentInstance.content = 'Are you sure you want to remove <i>' + this.parent.firstName + ' ' + this.parent.lastName + '</i> from <i>' + pool.name + '</i>?';
-                modalRef.componentInstance.confirmBtn = 'Confirm';
+                modalRef.componentInstance.title = 'Retirer un utilisateur d\'un tableau';
+                modalRef.componentInstance.content = 'Êtes vous sûr de vouloir retirer <i>' + this.parent.firstName + ' ' + this.parent.lastName + '</i> de <i>' + pool.name + '</i>?';
+                modalRef.componentInstance.confirmBtn = 'Confirmer';
                 modalRef.result.then((result) => {
                     if (result == 'confirm') {
                         this.ngxLoader.startLoader('submodule-loader-pools');
@@ -179,9 +179,9 @@ export class ModulePoolsSubmoduleComponent implements OnChanges {
     // Delete pool
     deletePool(pool: any) {
         const modalRef = this.modalService.open(ModalConfirmComponent, { centered: true });
-        modalRef.componentInstance.title = 'Deleting a pool';
-        modalRef.componentInstance.content = 'Are you sure you want to delete <i>' + pool.name + '</i> ?';
-        modalRef.componentInstance.confirmBtn = 'Confirm';
+        modalRef.componentInstance.title = 'Suppression d\'un tableau';
+        modalRef.componentInstance.content = 'Êtes-vous sûr de vouloir supprimer? <i>' + pool.name + '</i> ?';
+        modalRef.componentInstance.confirmBtn = 'Confirmer';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
                 this.ngxLoader.startLoader('submodule-loader-pools');

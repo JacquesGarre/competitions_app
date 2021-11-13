@@ -51,7 +51,7 @@
                                     <!-- <a class="btn text-light text-hover-orange">
                             <fa-icon [icon]="faPen" class="mr-2"></fa-icon>
                         </a> -->
-                                    <a class="btn text-light text-hover-orange" (click)=deleteUser(user) title="Delete user" *ngIf="parentModule !== 'registrations'">
+                                    <a class="btn text-light text-hover-orange" (click)=deleteUser(user) title="Delete user" *ngIf="parentModule !== 'registrations' && !user.roles.includes('ROLE_ADMIN')">
                                         <fa-icon [icon]="faTrash" class="mr-2"></fa-icon>
                                     </a>
                                     <a class="btn text-light text-hover-orange" (click)=removeUser(user) title="Remove user" *ngIf="parentModule !== 'registrations'">

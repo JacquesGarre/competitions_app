@@ -121,8 +121,8 @@ export class ModuleTournamentsSubmoduleComponent implements OnChanges {
         switch(this.parentModule){
             case 'users':
                 const modalRef = this.modalService.open(ModalConfirmComponent, { centered: true });
-                modalRef.componentInstance.title = 'Removing user from tournament';
-                modalRef.componentInstance.content = 'Are you sure you want to remove <i>' + this.parent.firstName + ' ' + this.parent.lastName + '</i> from <i>' + tournament.name + '</i>?';
+                modalRef.componentInstance.title = 'Supprimer un utilisateur d\'un tournoi';
+                modalRef.componentInstance.content = 'Êtes-vous sûr de vouloir supprimer <i>' + this.parent.firstName + ' ' + this.parent.lastName + '</i> de <i>' + tournament.name + '</i>?';
                 modalRef.componentInstance.confirmBtn = 'Confirm';
                 modalRef.result.then((result) => {
                     if (result == 'confirm') {
@@ -145,9 +145,9 @@ export class ModuleTournamentsSubmoduleComponent implements OnChanges {
     // Delete tournament
     deleteTournament(tournament: any) {
         const modalRef = this.modalService.open(ModalConfirmComponent, { centered: true });
-        modalRef.componentInstance.title = 'Deleting an tournament';
-        modalRef.componentInstance.content = 'Are you sure you want to delete <i>' + tournament.name + '</i> ?';
-        modalRef.componentInstance.confirmBtn = 'Confirm';
+        modalRef.componentInstance.title = 'Suppression d\'un tournoi';
+        modalRef.componentInstance.content = 'Êtes-vous sûr de vouloir supprimer <i>' + tournament.name + '</i> ?';
+        modalRef.componentInstance.confirmBtn = 'Confirmer';
         modalRef.result.then((result) => {
             if (result == 'confirm') {
                 this.ngxLoader.startLoader('submodule-loader');
