@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormControl, FormGroup, Validators, FormBuilder, ValidatorFn, AbstractControl, FormsModule } from '@angular/forms';
 import { faGem, faTrashAlt, faPencilAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
@@ -20,6 +20,10 @@ export class ModuleOrganizationsAddModalFormComponent {
         public activeModal: NgbActiveModal,
         private formBuilder: FormBuilder
     ) { 
+
+    }
+
+    ngOnInit(): void {
         this.addForm = new FormGroup({
             name: new FormControl(
                 this.name, 
