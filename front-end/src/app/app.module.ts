@@ -147,7 +147,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     imports: [
         BrowserModule,
         BrowserAnimationsModule,
-        AppRoutingModule,
         RouterModule,
         FormsModule,
         HttpClientModule,
@@ -163,6 +162,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
         QuillModule.forRoot(),
         NgMultiSelectDropDownModule.forRoot(),
         AgGridModule.withComponents([]),
+        AppRoutingModule,
     ],
     providers: [
         authInterceptorProviders,
