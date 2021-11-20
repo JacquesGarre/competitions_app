@@ -79,7 +79,7 @@ export class ModuleTournamentsComponent implements OnInit {
                             tournamentDetails: this.formBuilder.array(
                                 this.tournaments.map((x: any) => {
                                     var organization: any = this.organizations.filter((organization: any) => {
-                                        return organization.id.toString() === x.organization.replace('/api/organizations/','')
+                                        return organization.id.toString() === x.organization.replace('/organizations/','')
                                     })[0]?.name
                                     return this.formBuilder.group({
                                         id: [x.id, [Validators.required, Validators.minLength(2)]],
@@ -111,10 +111,10 @@ export class ModuleTournamentsComponent implements OnInit {
                 let values = modalRef.componentInstance.addForm.value;
                 let tournament: any = {
                     name: values.name,
-                    organization: 'api/organizations/' + values.organization,
+                    organization: 'organizations/' + values.organization,
                     startDate: new Date(Date.parse(values.startDate)+7200*1000).toUTCString(),
                     endDate: new Date(Date.parse(values.endDate)+7200*1000).toUTCString(),
-                    creator: 'api/users/' + this.currentUser.id,
+                    creator: 'users/' + this.currentUser.id,
                     uri: values.uri,
                     registrationFormOpen: false
                 }

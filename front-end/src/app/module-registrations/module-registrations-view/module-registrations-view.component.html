@@ -38,7 +38,7 @@
                                     name="tournament" id="tournament" [(ngModel)]="form.tournament"
                                     #tournament="ngModel" disabled>
                                     <option *ngFor="let tournament of tournaments"
-                                        value="'/api/tournaments/' + tournament.id">
+                                        value="'/tournaments/' + tournament.id">
                                         {{tournament.name}}
                                     </option>
                                 </select>

@@ -67,7 +67,7 @@ export class ModuleUsersViewComponent implements OnInit {
         this.service.getUser(id).subscribe((data: any) => {
             this.user = data;
             this.user.organizations = this.user.organizations.map((organization: string)=>{
-                const id = organization.replace('/api/organizations/','');
+                const id = organization.replace('/organizations/','');
                 return id;
             });
             this.untouchedUser = data;

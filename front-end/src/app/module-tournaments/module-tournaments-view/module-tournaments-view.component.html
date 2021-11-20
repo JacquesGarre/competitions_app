@@ -53,7 +53,7 @@
                                                 name="organization" id="organization" [(ngModel)]="form.organization"
                                                 #organization="ngModel" [disabled]="isReadonly">
                                                 <option *ngFor="let organization of organizations"
-                                                    [value]="'/api/organizations/' + organization.id">
+                                                    [value]="'/organizations/' + organization.id">
                                                     {{organization.name}}
                                                 </option>
                                             </select>
@@ -139,7 +139,7 @@
                                             <select class="browser-default custom-select bg-gray text-light"
                                                 name="creator" id="creator" [(ngModel)]="form.creator"
                                                 #creator="ngModel" disabled>
-                                                <option *ngFor="let user of users" [value]="'/api/users/' + user.id">
+                                                <option *ngFor="let user of users" [value]="'/users/' + user.id">
                                                     {{user.firstName}} {{user.lastName}}</option>
                                             </select>
                                         </div>

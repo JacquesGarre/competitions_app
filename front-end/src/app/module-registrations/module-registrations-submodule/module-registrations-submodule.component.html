@@ -63,7 +63,7 @@
                                     id="tournamentFilter" name="tournamentFilter">
                                     <option value=""></option>
                                     <option *ngFor="let tournament of tournaments"
-                                        [value]="'/api/tournaments/' + tournament.id" [selected]="'/api/tournaments/' + tournament.id == tournamentFilter">
+                                        [value]="'/tournaments/' + tournament.id" [selected]="'/tournaments/' + tournament.id == tournamentFilter">
                                         {{tournament.name}}
                                     </option>
                                 </select>
@@ -73,7 +73,7 @@
                                     id="poolsFilter" name="poolsFilter">
                                     <option value=""></option>
                                     <option *ngFor="let pool of pools"
-                                        [value]="'/api/pools/' + pool.id" [selected]="'/api/pools/' + pool.id == poolsFilter">
+                                        [value]="'/pools/' + pool.id" [selected]="'/pools/' + pool.id == poolsFilter">
                                         {{pool.name}} <i>({{pool.tournament.name}})</i>
                                     </option>
                                 </select>

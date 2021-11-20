@@ -140,7 +140,7 @@ export class ModuleUsersSubmoduleComponent implements OnChanges {
     // Add user to parent module
     linkUser() {
         const modalRef = this.modalService.open(ModuleUsersLinkModalFormComponent, { centered: true });
-        modalRef.componentInstance.parentUserIDS = this.parent.users.map((url: any) => {return url.replace('/api/users/', '')})
+        modalRef.componentInstance.parentUserIDS = this.parent.users.map((url: any) => {return url.replace('/users/', '')})
         modalRef.result.then((result) => {
             if (result == 'save') {
                 this.ngxLoader.startLoader('submodule-loader');
@@ -148,8 +148,8 @@ export class ModuleUsersSubmoduleComponent implements OnChanges {
                 switch(this.parentModule){
                     case 'organizations':
                         this.service.getUser(values.userId).subscribe((user: any) => {
-                            if (!this.parent.users.includes('/api/users/'+user.id)) {
-                                this.parent.users.push('/api/users/'+user.id);
+                            if (!this.parent.users.includes('/users/'+user.id)) {
+                                this.parent.users.push('/users/'+user.id);
                                 this.organizationService.updateOrganization(this.parent.id, this.parent).subscribe((data: any) => {
                                     this.initUsers();
                                 })
@@ -173,7 +173,7 @@ export class ModuleUsersSubmoduleComponent implements OnChanges {
                     modalRef.result.then((result) => {
                         if (result == 'confirm') {
                             this.ngxLoader.startLoader('submodule-loader');
-                            const index: number = this.parent.users.indexOf('/api/users/'+user.id);
+                            const index: number = this.parent.users.indexOf('/users/'+user.id);
                             if (index !== -1) {
                                 this.parent.users.splice(index, 1);
                                 this.organizationService.updateOrganization(this.parent.id, this.parent).subscribe((data: any) => {

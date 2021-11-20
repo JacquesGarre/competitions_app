@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit {
             this.organizations = results[1];
             this.tournaments.map((tournament: any) => {
                 let orga = this.organizations.filter((org:any) => {
-                    return org.id.toString() == tournament.organization.replace('/api/organizations/', '')
+                    return org.id.toString() == tournament.organization.replace('/organizations/', '')
                 })[0]
                 tournament.organization = orga;
             })

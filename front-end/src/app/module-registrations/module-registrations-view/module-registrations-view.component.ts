@@ -124,21 +124,21 @@ export class ModuleRegistrationsViewComponent implements OnInit {
                         this.tournaments = data;
                     })
                 }
-                this.userService.getUser(this.form.user.replace('/api/users/','')).subscribe((data: any) => {
+                this.userService.getUser(this.form.user.replace('/users/','')).subscribe((data: any) => {
                     let user = data;
                     this.title = user.firstName + ' ' + user.lastName
                     this.ngxLoader.stopLoader('page-loader');
                 })
             })
-            this.poolService.getPoolsByTournament(this.registration.tournament.replace('/api/tournaments/','')).subscribe((data: any) => {
+            this.poolService.getPoolsByTournament(this.registration.tournament.replace('/tournaments/','')).subscribe((data: any) => {
                 this.pools = data;
                 this.form.pools = this.registration.pools.map((pool: any) => {
                     const existingPool = this.pools.filter((el: any) => {
-                        return el.id.toString() === pool.replace('/api/pools/','')
+                        return el.id.toString() === pool.replace('/pools/','')
                     })[0];
                     return {
                         id: existingPool.id,
-                        name: existingPool.name.replace('/api/pools/','')          
+                        name: existingPool.name.replace('/pools/','')          
                     }
                 }) 
             })
@@ -186,7 +186,7 @@ export class ModuleRegistrationsViewComponent implements OnInit {
             tournament: this.form.tournament,
             user: this.form.user,
             pools: this.form.pools.map((pool: any) => {
-                return '/api/pools/'+pool.id
+                return '/pools/'+pool.id
             }),
             payableAmount: parseFloat(this.form.payableAmount),
             paidAmount: parseFloat(this.form.paidAmount),
@@ -198,17 +198,17 @@ export class ModuleRegistrationsViewComponent implements OnInit {
             this.form = data;
             this.form.pools = this.registration.pools.map((pool: any) => {
                 const existingPool = this.pools.filter((el: any) => {
-                    return el.id.toString() === pool.replace('/api/pools/','')
+                    return el.id.toString() === pool.replace('/pools/','')
                 })[0];
                 return {
                     id: existingPool.id,
-                    name: existingPool.name.replace('/api/pools/','')                
+                    name: existingPool.name.replace('/pools/','')                
                 }
             }) 
             this.form.presence = this.registration.presence ? "1" : "0";
             this.form.available = this.registration.available ? "1" : "0";
             let user = this.users.filter((user: any) => {
-                return this.form.user.replace('/api/users/','') == user.id.toString()
+                return this.form.user.replace('/users/','') == user.id.toString()
             })[0];
             this.title = user.firstName + ' ' + user.lastName
             this.ngxLoader.stopLoader('task-loader');

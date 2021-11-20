@@ -135,7 +135,7 @@ export class ModulePoolsSubmoduleComponent implements OnChanges {
                 let values = modalRef.componentInstance.addForm.value;
                 let pool: any = {
                     name: values.name,
-                    tournament: 'api/tournaments/' + this.parent.id,
+                    tournament: 'tournaments/' + this.parent.id,
                     minPoints: parseInt(values.minPoints),
                     maxPoints: parseInt(values.maxPoints),
                     startDate: new Date(Date.parse(values.startDate)+7200*1000).toUTCString(),
@@ -161,7 +161,7 @@ export class ModulePoolsSubmoduleComponent implements OnChanges {
                 modalRef.result.then((result) => {
                     if (result == 'confirm') {
                         this.ngxLoader.startLoader('submodule-loader-pools');
-                        const index: number = pool.users.indexOf('/api/users/'+this.parent.id);
+                        const index: number = pool.users.indexOf('/users/'+this.parent.id);
                         if (index !== -1) {
                             pool.users.splice(index, 1);
                             this.service.updatePool(pool.id, pool).subscribe((data: any) => {

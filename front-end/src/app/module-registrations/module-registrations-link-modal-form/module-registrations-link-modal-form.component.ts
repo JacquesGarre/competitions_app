@@ -180,7 +180,7 @@ export class ModuleRegistrationsLinkModalFormComponent {
         }
 
         if(this.parentModule == 'pools'){
-            this.poolService.getPoolsByTournament(this.parent.tournament.replace('/api/tournaments/','')).subscribe((data: any) => {
+            this.poolService.getPoolsByTournament(this.parent.tournament.replace('/tournaments/','')).subscribe((data: any) => {
                 this.pools = data;
                 this.pools.map((pool:any) => {
                     pool.displayTitle = pool.name + '(de '+pool.minPoints+' à '+pool.maxPoints+')';
@@ -299,7 +299,7 @@ export class ModuleRegistrationsLinkModalFormComponent {
                     let existingRegistration = data[0];
                     let pools = existingRegistration.pools.map((pool: any) => {
                         const existingPool = this.pools.filter((el: any) => {
-                            return el.id.toString() === pool.replace('/api/pools/','')
+                            return el.id.toString() === pool.replace('/pools/','')
                         })[0];
                         return {
                             id: existingPool.id,

@@ -38,7 +38,7 @@
                     <div class="col-md-12">
                         <div class="form-group">
                             <input type="text" 
-                            (change)="fetchPlayerInfos()"
+                            (keyup)="fetchPlayerInfos()"
                             [className]="
                             (addForm.invalid && (addForm.get('licenceNumber')?.dirty || addForm.get('licenceNumber')?.touched) && addForm.get('licenceNumber')?.errors) ? 
                             'form-control is-invalid' : (addForm.invalid && (addForm.get('licenceNumber')?.dirty || addForm.get('licenceNumber')?.touched)) ? 'form-control is-valid' : 'form-control'" id="licenceNumber" name="licenceNumber" formControlName="licenceNumber" placeholder="Numéro de licence *" autocomplete="off" required>
@@ -89,7 +89,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                             <input 
-                            (change)="testEmail()"
+                            (keyup)="testEmail()"
                             type="text" [className]="
                             (addForm.invalid && (addForm.get('email')?.dirty || addForm.get('email')?.touched) && addForm.get('email')?.errors) ? 
                             'form-control is-invalid' : (addForm.invalid && (addForm.get('email')?.dirty || addForm.get('email')?.touched)) ? 'form-control is-valid' : 'form-control'" id="email" name="email" formControlName="email" placeholder="Email *" autocomplete="off" required>

@@ -254,16 +254,16 @@ export class RegistrationComponent implements OnInit {
 
         this.userService.createUser(user).subscribe(data => {
             let registration: any = {
-                tournament: 'api/tournaments/' + values.tournament.id,
+                tournament: 'tournaments/' + values.tournament.id,
                 pools: values.selectedPools.map((pool:any) => {
-                    return 'api/pools/' + pool.id
+                    return 'pools/' + pool.id
                 }),
-                user: 'api/users/' + data.id,
+                user: 'users/' + data.id,
                 payableAmount: parseFloat(values.payableAmount),
                 paidAmount: parseFloat('0'),
                 presence: false,
                 available: false,
-                creator: 'api/users/1'
+                creator: 'users/1'
             }
             // create registration
             this.service.createRegistration(registration).subscribe(data => {

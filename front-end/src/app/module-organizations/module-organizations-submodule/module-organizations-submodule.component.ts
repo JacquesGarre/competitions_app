@@ -93,7 +93,7 @@ export class ModuleOrganizationsSubmoduleComponent implements OnChanges {
     // Add orga to parent module
     linkOrganization() {
         const modalRef = this.modalService.open(ModuleOrganizationsLinkModalFormComponent, { centered: true });
-        modalRef.componentInstance.parentOrganizationIDS = this.parent.organizations.map((url: any) => {return url.replace('/api/organizations/', '')})
+        modalRef.componentInstance.parentOrganizationIDS = this.parent.organizations.map((url: any) => {return url.replace('/organizations/', '')})
         modalRef.result.then((result) => {
             if (result == 'save') {
                 this.ngxLoader.startLoader('submodule-loader');
@@ -103,7 +103,7 @@ export class ModuleOrganizationsSubmoduleComponent implements OnChanges {
                         this.service.getOrganization(values.organizationId).subscribe((organization: any) => {
                             console.log(this.parent.organizations);
                             if (!organization.users.includes(this.parent.id)) {
-                                organization.users.push('/api/users/'+this.parent.id);
+                                organization.users.push('/users/'+this.parent.id);
                                 this.service.updateOrganization(organization.id, organization).subscribe((data: any) => {
                                     this.initOrganizations();
                                 })
@@ -126,7 +126,7 @@ export class ModuleOrganizationsSubmoduleComponent implements OnChanges {
                 modalRef.result.then((result) => {
                     if (result == 'confirm') {
                         this.ngxLoader.startLoader('submodule-loader');
-                        const index: number = organization.users.indexOf('/api/users/'+this.parent.id);
+                        const index: number = organization.users.indexOf('/users/'+this.parent.id);
                         if (index !== -1) {
                             organization.users.splice(index, 1);
                             this.service.updateOrganization(organization.id, organization).subscribe((data: any) => {

@@ -262,7 +262,7 @@ export class ModuleRegistrationsAddModalFormComponent {
                     let existingRegistration = data[0];
                     let pools = existingRegistration.pools.map((pool: any) => {
                         const existingPool = this.pools.filter((el: any) => {
-                            return el.id.toString() === pool.replace('/api/pools/','')
+                            return el.id.toString() === pool.replace('/pools/','')
                         })[0];
                         return {
                             id: existingPool.id,

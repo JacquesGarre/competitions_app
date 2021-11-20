@@ -88,7 +88,7 @@ export class ModuleTournamentsViewComponent implements OnInit {
                     this.organizationService.getOrganizations().subscribe((data: any) => {
                         this.organizations = data;
                         const organization = this.organizations.filter((org: any) => {
-                            return org.id == this.tournament.organization.replace('/api/organizations/','');
+                            return org.id == this.tournament.organization.replace('/organizations/','');
                         })[0];
                         this.formURL = "/"+organization.subdomain+"/inscription/"+this.tournament.uri;
                     })
@@ -96,7 +96,7 @@ export class ModuleTournamentsViewComponent implements OnInit {
                     this.organizationService.getOrganizationsByUser(this.currentUser.id).subscribe((data: any) => {
                         this.organizations = data;
                         const organization = this.organizations.filter((org: any) => {
-                            return org.id == this.tournament.organization.replace('/api/organizations/','');
+                            return org.id == this.tournament.organization.replace('/organizations/','');
                         })[0];
                         this.formURL = "/"+organization.subdomain+"/inscription/"+this.tournament.uri;
                     })

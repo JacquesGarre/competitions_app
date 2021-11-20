@@ -93,7 +93,7 @@ export class ModuleTournamentsSubmoduleComponent implements OnChanges {
     // Add orga to parent module
     linkTournament() {
         const modalRef = this.modalService.open(ModuleTournamentsLinkModalFormComponent, { centered: true });
-        modalRef.componentInstance.parentTournamentIDS = this.parent.tournaments.map((url: any) => {return url.replace('/api/tournaments/', '')})
+        modalRef.componentInstance.parentTournamentIDS = this.parent.tournaments.map((url: any) => {return url.replace('/tournaments/', '')})
         modalRef.result.then((result) => {
             if (result == 'save') {
                 this.ngxLoader.startLoader('submodule-loader');
@@ -103,7 +103,7 @@ export class ModuleTournamentsSubmoduleComponent implements OnChanges {
                         this.service.getTournament(values.tournamentId).subscribe((tournament: any) => {
                             console.log(this.parent.tournaments);
                             if (!tournament.users.includes(this.parent.id)) {
-                                tournament.users.push('/api/users/'+this.parent.id);
+                                tournament.users.push('/users/'+this.parent.id);
                                 this.service.updateTournament(tournament.id, tournament).subscribe((data: any) => {
                                     this.initTournaments();
                                     this.ngxLoader.stopLoader('submodule-loader');
@@ -127,7 +127,7 @@ export class ModuleTournamentsSubmoduleComponent implements OnChanges {
                 modalRef.result.then((result) => {
                     if (result == 'confirm') {
                         this.ngxLoader.startLoader('submodule-loader');
-                        const index: number = tournament.users.indexOf('/api/users/'+this.parent.id);
+                        const index: number = tournament.users.indexOf('/users/'+this.parent.id);
                         if (index !== -1) {
                             tournament.users.splice(index, 1);
                             this.service.updateTournament(tournament.id, tournament).subscribe((data: any) => {

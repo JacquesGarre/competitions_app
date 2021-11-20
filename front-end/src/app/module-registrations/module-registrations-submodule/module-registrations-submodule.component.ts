@@ -146,12 +146,12 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
 
             // tournament ids
             let tournamentIDS = this.registrations.map((reg: any) => {
-                return 'id[]=' + reg.tournament.replace('/api/tournaments/','');
+                return 'id[]=' + reg.tournament.replace('/tournaments/','');
             }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
 
             // user ids
             let userIDS = this.registrations.map((reg: any) => {
-                let userID = reg.user.replace('/api/users/','');
+                let userID = reg.user.replace('/users/','');
                 return 'id[]=' + userID;
             }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
 
@@ -159,7 +159,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
             let poolIDS: any = [];
             this.registrations.map((reg: any) => {
                 reg.pools.map((pool:any) => {
-                    poolIDS.push('id[]=' + pool.replace('/api/pools/',''));
+                    poolIDS.push('id[]=' + pool.replace('/pools/',''));
                 });
             })
             poolIDS = poolIDS.filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
@@ -179,20 +179,20 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
 
                 this.pools.map((pool: any) => {
                     pool.tournament = this.tournaments.filter((tournament: any) => {
-                        return tournament.id == pool.tournament.replace('/api/tournaments/','')
+                        return tournament.id == pool.tournament.replace('/tournaments/','')
                     })[0];
                 });
 
 
                 this.registrations.map((registration: any) => {
                     var tournament: any = this.tournaments.filter((tournament: any) => {
-                        return tournament.id.toString() == registration.tournament.replace('/api/tournaments/','')
+                        return tournament.id.toString() == registration.tournament.replace('/tournaments/','')
                     })[0]?.name
                     var user: any = this.users.filter((user: any) => {
-                        return user.id.toString() == registration.user.replace('/api/users/','')
+                        return user.id.toString() == registration.user.replace('/users/','')
                     })[0];
                     var pools: any = this.pools.filter((pool: any) => {
-                        return registration.pools.includes('/api/pools/'+pool.id.toString())
+                        return registration.pools.includes('/pools/'+pool.id.toString())
                     });
                     var poolsTxt: any = pools.map((pool: any) => {
                         return pool.name;
@@ -220,12 +220,12 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
 
             // tournament ids
             let tournamentIDS = this.registrations.map((reg: any) => {
-                return 'id[]=' + reg.tournament.replace('/api/tournaments/','');
+                return 'id[]=' + reg.tournament.replace('/tournaments/','');
             }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
 
             // user ids
             let userIDS = this.registrations.map((reg: any) => {
-                let userID = reg.user.replace('/api/users/','');
+                let userID = reg.user.replace('/users/','');
                 return 'id[]=' + userID;
             }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
 
@@ -233,7 +233,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
             let poolIDS: any = [];
             this.registrations.map((reg: any) => {
                 reg.pools.map((pool:any) => {
-                    poolIDS.push('id[]=' + pool.replace('/api/pools/',''));
+                    poolIDS.push('id[]=' + pool.replace('/pools/',''));
                 });
             })
             poolIDS = poolIDS.filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
@@ -252,20 +252,20 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                 this.tournaments = results[2];
                 this.pools.map((pool: any) => {
                     pool.tournament = this.tournaments.filter((tournament: any) => {
-                        return tournament.id == pool.tournament.replace('/api/tournaments/','')
+                        return tournament.id == pool.tournament.replace('/tournaments/','')
                     })[0];
                 });
 
 
                 this.registrations.map((registration: any) => {
                     var tournament: any = this.tournaments.filter((tournament: any) => {
-                        return tournament.id.toString() == registration.tournament.replace('/api/tournaments/','')
+                        return tournament.id.toString() == registration.tournament.replace('/tournaments/','')
                     })[0]?.name
                     var user: any = this.users.filter((user: any) => {
-                        return user.id.toString() == registration.user.replace('/api/users/','')
+                        return user.id.toString() == registration.user.replace('/users/','')
                     })[0];
                     var pools: any = this.pools.filter((pool: any) => {
-                        return registration.pools.includes('/api/pools/'+pool.id.toString())
+                        return registration.pools.includes('/pools/'+pool.id.toString())
                     });
                     var poolsTxt: any = pools.map((pool: any) => {
                         return pool.name;
@@ -292,12 +292,12 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
 
             // tournament ids
             let tournamentIDS = this.registrations.map((reg: any) => {
-                return 'id[]=' + reg.tournament.replace('/api/tournaments/','');
+                return 'id[]=' + reg.tournament.replace('/tournaments/','');
             }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
 
             // user ids
             let userIDS = this.registrations.map((reg: any) => {
-                let userID = reg.user.replace('/api/users/','');
+                let userID = reg.user.replace('/users/','');
                 return 'id[]=' + userID;
             }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
 
@@ -305,7 +305,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
             let poolIDS: any = [];
             this.registrations.map((reg: any) => {
                 reg.pools.map((pool:any) => {
-                    poolIDS.push('id[]=' + pool.replace('/api/pools/',''));
+                    poolIDS.push('id[]=' + pool.replace('/pools/',''));
                 });
             })
             poolIDS = poolIDS.filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
@@ -325,20 +325,20 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
 
                 this.pools.map((pool: any) => {
                     pool.tournament = this.tournaments.filter((tournament: any) => {
-                        return tournament.id == pool.tournament.replace('/api/tournaments/','')
+                        return tournament.id == pool.tournament.replace('/tournaments/','')
                     })[0];
                 });
 
 
                 this.registrations.map((registration: any) => {
                     var tournament: any = this.tournaments.filter((tournament: any) => {
-                        return tournament.id.toString() == registration.tournament.replace('/api/tournaments/','')
+                        return tournament.id.toString() == registration.tournament.replace('/tournaments/','')
                     })[0]?.name
                     var user: any = this.users.filter((user: any) => {
-                        return user.id.toString() == registration.user.replace('/api/users/','')
+                        return user.id.toString() == registration.user.replace('/users/','')
                     })[0];
                     var pools: any = this.pools.filter((pool: any) => {
-                        return registration.pools.includes('/api/pools/'+pool.id.toString())
+                        return registration.pools.includes('/pools/'+pool.id.toString())
                     });
                     var poolsTxt: any = pools.map((pool: any) => {
                         return pool.name;
@@ -384,7 +384,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
     filterAsPoolsSubmodule(page:any) {
         this.licenceNumberFilter = (<HTMLInputElement>document.getElementById("licenceNumberFilter")).value;
         this.tournamentFilter = '';
-        this.poolsFilter = '/api/pools/'+this.parent.id;
+        this.poolsFilter = '/pools/'+this.parent.id;
         this.jerseyNumberFilter = (<HTMLInputElement>document.getElementById("jerseyNumberFilter")).value;
         this.presenceFilter = (<HTMLInputElement>document.getElementById("presenceFilter")).value;
         this.availableFilter = (<HTMLInputElement>document.getElementById("availableFilter")).value;
@@ -416,7 +416,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
             
             this.userService.getUserByLicence(this.licenceNumberFilter).subscribe((users: any) => {
                 users.map((user:any) => {
-                    usersFilter.push('/api/users/'+user.id);
+                    usersFilter.push('/users/'+user.id);
                 })
                 this.service.getFilteredRegistrations(this.currentFilteredPage, usersFilter, this.jerseyNumberFilter, this.tournamentFilter, this.poolsFilter, this.presenceFilter, this.availableFilter).subscribe((data: any) => {
                     this.registrations = data['hydra:member'];
@@ -426,12 +426,12 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
         
                     // tournament ids
                     let tournamentIDS = this.registrations.map((reg: any) => {
-                        return 'id[]=' + reg.tournament.replace('/api/tournaments/','');
+                        return 'id[]=' + reg.tournament.replace('/tournaments/','');
                     }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
         
                     // user ids
                     let userIDS = this.registrations.map((reg: any) => {
-                        let userID = reg.user.replace('/api/users/','');
+                        let userID = reg.user.replace('/users/','');
                         return 'id[]=' + userID;
                     }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
         
@@ -451,19 +451,19 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
         
                         this.pools.map((pool: any) => {
                             pool.tournament = this.tournaments.filter((tournament: any) => {
-                                return tournament.id == pool.tournament.replace('/api/tournaments/','')
+                                return tournament.id == pool.tournament.replace('/tournaments/','')
                             })[0];
                         });
         
                         this.registrations.map((registration: any) => {
                             var tournament: any = this.tournaments.filter((tournament: any) => {
-                                return tournament.id.toString() == registration.tournament.replace('/api/tournaments/','')
+                                return tournament.id.toString() == registration.tournament.replace('/tournaments/','')
                             })[0]?.name
                             var user: any = this.users.filter((user: any) => {
-                                return user.id.toString() == registration.user.replace('/api/users/','')
+                                return user.id.toString() == registration.user.replace('/users/','')
                             })[0];
                             var pools: any = this.pools.filter((pool: any) => {
-                                return registration.pools.includes('/api/pools/'+pool.id.toString())
+                                return registration.pools.includes('/pools/'+pool.id.toString())
                             });
                             var poolsTxt: any = pools.map((pool: any) => {
                                 return pool.name;
@@ -488,12 +488,12 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
     
                 // tournament ids
                 let tournamentIDS = this.registrations.map((reg: any) => {
-                    return 'id[]=' + reg.tournament.replace('/api/tournaments/','');
+                    return 'id[]=' + reg.tournament.replace('/tournaments/','');
                 }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
     
                 // user ids
                 let userIDS = this.registrations.map((reg: any) => {
-                    let userID = reg.user.replace('/api/users/','');
+                    let userID = reg.user.replace('/users/','');
                     return 'id[]=' + userID;
                 }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
     
@@ -514,19 +514,19 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
     
                     this.pools.map((pool: any) => {
                         pool.tournament = this.tournaments.filter((tournament: any) => {
-                            return tournament.id == pool.tournament.replace('/api/tournaments/','')
+                            return tournament.id == pool.tournament.replace('/tournaments/','')
                         })[0];
                     });
     
                     this.registrations.map((registration: any) => {
                         var tournament: any = this.tournaments.filter((tournament: any) => {
-                            return tournament.id.toString() == registration.tournament.replace('/api/tournaments/','')
+                            return tournament.id.toString() == registration.tournament.replace('/tournaments/','')
                         })[0]?.name
                         var user: any = this.users.filter((user: any) => {
-                            return user.id.toString() == registration.user.replace('/api/users/','')
+                            return user.id.toString() == registration.user.replace('/users/','')
                         })[0];
                         var pools: any = this.pools.filter((pool: any) => {
-                            return registration.pools.includes('/api/pools/'+pool.id.toString())
+                            return registration.pools.includes('/pools/'+pool.id.toString())
                         });
                         var poolsTxt: any = pools.map((pool: any) => {
                             return pool.name;
@@ -547,7 +547,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
 
     filterAsTournamentsSubmodule(page:any) {
         this.licenceNumberFilter = (<HTMLInputElement>document.getElementById("licenceNumberFilter")).value;
-        this.tournamentFilter = '/api/tournaments/'+this.parent.id;
+        this.tournamentFilter = '/tournaments/'+this.parent.id;
         this.poolsFilter = (<HTMLInputElement>document.getElementById("poolsFilter")).value;
         this.jerseyNumberFilter = (<HTMLInputElement>document.getElementById("jerseyNumberFilter")).value;
         this.presenceFilter = (<HTMLInputElement>document.getElementById("presenceFilter")).value;
@@ -580,7 +580,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
             
             this.userService.getUserByLicence(this.licenceNumberFilter).subscribe((users: any) => {
                 users.map((user:any) => {
-                    usersFilter.push('/api/users/'+user.id);
+                    usersFilter.push('/users/'+user.id);
                 })
                 this.service.getFilteredRegistrations(this.currentFilteredPage, usersFilter, this.jerseyNumberFilter, this.tournamentFilter, this.poolsFilter, this.presenceFilter, this.availableFilter).subscribe((data: any) => {
                     this.registrations = data['hydra:member'];
@@ -590,12 +590,12 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
         
                     // tournament ids
                     let tournamentIDS = this.registrations.map((reg: any) => {
-                        return 'id[]=' + reg.tournament.replace('/api/tournaments/','');
+                        return 'id[]=' + reg.tournament.replace('/tournaments/','');
                     }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
         
                     // user ids
                     let userIDS = this.registrations.map((reg: any) => {
-                        let userID = reg.user.replace('/api/users/','');
+                        let userID = reg.user.replace('/users/','');
                         return 'id[]=' + userID;
                     }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
         
@@ -603,7 +603,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                     let poolIDS: any = [];
                     this.registrations.map((reg: any) => {
                         reg.pools.map((pool:any) => {
-                            poolIDS.push('id[]=' + pool.replace('/api/pools/',''));
+                            poolIDS.push('id[]=' + pool.replace('/pools/',''));
                         });
                     })
                     poolIDS = poolIDS.filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
@@ -623,19 +623,19 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
         
                         this.pools.map((pool: any) => {
                             pool.tournament = this.tournaments.filter((tournament: any) => {
-                                return tournament.id == pool.tournament.replace('/api/tournaments/','')
+                                return tournament.id == pool.tournament.replace('/tournaments/','')
                             })[0];
                         });
         
                         this.registrations.map((registration: any) => {
                             var tournament: any = this.tournaments.filter((tournament: any) => {
-                                return tournament.id.toString() == registration.tournament.replace('/api/tournaments/','')
+                                return tournament.id.toString() == registration.tournament.replace('/tournaments/','')
                             })[0]?.name
                             var user: any = this.users.filter((user: any) => {
-                                return user.id.toString() == registration.user.replace('/api/users/','')
+                                return user.id.toString() == registration.user.replace('/users/','')
                             })[0];
                             var pools: any = this.pools.filter((pool: any) => {
-                                return registration.pools.includes('/api/pools/'+pool.id.toString())
+                                return registration.pools.includes('/pools/'+pool.id.toString())
                             });
                             var poolsTxt: any = pools.map((pool: any) => {
                                 return pool.name;
@@ -660,12 +660,12 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
     
                 // tournament ids
                 let tournamentIDS = this.registrations.map((reg: any) => {
-                    return 'id[]=' + reg.tournament.replace('/api/tournaments/','');
+                    return 'id[]=' + reg.tournament.replace('/tournaments/','');
                 }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
     
                 // user ids
                 let userIDS = this.registrations.map((reg: any) => {
-                    let userID = reg.user.replace('/api/users/','');
+                    let userID = reg.user.replace('/users/','');
                     return 'id[]=' + userID;
                 }).filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
     
@@ -673,7 +673,7 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                 let poolIDS: any = [];
                 this.registrations.map((reg: any) => {
                     reg.pools.map((pool:any) => {
-                        poolIDS.push('id[]=' + pool.replace('/api/pools/',''));
+                        poolIDS.push('id[]=' + pool.replace('/pools/',''));
                     });
                 })
                 poolIDS = poolIDS.filter((x: any, i: any, a: any) => a.indexOf(x) == i).join('&')
@@ -693,19 +693,19 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
     
                     this.pools.map((pool: any) => {
                         pool.tournament = this.tournaments.filter((tournament: any) => {
-                            return tournament.id == pool.tournament.replace('/api/tournaments/','')
+                            return tournament.id == pool.tournament.replace('/tournaments/','')
                         })[0];
                     });
     
                     this.registrations.map((registration: any) => {
                         var tournament: any = this.tournaments.filter((tournament: any) => {
-                            return tournament.id.toString() == registration.tournament.replace('/api/tournaments/','')
+                            return tournament.id.toString() == registration.tournament.replace('/tournaments/','')
                         })[0]?.name
                         var user: any = this.users.filter((user: any) => {
-                            return user.id.toString() == registration.user.replace('/api/users/','')
+                            return user.id.toString() == registration.user.replace('/users/','')
                         })[0];
                         var pools: any = this.pools.filter((pool: any) => {
-                            return registration.pools.includes('/api/pools/'+pool.id.toString())
+                            return registration.pools.includes('/pools/'+pool.id.toString())
                         });
                         var poolsTxt: any = pools.map((pool: any) => {
                             return pool.name;
@@ -735,15 +735,15 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                     this.ngxLoader.startLoader('task-loader');
                     let values = modalRef.componentInstance.addForm.value;                    
                     let registration: any = {
-                        tournament: 'api/tournaments/'+values.tournament,
-                        user: 'api/users/'+this.parent.id,
+                        tournament: 'tournaments/'+values.tournament,
+                        user: 'users/'+this.parent.id,
                         payableAmount: parseFloat(values.payableAmount),
                         paidAmount: parseFloat(values.paidAmount),
-                        creator: 'api/users/' + this.currentUser.id,
+                        creator: 'users/' + this.currentUser.id,
                         presence: values.presence == "1",
                         available: values.presence == "1",
                         pools: values.selectedPools.map((pool:any) => {
-                            return '/api/pools/'+ pool.id
+                            return '/pools/'+ pool.id
                         }),
                     }
                     this.service.createRegistration(registration).subscribe(data => {
@@ -757,10 +757,10 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
         if(this.parentModule == 'pools'){
             modalRef.componentInstance.parentModule = 'pools';
             modalRef.componentInstance.parent = this.parent;
-            this.poolService.getPoolsByTournament(this.parent.tournament.replace('/api/tournaments/', '')).subscribe((data: any) => {
+            this.poolService.getPoolsByTournament(this.parent.tournament.replace('/tournaments/', '')).subscribe((data: any) => {
                 modalRef.componentInstance.pools = data;
-                modalRef.componentInstance.addForm.controls.tournament.setValue(this.parent.tournament.replace('/api/tournaments/', ''));
-                modalRef.componentInstance.tournament = this.parent.tournament.replace('/api/tournaments/', '');
+                modalRef.componentInstance.addForm.controls.tournament.setValue(this.parent.tournament.replace('/tournaments/', ''));
+                modalRef.componentInstance.tournament = this.parent.tournament.replace('/tournaments/', '');
             })
 
 
@@ -784,16 +784,16 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                         this.userService.createUser(user).subscribe(data => {
     
                             let registration: any = {
-                                tournament: 'api/tournaments/' + values.tournament,
+                                tournament: 'tournaments/' + values.tournament,
                                 pools: values.selectedPools.map((pool:any) => {
-                                    return 'api/pools/' + pool.id
+                                    return 'pools/' + pool.id
                                 }),
-                                user: 'api/users/' + data.id,
+                                user: 'users/' + data.id,
                                 payableAmount: parseFloat(values.payableAmount),
                                 paidAmount: parseFloat(values.paidAmount),
                                 presence: values.presence == "1",
                                 available: values.presence == "1",
-                                creator: 'api/users/' + this.currentUser.id
+                                creator: 'users/' + this.currentUser.id
                             }
     
                             this.service.createRegistration(registration).subscribe(data => {
@@ -806,16 +806,16 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                     } else {
     
                         let registration: any = {
-                            tournament: 'api/tournaments/' + values.tournament,
+                            tournament: 'tournaments/' + values.tournament,
                             pools: values.selectedPools.map((pool:any) => {
-                                return 'api/pools/' + pool.id
+                                return 'pools/' + pool.id
                             }),
-                            user: 'api/users/' + values.user,
+                            user: 'users/' + values.user,
                             payableAmount: parseFloat(values.payableAmount),
                             paidAmount: parseFloat(values.paidAmount),
                             presence: values.presence == "1",
                             available: values.presence == "1",
-                            creator: 'api/users/' + this.currentUser.id
+                            creator: 'users/' + this.currentUser.id
                         }
         
                         // registration exists, we update it
@@ -864,16 +864,16 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                         this.userService.createUser(user).subscribe(data => {
     
                             let registration: any = {
-                                tournament: 'api/tournaments/' + this.parent.id,
+                                tournament: 'tournaments/' + this.parent.id,
                                 pools: values.selectedPools.map((pool:any) => {
-                                    return 'api/pools/' + pool.id
+                                    return 'pools/' + pool.id
                                 }),
-                                user: 'api/users/' + data.id,
+                                user: 'users/' + data.id,
                                 payableAmount: parseFloat(values.payableAmount),
                                 paidAmount: parseFloat(values.paidAmount),
                                 presence: values.presence == "1",
                                 available: values.presence == "1",
-                                creator: 'api/users/' + this.currentUser.id
+                                creator: 'users/' + this.currentUser.id
                             }
     
                             this.service.createRegistration(registration).subscribe(data => {
@@ -886,16 +886,16 @@ export class ModuleRegistrationsSubmoduleComponent implements OnChanges {
                     } else {
     
                         let registration: any = {
-                            tournament: 'api/tournaments/' + this.parent.id,
+                            tournament: 'tournaments/' + this.parent.id,
                             pools: values.selectedPools.map((pool:any) => {
-                                return 'api/pools/' + pool.id
+                                return 'pools/' + pool.id
                             }),
-                            user: 'api/users/' + values.user,
+                            user: 'users/' + values.user,
                             payableAmount: parseFloat(values.payableAmount),
                             paidAmount: parseFloat(values.paidAmount),
                             presence: values.presence == "1",
                             available: values.presence == "1",
-                            creator: 'api/users/' + this.currentUser.id
+                            creator: 'users/' + this.currentUser.id
                         }
         
                         // registration exists, we update it

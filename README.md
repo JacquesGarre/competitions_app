@@ -4,6 +4,9 @@
 
 Web application based on Symfony 5 and Angular 12 meant for managing table tennis tournaments
 
+
+
+
 ## Installation
 
 
@@ -84,6 +87,17 @@ ng serve --port 8081 --open
 ```
 The homepage should be opening automatically on your default browser at : 
 http://localhost:8081/
+
+
+## Notes
+
+To realise a new build
+```bash
+cd ../front-end
+ng build
+```
+
+
 ## Authors
 
 - [@JacquesGarre](https://github.com/JacquesGarre)
