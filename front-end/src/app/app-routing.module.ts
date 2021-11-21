@@ -91,7 +91,7 @@ const routes: Routes = [
         ]
 
     },
-    { path: ':slug', component: ClubComponent },
+    { path: ':uri', component: RegistrationComponent },
     { path: ':slug/inscription/:uri', component: RegistrationComponent },
 ];
 
