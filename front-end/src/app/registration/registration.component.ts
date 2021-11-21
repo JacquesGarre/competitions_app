@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { OrganizationService } from '../module-organizations/organization.service';
 import { TournamentService } from '../module-tournaments/tournament.service';
 import { UserService } from '../module-users/user.service';
@@ -59,14 +59,43 @@ export class RegistrationComponent implements OnInit {
         public service: RegistrationService,
         private ngxModule: NgxUiLoaderModule,
         private ngxLoader: NgxUiLoaderService,
-        public ffttService: FFTTService
+        public ffttService: FFTTService,
+        private router: Router
     ) {
 
         this.ngxLoader.startLoader('page-loader-registration');
 
-        const slug = this.route.snapshot.paramMap.get('slug');
-        const uri = this.route.snapshot.paramMap.get('uri');
+        // https://thiaville.smaaash.fr/tournoi-decembre-2021
 
+        const regex = /https?:\/\/(.*).smaaash.fr\/(.*)/gm;
+        const url = window.location.href;
+        console.log(url);
+
+        let slug: any;
+        let uri: any;
+
+        if(url.includes('localhost')){
+            slug = this.route.snapshot.paramMap.get('slug');
+            uri = this.route.snapshot.paramMap.get('uri');
+        } else {
+
+            let m;
+            while ((m = regex.exec(url)) !== null) {
+                if (m.index === regex.lastIndex) {
+                    regex.lastIndex++;
+                }
+                m.forEach((match, groupIndex) => {
+                    console.log(`Found match, group ${groupIndex}: ${match}`);
+                });
+            }
+            slug = 'thiaville';
+            uri = 'tournoi-decembre-2021';
+
+        }
+
+        
+
+        
         // get current organization & tournament
         this.organizationService.getOrganizationBySlug(slug).subscribe((data: any) => {
             if(data.length){
