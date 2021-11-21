@@ -60,7 +60,7 @@ symfony serve -d
 ```
 - Check that you can access the API by going to 
 ```bash
-http://127.0.0.1:8000/api
+http://127.0.0.1:8000/
 ```
 
 - Create an admin user by running this SQL query 
