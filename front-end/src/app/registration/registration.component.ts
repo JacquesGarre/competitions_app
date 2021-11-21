@@ -65,14 +65,12 @@ export class RegistrationComponent implements OnInit {
 
         this.ngxLoader.startLoader('page-loader-registration');
 
-        // https://thiaville.smaaash.fr/tournoi-decembre-2021
 
         const regex = /https?:\/\/(.*).smaaash.fr\/(.*)/gm;
         const url = window.location.href;
-        console.log(url);
 
-        let slug: any;
-        let uri: any;
+        let slug: any = '';
+        let uri: any = '';
 
         if(url.includes('localhost')){
             slug = this.route.snapshot.paramMap.get('slug');
@@ -85,17 +83,16 @@ export class RegistrationComponent implements OnInit {
                     regex.lastIndex++;
                 }
                 m.forEach((match, groupIndex) => {
-                    console.log(`Found match, group ${groupIndex}: ${match}`);
+                    if(groupIndex == 1){
+                        slug = match;
+                    }
+                    if(groupIndex == 2){
+                        uri = match;
+                    }
                 });
             }
-            slug = 'thiaville';
-            uri = 'tournoi-decembre-2021';
-
         }
 
-        
-
-        
         // get current organization & tournament
         this.organizationService.getOrganizationBySlug(slug).subscribe((data: any) => {
             if(data.length){
