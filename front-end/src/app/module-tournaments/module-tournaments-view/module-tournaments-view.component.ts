@@ -74,6 +74,7 @@ export class ModuleTournamentsViewComponent implements OnInit {
 
     ngOnInit(): void {
         const id = this.route.snapshot.paramMap.get('id');
+        const url = window.location.href;
         this.service.getTournament(id).subscribe((data: any) => {
             this.tournament = data;
 
@@ -90,7 +91,13 @@ export class ModuleTournamentsViewComponent implements OnInit {
                         const organization = this.organizations.filter((org: any) => {
                             return org.id == this.tournament.organization.replace('/organizations/','');
                         })[0];
-                        this.formURL = "/"+organization.subdomain+"/inscription/"+this.tournament.uri;
+
+                        if(url.includes('localhost')){
+                            this.formURL = "/"+organization.subdomain+"/inscription/"+this.tournament.uri;
+                        } else {
+                            this.formURL = "https://"+organization.subdomain+".smaaash.fr/"+this.tournament.uri;
+                        }
+
                     })
                 } else {
                     this.organizationService.getOrganizationsByUser(this.currentUser.id).subscribe((data: any) => {
@@ -98,7 +105,13 @@ export class ModuleTournamentsViewComponent implements OnInit {
                         const organization = this.organizations.filter((org: any) => {
                             return org.id == this.tournament.organization.replace('/organizations/','');
                         })[0];
-                        this.formURL = "/"+organization.subdomain+"/inscription/"+this.tournament.uri;
+                        
+                        if(url.includes('localhost')){
+                            this.formURL = "/"+organization.subdomain+"/inscription/"+this.tournament.uri;
+                        } else {
+                            this.formURL = "https://"+organization.subdomain+".smaaash.fr/"+this.tournament.uri;
+                        }
+
                     })
                 }
                 this.userService.getUsers().subscribe((data: any) => {
